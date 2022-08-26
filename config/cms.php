@@ -1,0 +1,67 @@
+<?php
+
+use Illuminate\Support\Str;
+
+return [
+
+    'rating' => 5,
+
+    'modules' => [
+
+        'users' => true,
+        'menus' => true,
+        'roles' => true,
+        'pages' => true,
+
+        'articles'          => false,
+        'attributes'        => true,
+        'attribute_values'  => true,
+        'audios'            => false,
+        'banners'           => true,
+        'brand_category_texts' => true,
+        'brands'            => true,
+        'c_v_s'             => false,
+        'categories'        => true,
+        'companies'         => false,
+        'delivery_settings' => true,
+        'export'            => true,
+        'galleries'         => false,
+        'genders'           => false,
+        'import'            => true,
+        'import_partners'   => false,
+        'import_partner_margins' => false,
+        'news'              => false,
+        'notifications'     => false,
+        'orders'            => true,
+        'partner_installments' => false,
+        'partners'          => false,
+        'payment_methods'   => true,
+        'photos'            => false,
+        'poll_answers'      => false,
+        'polls'             => false,
+        'pricelists'        => false,
+        'product_attributes_templates' => true,
+        'product_groups'    => true,
+        'products'          => true,
+        'promotions'        => true,
+        'publications'      => true,
+        'redirects'         => true,
+        'regions'           => false,
+        'reviews'           => true,
+        'rubrics'           => false,
+        'services'          => false,
+        'shipping_methods'  => true,
+        'shops'             => false,
+        'specializations'   => false,
+        'specialists'       => false,
+        'static_texts'      => true,
+        'stickers'          => true,
+        'stores'            => true,
+        'subscribers'       => false,
+        'user_applications' => false,
+        'vacancies'         => false,
+        'videos'            => false,
+        'warehouses'        => false,
+    ],
+
+];
