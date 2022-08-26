@@ -13,127 +13,235 @@
 </div>
 @endif
 
-<main class="main">
+<!-- hero -->
+<section class="hero" style="background-image: url(./assets/img/hero.jpg)">
+    <div class="container">
+        <div class="hero__in">
+            <div class="hero__content">
+                <h1 class="hero__title">Everything you want. Nothing you don’t.</h1>
+                <a href="catalog.html" class="btn btn--main">find your car</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="hero-banner">
-        <div class="container">
-            <div class="row hero-banner__wrap">
-                <div class="col-lg-9">
-                    <div class="hero-swiper-main swiper-container radius-12">
-                        <div class="swiper-wrapper">
-                            @foreach ($slides as $slide)
-                            <div class="swiper-slide">
-                                <div class="hero-swiper-main__item radius-12"
-                                    style="background-image: url('{{ $slide->img }}')">
-                                    <h2>{{ $slide->getTranslatedAttribute('name') }}</h2>
-                                    <p class="sub-title font-regular">{{ $slide->getTranslatedAttribute('description') }}</p>
-                                    @if ($slide->getTranslatedAttribute('button_text') && $slide->getTranslatedAttribute('url'))
-                                        <a href="{{ $slide->getTranslatedAttribute('url') }}" class="btn btn-primary lg radius-8">{{ $slide->getTranslatedAttribute('button_text') }}</a>
-                                    @endif
-                                </div>
+<!-- features and advantages cards -->
+<section class="section">
+    <div class="container">
+        <div class="card__wrapper">
+            <div class="card__box">
+                <a href="#" class="card">
+                    <div class="card__photo">
+                        <img src="./assets/img/hero.jpg" alt="" />
+                    </div>
+                    <div class="card__content">
+                        <h3>Get Pre-Qualified</h3>
+                        <p>See your actual monthly payment</p>
+                        <button class="btn btn--outlined">Get Pre-Qualified</button>
+                    </div>
+                </a>
+            </div>
+            <div class="card__box">
+                <a href="#" class="card">
+                    <div class="card__photo">
+                        <img src="./assets/img/photo-1.jpg" alt="" />
+                    </div>
+                    <div class="card__content">
+                        <h3>Get Pre-Qualified</h3>
+                        <p>See your actual monthly payment</p>
+                        <button class="btn btn--outlined">Get Pre-Qualified</button>
+                    </div>
+                </a>
+            </div>
+            <div class="card__box">
+                <a href="#" class="card">
+                    <div class="card__photo">
+                        <img src="./assets/img/photo-1.jpg" alt="" />
+                    </div>
+                    <div class="card__content">
+                        <h3>Get Pre-Qualified</h3>
+                        <p>See your actual monthly payment</p>
+                        <button class="btn btn--outlined">Get Pre-Qualified</button>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- photos -->
+<section class="photo__wrapper section pt-0">
+    <div class="container">
+        <div class="photo__head">
+            <h2>A hassle-free kind of happy</h2>
+            <a href="#">#SHOWYOURBOW</a>
+        </div>
+    </div>
+    <div class="photo__slide">
+        <div class="swiper photo-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
                             </div>
-                            @endforeach
-
-                        </div>
-                        <div class="swiper-button-prev">
-                            <svg width="18" height="18" fill="rgba(0, 0, 0, .3)">
-                                <use xlink:href="#arrow-prev"></use>
-                            </svg>
-                        </div>
-                        <div class="swiper-button-next">
-                            <svg width="18" height="18" fill="rgba(0, 0, 0, .3)">
-                                <use xlink:href="#arrow-next"></use>
-                            </svg>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 d-none d-lg-block">
-                    <div class="hero-swiper-sub swiper-container radius-12">
-                        <div class="swiper-wrapper">
-                            @php
-                                $slideProducts = $promotionProducts;
-                                // if ($slideProducts->isEmpty()) {
-                                //     $slideProducts = $newProducts;
-                                // }
-                            @endphp
-                            @foreach ($slideProducts as $product)
-                            <div class="swiper-slide">
-                                <div class="hero-swiper-sub__item radius-12">
-                                    @if ($product->isDiscounted())
-                                        <span class="sale-text bg-danger radius-14">-{{ $product->discount_percent }}%</span>
-                                    @endif
-                                    <a href="{{ $product->url }}" class="d-block">
-                                        <img src="{{ $product->small_img }}" alt="{{ $product->getTranslatedAttribute('name') }}" class="img-fluid">
-                                    </a>
-                                    <a href="{{ $product->url }}" class="title-link">{{ $product->getTranslatedAttribute('name') }}</a>
-                                    <p class="price-text">{{ Helper::formatPrice($product->current_price) }}</p>
-                                    @if ($product->isDiscounted())
-                                        <del>{{ Helper::formatPrice($product->current_not_sale_price) }}</del>
-                                    @endif
-
-                                    <div class="mt-1">
-                                        @include('partials.stars', ['rating' => $product->rating_avg])
-                                    </div>
-                                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
                             </div>
-                            @endforeach
                         </div>
-                        <div class="swiper-button-prev">
-                            <svg width="18" height="18" fill="rgba(0, 0, 0, .3)">
-                                <use xlink:href="#arrow-prev"></use>
-                            </svg>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
                         </div>
-                        <div class="swiper-button-next">
-                            <svg width="18" height="18" fill="rgba(0, 0, 0, .3)">
-                                <use xlink:href="#arrow-next"></use>
-                            </svg>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="photo__box">
+                        <div
+                            class="photo"
+                            data-fancybox="photos"
+                            data-src="./assets/img/photo.jpg"
+                            data-caption="@happylovepeacekeeper"
+                        >
+                            <img src="./assets/img/photo.jpg" alt="" />
+                            <div class="photo__content">
+                                <i class="bx bxl-instagram"></i>
+                                <span>@happylovepeacekeeper</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <x-categories></x-categories>
-
-    <x-bestseller-products></x-bestseller-products>
-
-    <section class="radius-b">
-        <div class="container">
-            <div class="row radius-b__wrap">
-                <div class="col-lg-4 col-sm-4 col-6 radius-b-box__parent">
-                    <x-banner-middle type="middle_1"></x-banner-middle>
+            <div class="arrows prev">
+                <div class="arrow swiper-button-prev">
+                    <svg>
+                        <use xlink:href="#icon-arrow-right"></use>
+                    </svg>
                 </div>
-                <div class="col-lg-4 col-sm-4 col-6 radius-b-box__parent">
-                    <x-banner-middle type="middle_2"></x-banner-middle>
-                </div>
-                <div class="col-lg-4 col-sm-4 col-6 radius-b-box__parent d-none d-sm-block">
-                    <x-banner-middle type="middle_3"></x-banner-middle>
+            </div>
+            <div class="arrows next">
+                <div class="arrow swiper-button-next">
+                    <svg>
+                        <use xlink:href="#icon-arrow-right"></use>
+                    </svg>
                 </div>
             </div>
         </div>
-    </section>
-
-    <x-promotion-products></x-promotion-products>
-
-    <x-new-products></x-new-products>
-
-    <x-news></x-news>
-
-    <x-brands></x-brands>
-
-    <section class="about text-block">
-        <div class="container">
-            <div data-target="more-container" class="gradient">
-                {!! $page->getTranslatedAttribute('body') !!}
-            </div>
-            @if($page->getTranslatedAttribute('body'))
-            <a href="javascript:;" data-toggle="more-btn" class="d-block mt-3">{{ __('main.read_all') }}</a>
-            @endif
-        </div>
-    </section>
-
-</main>
+    </div>
+</section>
 
 
 @endsection

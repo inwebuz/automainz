@@ -7,9 +7,10 @@ return [
     // Regional languages are sorted by their base language, so "British English" sorts as "English, British"
     'supportedLocales' => [
 
-        'ru'            => ['name' => 'Russian',                'script' => 'Cyrl', 'native' => 'Русский', 'regional' => 'ru_RU'],
-        'uz'            => ['name' => 'Uzbek (Latin)',          'script' => 'Latn', 'native' => 'Oʻzbekcha', 'regional' => 'uz_UZ'],
-        // 'en'            => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_US'],
+        // 'ru'            => ['name' => 'Russian',                'script' => 'Cyrl', 'native' => 'Русский', 'regional' => 'ru_RU'],
+        // 'uz'            => ['name' => 'Uzbek (Latin)',          'script' => 'Latn', 'native' => 'Oʻzbekcha', 'regional' => 'uz_UZ'],
+        'en'            => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_US'],
+        'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'Español', 'regional' => 'es_ES'],
 
         //'uz'          => ['name' => 'Uzbek (Cyrillic)',       'script' => 'Cyrl', 'native' => 'Ўзбек', 'regional' => 'uz_UZ'],
 

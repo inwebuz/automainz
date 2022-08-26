@@ -108,15 +108,16 @@ return [
         /*
          * Select default language
          */
-        'default' => 'ru',
+        'default' => 'en',
 
         /*
          * Select languages that are supported.
          */
         'locales' => [
-            'ru',
-            'uz',
-            // 'en',
+            // 'ru',
+            // 'uz',
+            'en',
+            'es',
         ],
     ],
 

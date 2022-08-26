@@ -12,353 +12,152 @@ $siteTitle = setting('site.title')
 </div>
 @endif --}}
 
-<div class="header-d d-none d-lg-block">
-    <div class="header-d-top">
-        <div class="container">
-            <div class="header-d-top__wrap">
-                <div class="dropdown dropdown-lang">
-                    <a href="javascript:;" class="dropdown-toggle text-gray" data-toggle="dropdown">
-                        <img src="{{ asset('img/icons/flag_' . $switcher->getActive()->key . '.jpg') }}" alt="{{ $switcher->getActive()->name }}">
-                        <span>{{ $switcher->getActive()->name }}</span>
-                        <svg class="arrow" width="12" height="12" fill="#666">
-                            <use xlink:href="#arrow-down"></use>
-                        </svg>
-                    </a>
-                    <div class="dropdown-menu">
-                        @foreach ($switcher->getValues() as $item)
-                            <a href="{{ $item->url }}" class="dropdown-item @if($switcher->getActive()->key == $item->key) active @endif" >
-                                <img src="{{ asset('img/icons/flag_' . $item->key . '.jpg') }}" alt="{{ $item->name }}">
-                                <span>{{ $item->name }}</span>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-                <ul class="header-d-top__list">
-                    @foreach ($headerMenuItems as $item)
-                        <li>
-                            <a href="{{ $item->url }}">
-                                <span>{{ $item->name }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-                <ul class="header-d-top__list">
-                    <li>
-                        <a href="mailto:{{ $email }}">
-                            <span>{{ $email }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tel:{{ Helper::phone($phone) }}">
-                            <span>{{ $phone }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="header-d-bottom">
-        <div class="container">
-            <div class="header-d-bottom__wrap">
-                <div class="logo">
-                    <a href="{{ route('home') }}">
-                        <img src="{{ $logo }}" alt="{{ $siteTitle }}">
-                    </a>
-                </div>
-                <a href="#" class="btn btn-primary sm radius-4 font-bold" data-toggle="catalog-menu-d">
-                    <svg width="22" height="22" fill="#fff">
-                        <use xlink:href="#list"></use>
-                    </svg>
-                    <span>{{ __('main.nav.catalog') }}</span>
-                </a>
-                <form class="search-field radius-6 ajax-search-form ajax-search-container" action="{{ route('search') }}">
-                    <label>
-                        <input type="text" class="input-field-search ajax-search-input" name="q" placeholder="{{ __('main.i_want_to_buy') }} …">
-                    </label>
-                    <button type="submit" class="btn btn-primary sm search-btn">
-                        <svg width="24" height="24" stroke="#fff">
-                            <use xlink:href="#search"></use>
-                        </svg>
-                    </button>
-                    <div class="ajax-search-results">
-                        <div class="ajax-search-results-content py-4">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4 border-right">
-                                        <div class="products-list-group list-group"></div>
-                                    </div>
-                                    <div class="col-lg-4 border-right">
-                                        <div class="categories-list-group list-group"></div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="brands-list-group list-group"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <ul class="header-d-nav__list">
-                    <li>
-                        <a href="{{ route('wishlist.index') }}">
-                            <span class="badge wishlist_count">{{ $wishlistQuantity }}</span>
-                            <svg width="24" height="24" fill="#333">
-                                <use xlink:href="#heart"></use>
-                            </svg>
-                            <span>{{ __('main.featured') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('cart.index') }}">
-                            <span class="badge cart_count">{{ $cartQuantity }}</span>
-                            <svg width="24" height="24" fill="#333">
-                                <use xlink:href="#cart"></use>
-                            </svg>
-                            <span>{{ __('main.cart') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        @guest
-                        <a href="{{ route('login') }}">
-                            <svg width="24" height="24" fill="#333">
-                                <use xlink:href="#user"></use>
-                            </svg>
-                            <span>{{ __('main.login') }}</span>
-                        </a>
-                        @else
-                        <a href="{{ route('profile.show') }}">
-                            <svg width="24" height="24" fill="#333">
-                                <use xlink:href="#user"></use>
-                            </svg>
-                            <span>{{ __('main.profile') }}</span>
-                        </a>
-                        @endguest
-                    </li>
-                </ul>
-            </div>
-            @if ($menuCategories)
-            <ul class="header-d-bottom__list">
-                @foreach ($menuCategories as $item)
-                <li>
-                    <a href="{{ $item->getTranslatedAttribute('url') }}">{{ $item->getTranslatedAttribute('title') }}</a>
-                </li>
-                @endforeach
-            </ul>
-            @endif
-
-        </div>
-
-        <div class="catalog-menu-d">
-            <div class="container">
-                <div class="row catalog-menu-d__wrap">
-                    <div class="col-lg-20">
-                        <ul class="catalog-menu-d__list">
-                            @foreach ($menuCatalog as $key => $category)
-                                <li>
-                                    <a href="{{ $category->url }}" class="radius-6 parent-category @if($key == 0) current @endif" data-category-id="{{ $category->id }}">
-                                        <span class="category-svg-icon">
-                                            {!! $category->svg_icon_img !!}
-                                        </span>
-                                        {{-- <img src="{{ $category->micro_icon_img }}" alt="{{ $category->getTranslatedAttribute('name') }}"> --}}
-                                        {{ $category->getTranslatedAttribute('name') }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="col-lg-80">
-                        @foreach ($menuCatalog as $key => $category)
-                            <div class="catalog-menu-d__content-container @if($key == 0) active @endif"  data-category-id="{{ $category->id }}">
-                                <div class="catalog-menu-d__content">
-                                    @if (!$category->children->isEmpty())
-                                        <div class="catalog-menu-d-nav__wrap">
-                                            @foreach ($category->children as $child)
-                                                <div class="catalog-menu-d-nav">
-                                                    <a href="{{ $child->url }}">{{ $child->getTranslatedAttribute('name') }}</a>
-                                                    @if (!$category->children->isEmpty())
-                                                        <ul class="catalog-menu-d-nav__list">
-                                                            @foreach ($child->children as $subchild)
-                                                            <li>
-                                                                <a href="{{ $subchild->url }}">{{ $subchild->getTranslatedAttribute('name') }}</a>
-                                                            </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="header-m d-lg-none">
-    <div class="header-m-top">
-        <div class="container">
-            <div class="header-m-top__wrap">
-                <div class="logo">
-                    <a href="{{ route('home') }}">
-                        <img src="{{ $logo }}" alt="{{ $siteTitle }}">
-                    </a>
-                </div>
-                <div class="contacts">
-                    <a href="tel:{{ Helper::phone($phone) }}" class="phone-link">{{ $phone }}</a>
-                    <div class="dropdown dropdown-lang">
-                        <a href="javascript:;" class="dropdown-toggle text-gray" data-toggle="dropdown">
-                            <span class="text-uppercase">{{ $switcher->getActive()->key }}</span>
-                            <svg width="14" height="14" fill="#666">
-                                <use xlink:href="#arrow-down"></use>
-                            </svg>
-                        </a>
-                        <div class="dropdown-menu right">
-                            @foreach ($switcher->getValues() as $item)
-                            <a href="{{ $item->url }}" class="dropdown-item text-uppercase">{{ $item->key }}</a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="header-m-bottom">
-        <div class="container">
-            <div class="header-m-bottom__wrap">
-                <a href="#" class="btn-icon radius-4" data-toggle-menu="catalog-menu-m">
-                    <svg width="22" height="22" fill="#fff">
-                        <use xlink:href="#list"></use>
-                    </svg>
-                </a>
-                <form class="search-field radius-4 ajax-search-form ajax-search-container" action="{{ route('search') }}">
-                    <div class="input-group">
-                        <input type="text" class="input-field-search form-control ajax-search-input" name="q" placeholder="{{ __('main.i_want_to_buy') }} …">
-                        <span class="input-group-append">
-                            <button type="submit" class="btn btn-primary radius-right-4">
-                                <svg width="22" height="22" fill="#fff">
-                                    <use xlink:href="#search"></use>
-                                </svg>
-                            </button>
-                        </span>
-                    </div>
-                    <div class="ajax-search-results">
-                        <div class="ajax-search-results-content py-4">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4 border-bottom">
-                                        <div class="products-list-group list-group"></div>
-                                    </div>
-                                    <div class="col-lg-4 border-bottom">
-                                        <div class="categories-list-group list-group"></div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="brands-list-group list-group"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="catalog-menu-m" data-target-menu="catalog-menu-m">
-    <div class="catalog-menu-m__header">
-        <button type="button" data-toggle="menu-close">
-            <span>&times;</span>
-        </button>
-        <div class="logo">
-            <a href="{{ route('home') }}">
-                <img src="{{ $logo }}" alt="{{ $siteTitle }}" class="img-fluid">
+<div class="header">
+    <div class="container">
+        <div class="header__in">
+            <a href="index.html" class="header__logo">
+                <img src="assets/img/logo-automainz-blue.svg" alt="" />
             </a>
+            <ul class="header__nav">
+                <li><a href="catalog.html">Shop</a></li>
+                <li><a href="sell-trade.html">Sell/Trade</a></li>
+                <li><a href="financing-overview.html">Finance</a></li>
+            </ul>
+            <div class="header__controls">
+                <div class="location">
+                    <div class="location__btn">
+                        <i class="bx bx-map"></i>
+                        <span>Tashkent</span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <div class="location__box">
+                        <div class="location__in">
+                            <h3 class="location__title">Automainz Tashkent</h3>
+                            <a href="#" class="location__show">
+                                <i class="bx bxs-map"></i>
+                                <span>Show on map</span>
+                            </a>
+                            <p class="location__text">
+                                14442 Northampton Dr Granger, Indiana(IN), 46530
+                            </p>
+                            <a href="tel:9133846697" class="location__number"
+                                >(913) 384–6697</a
+                            >
+                            <a href="#" class="btn btn--outlined btn--block"
+                                >View cars at this store</a
+                            >
+                            <div class="location__search">
+                                <div class="input__box input__box--100">
+                                    <input
+                                        type="text"
+                                        class="input"
+                                        placeholder="Enter ZIP or State"
+                                    />
+                                    <button type="submit" class="input__btn">
+                                        <i class="bx bx-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header__fav">
+                    <i class="bx bx-heart"></i>
+                    <!-- filled heard -->
+                    <!-- <i class="bx bxs-heart"></i> -->
+                </div>
+                <div class="header-acc">
+                    <div class="header-acc__btn">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <!-- if not authenticated -->
+                    <div class="select-box">
+                        <div class="select-box__in">
+                            <a href="login.html" class="select-box__link">
+                                <span>Sign in</span>
+                            </a>
+                            <a href="register.html" class="select-box__link">
+                                <span>Register</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- if authenticated -->
+                    <!-- <div class="select-box">
+                        <div class="select-box__in">
+                            <a href="profile.html" class="select-box__link">
+                                <svg>
+                                    <use xlink:href="#icon-home"></use>
+                                </svg>
+                                <span>My Automainz</span>
+                            </a>
+                            <a href="profile-favorites.html" class="select-box__link">
+                                <svg>
+                                    <use xlink:href="#icon-heart"></use>
+                                </svg>
+                                <span>My Favorites</span>
+                            </a>
+                            <a href="profile-searchs.html" class="select-box__link">
+                                <svg>
+                                    <use xlink:href="#icon-loop"></use>
+                                </svg>
+                                <span>My Saved Cars</span>
+                            </a>
+                            <hr />
+                            <a href="#" class="select-box__link">
+                                <span>My Orders</span>
+                            </a>
+                            <a href="settings.html" class="select-box__link">
+                                <span>Profile Settings</span>
+                            </a>
+                            <a href="#" class="select-box__link" style="color: #e95050">
+                                <span>Sign Out</span>
+                            </a>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="lang">
+                    <div class="lang__btn">
+                        <img src="assets/img/icons/flag-gb.svg" alt="" />
+                        <span>En</span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <div class="select-box">
+                        <div class="select-box__in">
+                            <a href="#" class="select-box__link">
+                                <img src="assets/img/icons/flag-gb.svg" alt="" />
+                                <span>EN</span>
+                            </a>
+                            <a href="#" class="select-box__link">
+                                <img src="assets/img/icons/flag-es.svg" alt="" />
+                                <span>ES</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="catalog-menu-m__content">
-        <div class="catalog-menu-m__body">
-            <ul class="catalog-menu-m__list">
-                @foreach ($menuCatalog as $category)
-                    <li>
-                        <a href="{{ $category->url }}">
-                            <span class="category-svg-icon">
-                                {!! $category->svg_icon_img !!}
-                            </span>
-                            <span>{{ $category->getTranslatedAttribute('name') }}</span>
-                            @if (!$category->children->isEmpty())
-                                <span class="show-subcategories-m" data-category-id="{{ $category->id }}">
-                                    <svg width="16" height="16" fill="#999">
-                                        <use xlink:href="#arrow"></use>
-                                    </svg>
-                                </span>
-                            @endif
-                        </a>
-                    </li>
-                @endforeach
+        <div class="header__search">
+            <form>
+                <div class="input__box input__box--100">
+                    <input
+                        type="text"
+                        class="input"
+                        placeholder="Search by Model or Keyword"
+                        required
+                    />
+                    <button type="submit" class="input__btn">
+                        <i class="bx bx-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="header__bottom">
+            <ul class="header__nav">
+                <li><a href="catalog.html">Shop</a></li>
+                <li><a href="sell-trade.html">Sell/Trade</a></li>
+                <li><a href="financing-overview.html">Finance</a></li>
             </ul>
         </div>
     </div>
 </div>
-
-@foreach ($menuCatalog as $category)
-    @if (!$category->children->isEmpty())
-        <div class="subcategories-m" data-category-id="{{ $category->id }}">
-            <div class="catalog-menu-m__content">
-                <div class="catalog-menu-m__body">
-                    <ul class="catalog-menu-m__list">
-                        <li>
-                            <a href="javascript:;" class="close-subcategories-m" data-category-id="{{ $category->id }}">
-                                <strong>
-                                    &larr; {{ $category->getTranslatedAttribute('name') }}
-                                </strong>
-                            </a>
-                        </li>
-                        @foreach ($category->children as $subcategory)
-                            <li>
-                                <a href="{{ $subcategory->url }}" class="">
-                                    <span>{{ $subcategory->getTranslatedAttribute('name') }}</span>
-                                    @if (!$subcategory->children->isEmpty())
-                                        <span class="show-subcategories-m" data-category-id="{{ $subcategory->id }}">
-                                            <svg width="16" height="16" fill="#999">
-                                                <use xlink:href="#arrow"></use>
-                                            </svg>
-                                        </span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-        @foreach ($category->children as $subcategory)
-            @if (!$subcategory->children->isEmpty())
-                <div class="subcategories-m" data-category-id="{{ $subcategory->id }}">
-                    <div class="catalog-menu-m__content">
-                        <div class="catalog-menu-m__body">
-                            <ul class="catalog-menu-m__list">
-                                <li>
-                                    <a href="javascript:;" class="close-subcategories-m" data-category-id="{{ $subcategory->id }}">
-                                        <strong>
-                                            &larr; {{ $subcategory->getTranslatedAttribute('name') }}
-                                        </strong>
-                                    </a>
-                                </li>
-                                @foreach ($subcategory->children as $subsubcategory)
-                                    <li>
-                                        <a href="{{ $subsubcategory->url }}" class="">
-                                            <span>{{ $subsubcategory->getTranslatedAttribute('name') }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
-    @endif
-@endforeach
