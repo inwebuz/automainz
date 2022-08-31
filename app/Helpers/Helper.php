@@ -136,79 +136,6 @@ class Helper
         return $menu;
     }
 
-    public static function categories($type = 'parents', $limit = 0, $parentIDs = [], $allIDs = [])
-    {
-        $showIn = false;
-        if ($type == 'menu') {
-            $showIn = [Category::SHOW_IN_MENU, Category::SHOW_IN_EVERYWHERE];
-        }
-        if ($type == 'home') {
-            $showIn = [Category::SHOW_IN_HOME, Category::SHOW_IN_EVERYWHERE];
-        }
-        $locale = app()->getLocale();
-        $query = Category::active()
-            ->withTranslation($locale)
-            // ->where('order', '>', 0)
-            ->orderBy('order');
-        if ($parentIDs) {
-            $query->whereIn('id', $parentIDs);
-        }
-        if ($allIDs) {
-            $query->whereIn('id', $allIDs);
-        }
-        if ($showIn) {
-            $query->whereIn('show_in', $showIn);
-        }
-        if ($type == 'menu') {
-            $query
-                ->whereNull('parent_id')
-                ->with(['children' => function ($q1) use ($locale, $showIn, $allIDs) {
-                    $q1
-                        ->active()
-                        ->withTranslation($locale)
-                        ->whereIn('show_in', $showIn)
-                        ->orderBy('order')
-                        ->with(['children' => function ($q2) use ($locale, $showIn, $allIDs) {
-                            $q2
-                                ->active()
-                                ->withTranslation($locale)
-                                ->orderBy('order')
-                                ->whereIn('show_in', $showIn);
-                            if ($allIDs) {
-                                $q2->whereIn('id', $allIDs);
-                            }
-                        }]);
-                    if ($allIDs) {
-                        $q1->whereIn('id', $allIDs);
-                    }
-                }]);
-        }
-        if ($type == 'parents') {
-            $query
-                ->whereNull('parent_id')
-                ->with(['children' => function ($q1) use ($locale) {
-                    $q1
-                        ->active()
-                        ->withTranslation($locale)
-                        ->orderBy('order')
-                        ->with(['children' => function ($q2) use ($locale) {
-                            $q2
-                                ->active()
-                                ->withTranslation($locale)
-                                ->orderBy('order');
-                        }]);
-                }]);
-        }
-        if ($limit > 0) {
-            $query->take($limit);
-        }
-        $query->with(['banners' => function($q1) use ($locale) {
-            $q1->withTranslation($locale);
-        }]);
-        $categories = $query->get();
-        return $categories;
-    }
-
     public static function banner($type)
     {
         $locale = app()->getLocale();
@@ -325,7 +252,7 @@ class Helper
 
         $model = null;
         $foundModel = false;
-        $hasSlugRoutes = ['page', 'publications.show', 'product'];
+        $hasSlugRoutes = ['page', 'cars.show'];
         foreach ($hasSlugRoutes as $hasSlugRoute) {
             if ($routeName == $hasSlugRoute) {
                 $routeParams = array_values($route->parameters);
@@ -1004,26 +931,6 @@ class Helper
         return (!empty($file[0]->original_name)) ? $file[0]->original_name : '';
     }
 
-    public static function getCurrentRegionID()
-    {
-        $currentRegionID = Cookie::get('region_id', '');
-        if (!$currentRegionID || !is_numeric($currentRegionID)) {
-            return 14; // Tashkent ID
-        }
-        return (int)$currentRegionID;
-    }
-
-    public static function getCurrentRegion()
-    {
-        $currentRegionID = self::getCurrentRegionID();
-        $region = Region::find($currentRegionID);
-        if (!$region) {
-            $region = Region::first();
-        }
-        $region->load('translations');
-        return $region;
-    }
-
     public static function changeEnvironmentVariable($key, $value)
     {
         $path = base_path('.env');
@@ -1066,72 +973,6 @@ class Helper
         $string = preg_replace('/[^\p{L}\p{N}_]+/u', ' ', $string);
         $string = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $string);
         return $string;
-    }
-
-    public static function partnersPrices($basePrice)
-    {
-        $prices = [];
-        $partners = Cache::remember('partners', 300, function () {
-            return Partner::active()->orderBy('order')->withTranslations()->with(['partnerInstallments' => function($q) {
-                $q->active()->orderBy('order');
-            }])->get();
-        });
-        foreach ($partners as $partner) {
-            $prices[$partner->id] = [
-                'partner' => $partner,
-                'prices' => [],
-            ];
-            foreach ($partner->partnerInstallments as $partnerInstallment) {
-                $prices[$partner->id]['prices'][] = self::partnerInstallmentCalculate($partnerInstallment, $basePrice);
-            }
-        }
-        return $prices;
-    }
-
-    public static function partnerInstallmentPricePerMonth($partnerInstallmentID, $basePrice)
-    {
-        $partnerInstallment = PartnerInstallment::findOrFail($partnerInstallmentID);
-        $partnerInstallmentPriceItem = self::partnerInstallmentCalculate($partnerInstallment, $basePrice);
-        return $partnerInstallmentPriceItem['price_per_month'];
-    }
-
-    public static function partnerInstallmentDuration($partnerInstallmentID)
-    {
-        $partnerInstallment = PartnerInstallment::findOrFail($partnerInstallmentID);
-        $duration = (int)$partnerInstallment->duration;
-        if ($duration < 1) {
-            $duration = 1;
-        }
-        return $duration;
-    }
-
-    public static function isInstallmentPaymentMethod($paymentMethodID)
-    {
-        $paymentMethods = Helper::paymentMethods();
-        $paymentMethod = $paymentMethods->where('id', $paymentMethodID)->first();
-        return ($paymentMethod && (bool)$paymentMethod->installment);
-    }
-
-    private static function partnerInstallmentCalculate($partnerInstallment, $basePrice)
-    {
-        $percent = (float)$partnerInstallment->percent;
-        if ($percent < 0) {
-            $percent = 0;
-        }
-        $duration = (int)$partnerInstallment->duration;
-        if ($duration < 1) {
-            $duration = 1;
-        }
-        $partnerInstallmentPrice = round($basePrice * (1 + $percent / 100));
-        $partnerInstallmentPricePerMonth = round($partnerInstallmentPrice / $duration);
-        return [
-            'partner_installment' => $partnerInstallment,
-            'price' => $partnerInstallmentPrice,
-            'price_formatted' => Helper::formatPrice($partnerInstallmentPrice),
-            'price_per_month' => $partnerInstallmentPricePerMonth,
-            'price_per_month_formatted' => Helper::formatPrice($partnerInstallmentPricePerMonth),
-            'duration' => $duration,
-        ];
     }
 
     public static function getDeviceName()

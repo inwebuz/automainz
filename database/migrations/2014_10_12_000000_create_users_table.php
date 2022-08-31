@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->timestamp('banned_until')->nullable();
             $table->rememberToken();
+            $table->unsignedBigInteger('referrer_id')->nullable();
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCarModificationsTable extends Migration
+class CreateFeaturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateCarModificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('car_modifications', function (Blueprint $table) {
+        Schema::create('features', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_model_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('feature_group_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->tinyInteger('source')->default(0);
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
@@ -27,6 +28,8 @@ class CreateCarModificationsTable extends Migration
             $table->text('seo_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
+            $table->bigInteger('order')->default(0);
+            $table->text('additional_info')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +41,6 @@ class CreateCarModificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_modifications');
+        Schema::dropIfExists('features');
     }
 }

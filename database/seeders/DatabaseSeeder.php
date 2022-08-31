@@ -25,47 +25,28 @@ class DatabaseSeeder extends Seeder
 
             SettingsTableSeeder::class,
 
-            UsersTableSeeder::class,
-            PagesTableSeeder::class,
-            StaticTextsTableSeeder::class,
-            RegionsTableSeeder::class,
-            WarehousesTableSeeder::class,
+            UserSeeder::class,
+            PageSeeder::class,
+            StaticTextSeeder::class,
 
-            BannersTableSeeder::class,
-            // PromotionsTableSeeder::class,
+            BannerSeeder::class,
+            PublicationSeeder::class,
 
-            // GendersTableSeeder::class,
-            CategoriesTableSeeder::class,
-            BrandsTableSeeder::class,
-            // RubricsTableSeeder::class,
+            // PaymentMethodSeeder::class,
+            // ShippingMethodSeeder::class,
 
-            AttributesTableSeeder::class,
-            AttributeValuesTableSeeder::class,
+            // ReviewSeeder::class,
 
-            ProductsTableSeeder::class,
-            PublicationsTableSeeder::class,
+            FeatureGroupSeeder::class,
+            FeatureSeeder::class,
+            SpecificationGroupSeeder::class,
+            SpecificationTypeSeeder::class,
+            SpecificationSeeder::class,
 
-            PaymentMethodSeeder::class,
-            ShippingMethodSeeder::class,
-
-            PromotionSeeder::class,
-            StoreSeeder::class,
-
-            // PricelistsTableSeeder::class,
-
-            // ArticlesTableSeeder::class,
-            // NewsTableSeeder::class,
-
-            // VacanciesTableSeeder::class,
-            // CVsTableSeeder::class,
-
-            // GalleriesTableSeeder::class,
-            // PhotosTableSeeder::class,
-
-            // ReviewsTableSeeder::class,
-            // FixedCompaniesTableSeeder::class,
-
-            // PollsTableSeeder::class,
+            MakeSeeder::class,
+            CarModelSeeder::class,
+            CarModificationSeeder::class,
+            CarSeeder::class,
 
         ]);
     }

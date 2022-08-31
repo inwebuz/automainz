@@ -27,14 +27,6 @@ class CreateCarModelsTable extends Migration
             $table->text('seo_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
-            $table->foreignId('body_type_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('fuel_type_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('transmission_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->text('engine')->nullable();
-            $table->text('сylinders')->nullable();
-            $table->text('horsepower')->nullable();
-            $table->text('mpg_city')->nullable();
-            $table->text('mpg_hwy')->nullable();
             $table->timestamps();
         });
     }

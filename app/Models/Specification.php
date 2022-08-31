@@ -9,7 +9,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Traits\Resizable;
 
-class CarModel extends Model
+class Specification extends Model
 {
     use Resizable;
     use Translatable;
@@ -17,6 +17,9 @@ class CarModel extends Model
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+
+    const SOURCE_ADDITIONAL = 0;
+    const SOURCE_MAIN = 1;
 
     protected $guarded = [];
 
@@ -26,29 +29,39 @@ class CarModel extends Model
 
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
 
+    public function specifationType()
+    {
+        return $this->belongsTo(SpecificationType::class);
+    }
+
     public function cars()
     {
-        return $this->hasMany(Car::class);
+        return $this->belongsToMany(Car::class);
+    }
+
+    public function carModels()
+    {
+        return $this->belongsToMany(CarModel::class, 'car_model_specification');
     }
 
     public function carModifications()
     {
-        return $this->hasMany(CarModification::class);
+        return $this->belongsToMany(CarModification::class, 'car_modification_specification');
     }
 
-    public function make()
+    public function scopeActive($query)
     {
-        return $this->belongsTo(Make::class);
+        return $query->where('status', static::STATUS_ACTIVE);
     }
 
-    public function features()
+    public function scopeMain($query)
     {
-        return $this->belongsToMany(Feature::class, 'car_model_feature');
+        return $query->where('source', static::SOURCE_MAIN);
     }
 
-    public function specifications()
+    public function scopeAdditional($query)
     {
-        return $this->belongsToMany(Specification::class, 'car_model_specification');
+        return $query->where('source', static::SOURCE_ADDITIONAL);
     }
 
     public function getBgAttribute()
@@ -116,5 +129,20 @@ class CarModel extends Model
             }
         }
         return $group;
+    }
+
+    public function getURLAttribute()
+    {
+        return $this->getURL();
+    }
+
+    public function getURL($lang = '')
+    {
+        if (!$lang) {
+            $lang = app()->getLocale();
+        }
+        $slug = $this->getTranslatedAttribute('slug', $lang) ?: $this->slug;
+        $url = 'brand/' . $this->id . '-' . $slug;
+        return LaravelLocalization::localizeURL($url, $lang);
     }
 }

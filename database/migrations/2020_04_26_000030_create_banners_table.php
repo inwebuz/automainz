@@ -15,9 +15,8 @@ class CreateBannersTable extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('shop_id')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('type');
+            $table->morphs('targetable');
+            $table->string('type')->nullable();
             $table->string('name')->nullable();
             $table->text('description_top')->nullable();
             $table->text('description')->nullable();

@@ -28,6 +28,13 @@ class CreateAddressesTable extends Migration
             $table->string('type')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->bigInteger('order')->default(0);
+            $table->text('latitude')->nullable();
+            $table->text('longitude')->nullable();
+            $table->text('location_accuracy')->nullable();
+            $table->text('landmark')->nullable();
+            $table->text('name')->nullable();
+            $table->text('phone_number')->nullable();
+            $table->tinyInteger('is_default')->default(0);
             $table->timestamps();
         });
     }

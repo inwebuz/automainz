@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Feature;
+use App\Models\SpecificationType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class FeatureSeeder extends Seeder
+class SpecificationTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +15,12 @@ class FeatureSeeder extends Seeder
      */
     public function run()
     {
-        $values = ['ABS Brakes', 'Air Conditioning', 'Cruise Control', 'Overhead Airbags', 'Panoramic Sunroof', 'Parking Sensors', 'Power Mirrors', 'Side Airbags'];
+        $values = ['Body', 'Fuel Type', 'Transmission', 'Engine', 'Cylinders', 'Horsepower', 'Drive Train', 'MPG', 'Exterior Color', 'Interior Color'];
         foreach ($values as $value) {
-            Feature::create([
+            SpecificationType::create([
                 'name' => $value,
                 'slug' => Str::slug($value),
                 'status' => 1,
-                'source' => 1,
             ]);
         }
     }

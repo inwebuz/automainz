@@ -17,6 +17,8 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->morphs('reviewable');
             $table->string('name');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->text('body');
             $table->tinyInteger('rating')->default(config('cms.rating'));
             $table->tinyInteger('status')->default(0);

@@ -39,8 +39,8 @@ class GenerateModelSearchText
             return;
         }
 
-        if ($baseClassName == 'Product') {
-            $searchBody = $this->productSearchBody($model);
+        if ($baseClassName == 'Car') {
+            $searchBody = $this->carSearchBody($model);
         } else {
             $searchBody = '';
             if (!empty($model->name)) {
@@ -58,12 +58,6 @@ class GenerateModelSearchText
             if (!empty($model->last_name)) {
                 $searchBody .= $model->last_name . PHP_EOL;
             }
-            if (!empty($model->middle_name)) {
-                $searchBody .= $model->middle_name . PHP_EOL;
-            }
-            if (!empty($model->specifications)) {
-                $searchBody .= strip_tags($model->specifications) . PHP_EOL;
-            }
 
             // localization
             $defaultLocale = config('voyager.multilingual.default');
@@ -75,7 +69,6 @@ class GenerateModelSearchText
                     // $texts[] = $model->getTranslatedAttribute('body', $key);
                     $texts[] = $model->getTranslatedAttribute('first_name', $key);
                     $texts[] = $model->getTranslatedAttribute('last_name', $key);
-                    $texts[] = $model->getTranslatedAttribute('middle_name', $key);
                     foreach ($texts as $text) {
                         if ($text) {
                             $searchBody .= $text . PHP_EOL;
@@ -91,23 +84,43 @@ class GenerateModelSearchText
         $model->searches()->save($search);
     }
 
-    private function productSearchBody($model)
+    private function carSearchBody($model)
     {
         $searchBody = '';
         if (!$model->isActive()) {
             return $searchBody;
         }
-        $brand = $model->brand;
-        if ($brand) {
-            $brand->load('translations');
+        $make = $model->make;
+        $carModel = $model->carModel;
+        $carModification = $model->carModification;
+        $features = $model->features;
+        $specifications = $model->specifications;
+        if ($make) {
+            $make->load('translations');
         }
-        $categories = $model->categories()->withTranslations()->get();
+        if ($carModel) {
+            $carModel->load('translations');
+        }
+        if ($carModification) {
+            $carModification->load('translations');
+        }
+        if ($features) {
+            $features->load('translations');
+        }
+        if ($specifications) {
+            $specifications->load('translations');
+        }
+        // $categories = $model->categories()->withTranslations()->get();
         $searchBody .= $model->name . PHP_EOL;
-        $searchBody .= $model->sku . PHP_EOL;
         $searchBody .= $model->description . PHP_EOL;
-        $searchBody .= ($brand->name ?? '') . PHP_EOL;
-        foreach ($categories as $category) {
-            $searchBody .= $category->name . PHP_EOL;
+        $searchBody .= ($make->name ?? '') . PHP_EOL;
+        $searchBody .= ($carModel->name ?? '') . PHP_EOL;
+        $searchBody .= ($carModification->name ?? '') . PHP_EOL;
+        foreach ($features as $feature) {
+            $searchBody .= $feature->name . PHP_EOL;
+        }
+        foreach ($specifications as $specification) {
+            $searchBody .= $specification->name . PHP_EOL;
         }
 
         $defaultLocale = config('voyager.multilingual.default');
@@ -117,12 +130,20 @@ class GenerateModelSearchText
                 $searchBody .= $model->getTranslatedAttribute('name', $key) . PHP_EOL;
                 $searchBody .= $model->getTranslatedAttribute('description', $key) . PHP_EOL;
 
-                if ($brand) {
-                    $searchBody .= $brand->getTranslatedAttribute('name', $key) . PHP_EOL;
+                if ($make) {
+                    $searchBody .= $make->getTranslatedAttribute('name', $key) . PHP_EOL;
                 }
-
-                foreach ($categories as $category) {
-                    $searchBody .= $category->getTranslatedAttribute('name') . PHP_EOL;
+                if ($carModel) {
+                    $searchBody .= $carModel->getTranslatedAttribute('name', $key) . PHP_EOL;
+                }
+                if ($carModification) {
+                    $searchBody .= $carModification->getTranslatedAttribute('name', $key) . PHP_EOL;
+                }
+                foreach ($features as $feature) {
+                    $searchBody .= $feature->getTranslatedAttribute('name') . PHP_EOL;
+                }
+                foreach ($specifications as $specification) {
+                    $searchBody .= $specification->getTranslatedAttribute('name') . PHP_EOL;
                 }
             }
         }

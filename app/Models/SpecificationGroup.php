@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Traits\Resizable;
 
-class FeatureGroup extends Model
+class SpecificationGroup extends Model
 {
     use Resizable;
     use Translatable;
@@ -24,8 +24,8 @@ class FeatureGroup extends Model
 
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
 
-    public function features()
+    public function specificationTypes()
     {
-        return $this->hasMany(Feature::class);
+        return $this->hasMany(SpecificationType::class);
     }
 }
