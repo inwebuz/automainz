@@ -18,13 +18,19 @@ class MenusTableSeeder extends Seeder
             'name' => 'admin',
         ]);
         Menu::firstOrCreate([
-            'name' => 'footer-1',
+            'name' => 'Shop',
         ]);
         Menu::firstOrCreate([
-            'name' => 'footer-2',
+            'name' => 'Sell/Trade',
         ]);
         Menu::firstOrCreate([
-            'name' => 'footer-3',
+            'name' => 'Finance',
+        ]);
+        Menu::firstOrCreate([
+            'name' => 'About',
+        ]);
+        Menu::firstOrCreate([
+            'name' => 'Careers',
         ]);
     }
 }

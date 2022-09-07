@@ -25,6 +25,10 @@ use App\Http\Controllers\Voyager\VoyagerRoleController;
 use App\Http\Controllers\Voyager\VoyagerSubscriberController;
 use App\ImportPartner;
 use App\ImportPartnerMargin;
+use App\Models\Car;
+use App\Models\CarModel;
+use App\Models\Feature;
+use App\Models\Make;
 use App\News;
 use App\Models\Notification;
 use App\Models\Order;
@@ -49,6 +53,8 @@ use App\Serrubric;
 use App\Service;
 use App\Models\ShippingMethod;
 use App\Models\Shop;
+use App\Models\Specification;
+use App\Models\SpecificationType;
 use App\Specialist;
 use App\Specialization;
 use App\Models\StaticText;
@@ -610,6 +616,60 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.shipping_method.plural'),
                 'icon'                  => 'voyager-truck',
                 'model_name'            => ShippingMethod::class,
+                // 'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'features',
+                'name'                  => 'features',
+                'display_name_singular' => __('seeders.data_types.feature.singular'),
+                'display_name_plural'   => __('seeders.data_types.feature.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => Feature::class,
+                'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'specification_types',
+                'name'                  => 'specification_types',
+                'display_name_singular' => __('seeders.data_types.specification_type.singular'),
+                'display_name_plural'   => __('seeders.data_types.specification_type.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => SpecificationType::class,
+                // 'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'specifications',
+                'name'                  => 'specifications',
+                'display_name_singular' => __('seeders.data_types.specification.singular'),
+                'display_name_plural'   => __('seeders.data_types.specification.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => Specification::class,
+                // 'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'makes',
+                'name'                  => 'makes',
+                'display_name_singular' => __('seeders.data_types.make.singular'),
+                'display_name_plural'   => __('seeders.data_types.make.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => Make::class,
+                // 'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'car_models',
+                'name'                  => 'car_models',
+                'display_name_singular' => __('seeders.data_types.car_model.singular'),
+                'display_name_plural'   => __('seeders.data_types.car_model.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => CarModel::class,
+                // 'server_side'           => 1,
+            ],
+            [
+                'slug'                  => 'cars',
+                'name'                  => 'cars',
+                'display_name_singular' => __('seeders.data_types.car.singular'),
+                'display_name_plural'   => __('seeders.data_types.car.plural'),
+                'icon'                  => 'voyager-categories',
+                'model_name'            => Car::class,
                 // 'server_side'           => 1,
             ],
         ];

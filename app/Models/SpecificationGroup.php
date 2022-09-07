@@ -19,7 +19,7 @@ class SpecificationGroup extends Model
     protected $guarded = [];
 
     public static $imgSizes = [
-        'small' => [160, 160],
+        'micro' => [30, 30],
     ];
 
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];

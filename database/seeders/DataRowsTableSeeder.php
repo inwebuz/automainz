@@ -11,6 +11,10 @@ use App\Company;
 use App\Gallery;
 use App\Models\Gender;
 use App\ImportPartner;
+use App\Models\Car;
+use App\Models\CarModel;
+use App\Models\Feature;
+use App\Models\Make;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Page;
@@ -29,6 +33,7 @@ use App\Serrubric;
 use App\Service;
 use App\Models\ShippingMethod;
 use App\Models\Shop;
+use App\Models\SpecificationType;
 use App\Models\Sticker;
 use App\Models\Store;
 use App\Models\User;
@@ -3127,6 +3132,271 @@ class DataRowsTableSeeder extends StandardSeeder
                 'data' => [
                     'display_name' => __('seeders.data_rows.longitude'),
                 ],
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function makesRows()
+    {
+        $dataType = DataType::where('slug', 'makes')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (Make::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'hiddenRow',
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function carModelsRows()
+    {
+        $dataType = DataType::where('slug', 'car_models')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (CarModel::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'hiddenRow',
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function carsRows()
+    {
+
+        $dataType = DataType::where('slug', 'cars')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (Car::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'car_answer_belongsto_car_model_relationship' => [
+                'method' => 'relationshipRow',
+                'data' => [
+                    'display_name' => __('seeders.data_types.car_model.singular'),
+                    'details' => $this->relationship(CarModel::class, 'car_models', 'belongsTo', 'car_model_id', 'id', 'name'),
+                    'order' => 10,
+                ],
+            ],
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'display_name' => __('seeders.data_rows.gallery'),
+                    'type' => 'multiple_images',
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function featuresRows()
+    {
+
+        $dataType = DataType::where('slug', 'features')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (Feature::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'hiddenRow',
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function specificationTypesRows()
+    {
+
+        $dataType = DataType::where('slug', 'specification_types')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (Make::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'hiddenRow',
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
+            ],
+        ];
+
+        $this->saveRows($dataType, $rows);
+    }
+
+    protected function specificationsRows()
+    {
+
+        $dataType = DataType::where('slug', 'specifications')->firstOrFail();
+
+        $this->saveMainRows($dataType);
+        $this->saveStandardRows($dataType, [], ['image']);
+        // $this->saveSeoRows($dataType);
+
+        $imageThumbs = [];
+        foreach (Make::$imgSizes as $key => $value) {
+            $imageThumbs[] = [
+                'name' => $key,
+                'width' => $value[0],
+                'height' => $value[1],
+            ];
+        }
+
+        // specific rows
+        $rows = [
+            'specification_answer_belongsto_specification_type_relationship' => [
+                'method' => 'relationshipRow',
+                'data' => [
+                    'display_name' => __('seeders.data_types.car_model.singular'),
+                    'details' => $this->relationship(SpecificationType::class, 'specification_types', 'belongsTo', 'specification_type_id', 'id', 'name'),
+                    'order' => 10,
+                ],
+            ],
+            'image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000, $imageThumbs),
+                ],
+            ],
+            'background' => [
+                'method' => 'hiddenRow',
+            ],
+            'images' => [
+                'method' => 'hiddenRow',
+            ],
+            'order' => [
+                // 'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
             ],
         ];
 

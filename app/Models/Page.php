@@ -133,8 +133,8 @@ class Page extends Model
         } elseif(Route::has($this->slug . '.index')) {
             $url = route($this->slug . '.index');
         } else {
-            $url = 'page/' . $this->id . '-' . $slug;
-            // $url = $slug;
+            // $url = 'page/' . $this->id . '-' . $slug;
+            $url = $slug;
         }
         return LaravelLocalization::localizeURL($url, $lang);
     }
@@ -247,9 +247,9 @@ class Page extends Model
     {
         return [
             self::SHOW_IN_NONE => 'Не показывать',
-            self::SHOW_IN_EVERYWHERE => 'Везде',
+            // self::SHOW_IN_EVERYWHERE => 'Везде',
             self::SHOW_IN_HEADER => 'В шапке',
-            self::SHOW_IN_FOOTER => 'В футере',
+            // self::SHOW_IN_FOOTER => 'В футере',
         ];
     }
 

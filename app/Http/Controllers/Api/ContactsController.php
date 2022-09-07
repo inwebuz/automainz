@@ -13,9 +13,9 @@ class ContactsController extends ApiController
     {
         $data = [
             'site' => config('app.url'),
-            'site_title' => setting('site.title'),
-            'phone' => setting('contact.phone'),
-            'email' => setting('contact.email'),
+            'site_title' => Helper::setting('site.title'),
+            'phone' => Helper::setting('contact.phone'),
+            'email' => Helper::setting('contact.email'),
             'address' => Helper::staticText('contact_address', 300)->getTranslatedAttribute('description'),
         ];
         return $data;

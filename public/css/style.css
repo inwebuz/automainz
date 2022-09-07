@@ -863,6 +863,7 @@ ul {
     }
 }
 
+.header__logo svg,
 .header__logo img {
     max-width: 100%;
     display: block;
@@ -1253,6 +1254,7 @@ ul {
     }
 }
 
+.footer__logo svg,
 .footer__logo img {
     max-width: 100%;
     display: block;
@@ -4904,4 +4906,8 @@ input[type=range]::-moz-range-thumb {
 
 .menu__item span {
     display: none;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
 }

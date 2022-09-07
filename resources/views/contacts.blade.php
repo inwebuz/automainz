@@ -5,9 +5,9 @@
 @section('meta_keywords', $page->getTranslatedAttribute('meta_keywords'))
 
 @php
-    $phone = setting('contact.phone');
-    $phone2 = setting('contact.phone2');
-    $email = setting('contact.email');
+    $phone = Helper::setting('contact.phone');
+    $phone2 = Helper::setting('contact.phone2');
+    $email = Helper::setting('contact.email');
 @endphp
 
 @section('content')
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="contact-map my-4">
-                    {!! setting('contact.map') !!}
+                    {!! Helper::setting('contact.map') !!}
                 </div>
 
             </div>

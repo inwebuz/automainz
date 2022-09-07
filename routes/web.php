@@ -140,7 +140,9 @@ Route::group(
 
     // home page
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/home/latest-products/{category}', [HomeController::class, 'latestProducts'])->name('home.latest-products');
+
+    // shop
+    Route::get('shop', [HomeController::class, 'index'])->name('shop');
 
     // zoodpay create transaction
     Route::post('zoodpay/transaction/store', [ZoodpayController::class, 'transactionStore'])->name('zoodpay.transaction.store');
@@ -156,45 +158,13 @@ Route::group(
     // contacts
     Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
     Route::post('contacts/send', [ContactController::class, 'send'])->name('contacts.send');
-    Route::post('contacts/send/installment-payment', [ContactController::class, 'sendInstallmentPayment'])->name('contacts.send.installment-payment');
 
     // subscriber
     Route::post('subscriber/subscribe', [SubscriberController::class, 'subscribe'])->name('subscriber.subscribe');
     Route::get('subscriber/unsubscribe', [SubscriberController::class, 'unsubscribe'])->name('subscriber.unsubscribe');
 
-    // brand view
-    Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
-    Route::get('brand/{brand}-{slug}', [BrandController::class, 'show'])->name('brands.show');
-
-    // product view
-    Route::get('product/{product}-{slug}', [ProductController::class, 'view'])->name('product');
-    Route::get('product/{product}-{slug}/print', [ProductController::class, 'print'])->name('product.print');
-    Route::get('sale', [ProductController::class, 'sale'])->name('sale');
-    Route::get('promotions', [ProductController::class, 'promotions'])->name('promotions');
-    Route::get('featured', [ProductController::class, 'featured'])->name('featured');
-    Route::get('new-products', [ProductController::class, 'newProducts'])->name('new-products');
-    Route::get('bestsellers', [ProductController::class, 'bestsellers'])->name('bestsellers');
-    Route::get('latest-viewed', [ProductController::class, 'latestViewed'])->name('latest-viewed');
-    Route::get('promotional-products', [ProductController::class, 'promotionalProducts'])->name('promotional-products');
-
-    // products routes
-    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('products', [ProductController::class, 'store'])->name('products.store');
-    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('products/{product}/', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('products/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');
-
-    // product attributes
-    Route::get('products/{product}/attributes/edit', [ProductController::class, 'attributesEdit'])->name('products.attributes.edit');
-    Route::post('products/{product}/attributes', [ProductController::class, 'attributesUpdate'])->name('products.attributes.update');
-
     // reviews
     Route::post('reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
-
-    // polls
-    Route::get('polls', [PollController::class, 'index'])->name('polls');
-    Route::get('polls/{poll}', [PollController::class, 'show'])->name('polls.show');
-    Route::post('polls/{poll}/vote', [PollController::class, 'vote'])->name('polls.vote');
 
     // publications pages
     Route::get('news', [PublicationController::class, 'news'])->name('news');
@@ -218,14 +188,14 @@ Route::group(
     // });
 
     // cart routes
-    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-    Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-    Route::post('cart', [CartController::class, 'add'])->name('cart.add');
-    Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
-    Route::post('cart/conditions', [CartController::class, 'addCondition'])->name('cart.addCondition');
-    Route::delete('cart/conditions', [CartController::class, 'clearCartConditions'])->name('cart.clearCartConditions');
-    Route::get('cart/debug', [CartController::class, 'debug'])->name('cart.debug');
+    // Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    // Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    // Route::post('cart', [CartController::class, 'add'])->name('cart.add');
+    // Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+    // Route::delete('cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    // Route::post('cart/conditions', [CartController::class, 'addCondition'])->name('cart.addCondition');
+    // Route::delete('cart/conditions', [CartController::class, 'clearCartConditions'])->name('cart.clearCartConditions');
+    // Route::get('cart/debug', [CartController::class, 'debug'])->name('cart.debug');
 
     // wishlist routes
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
@@ -233,61 +203,43 @@ Route::group(
     Route::delete('wishlist/{id}', [WishlistController::class, 'delete'])->name('wishlist.delete');
 
     // compare routes
-    Route::get('compare', [CompareController::class, 'index'])->name('compare.index');
-    Route::post('compare', [CompareController::class, 'add'])->name('compare.add');
-    Route::delete('compare/{id}', [CompareController::class, 'delete'])->name('compare.delete');
+    // Route::get('compare', [CompareController::class, 'index'])->name('compare.index');
+    // Route::post('compare', [CompareController::class, 'add'])->name('compare.add');
+    // Route::delete('compare/{id}', [CompareController::class, 'delete'])->name('compare.delete');
 
     // order routes
-    Route::get('order/{order}-{check}', [OrderController::class, 'show'])->name('order.show');
-    Route::get('order/{order}-{check}/print', [OrderController::class, 'print'])->name('order.print');
-    Route::post('order', [OrderController::class, 'add'])->name('order.add');
+    // Route::get('order/{order}-{check}', [OrderController::class, 'show'])->name('order.show');
+    // Route::get('order/{order}-{check}/print', [OrderController::class, 'print'])->name('order.print');
+    // Route::post('order', [OrderController::class, 'add'])->name('order.add');
 
     // profile routes
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/password', [ProfileController::class, 'password'])->name('profile.password');
-    Route::get('profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
-    Route::get('profile/products', [ProfileController::class, 'products'])->name('profile.products');
     Route::get('profile/notifications', [ProfileController::class, 'notifications'])->name('profile.notifications.index');
     Route::get('profile/notifications/{notification}', [ProfileController::class, 'notificationsShow'])->name('profile.notifications.show');
-    Route::get('profile/shop/edit', [ProfileController::class, 'shopEdit'])->name('profile.shop.edit');
-    Route::put('profile/shop', [ProfileController::class, 'shopUpdate'])->name('profile.shop.update');
-    Route::get('profile/request-seller-status', [ProfileController::class, 'requestSellerStatus'])->name('profile.request-seller-status');
-
-    Route::group(['middleware' => ['auth']], function() {
-        Route::get('addresses/{address}/status/{status}', [AddressController::class, 'statusUpdate'])->name('addresses.status.update');
-        Route::resource('addresses', AddressController::class);
-    });
-
-    // shop routes
-    Route::get('shops', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('shop/{shop}', [ShopController::class, 'show'])->name('shop.show');
 
     // auth routes
     Auth::routes(['verify' => true]);
     // Auth::routes(['verify' => false]);
 
     // custom auth routes (phone registration)
-    Route::get('register/verify', [RegisterController::class, 'showRegistrationVerifyForm'])->name('register.verify');
-    Route::post('register/verify', [RegisterController::class, 'registerVerify'])->middleware('throttle:10,60');
+    // Route::get('register/verify', [RegisterController::class, 'showRegistrationVerifyForm'])->name('register.verify');
+    // Route::post('register/verify', [RegisterController::class, 'registerVerify'])->middleware('throttle:10,60');
 
-    Route::get('password/phone', [ForgotPasswordController::class, 'showLinkRequestPhoneForm'])->name('password.phone');
-    Route::post('password/phone', [ForgotPasswordController::class, 'passwordPhone']);
-    Route::get('password/phone/verify', [ForgotPasswordController::class, 'showPasswordPhoneVerifyForm'])->name('password.phone.verify');
-    Route::post('password/phone/verify', [ForgotPasswordController::class, 'passwordPhoneVerify'])->middleware('throttle:10,60');
+    // Route::get('password/phone', [ForgotPasswordController::class, 'showLinkRequestPhoneForm'])->name('password.phone');
+    // Route::post('password/phone', [ForgotPasswordController::class, 'passwordPhone']);
+    // Route::get('password/phone/verify', [ForgotPasswordController::class, 'showPasswordPhoneVerifyForm'])->name('password.phone.verify');
+    // Route::post('password/phone/verify', [ForgotPasswordController::class, 'passwordPhoneVerify'])->middleware('throttle:10,60');
 
     // regular pages
-    Route::get('page/{page}-{slug}', [PageController::class, 'index'])->name('page');
+    // Route::get('page/{page}-{slug}', [PageController::class, 'index'])->name('page');
     Route::get('guestbook', [PageController::class, 'guestbook'])->name('guestbook');
     // Route::get('{slug}', [PageController::class, 'index'])->name('page');
     Route::get('page/{page}-{slug}/print', [PageController::class, 'print'])->name('page.print');
 
-    // category view
-    Route::get('categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('{slug}', [CategoryController::class, 'show'])->name('category');
-    // Route::get('category/{category}-{slug}', [CategoryController::class, 'show'])->name('category');
-    Route::get('{brand_slug}/{category_slug}', [CategoryController::class, 'showBrand'])->name('brand.category');
+    Route::get('{slug}', [PageController::class, 'show'])->name('page');
 });
 
 // non localized routes

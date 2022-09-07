@@ -1,7 +1,7 @@
 @php
-$phone = setting('contact.phone');
-$email = setting('contact.email');
-$siteTitle = setting('site.title')
+$phone = Helper::setting('contact.phone');
+$email = Helper::setting('contact.email');
+$siteTitle = Helper::setting('site.title')
 @endphp
 {{-- @if (auth()->check() && auth()->user()->isAdmin())
 <div class="py-3 px-3 text-light position-fixed"
@@ -15,49 +15,33 @@ $siteTitle = setting('site.title')
 <div class="header">
     <div class="container">
         <div class="header__in">
-            <a href="index.html" class="header__logo">
-                <img src="assets/img/logo-automainz-blue.svg" alt="" />
+            <a href="{{ route('home') }}" class="header__logo">
+                <img src="{{ $logo }}" alt="{{ $siteTitle }}" />
+                {{-- {!! $logo !!} --}}
             </a>
             <ul class="header__nav">
-                <li><a href="catalog.html">Shop</a></li>
-                <li><a href="sell-trade.html">Sell/Trade</a></li>
-                <li><a href="financing-overview.html">Finance</a></li>
+                @foreach ($headerMenuItems as $item)
+                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
+                @endforeach
             </ul>
             <div class="header__controls">
                 <div class="location">
                     <div class="location__btn">
                         <i class="bx bx-map"></i>
-                        <span>Tashkent</span>
+                        <span>{{ __('main.nav.contacts') }}</span>
                         <i class="bx bx-chevron-down"></i>
                     </div>
                     <div class="location__box">
                         <div class="location__in">
-                            <h3 class="location__title">Automainz Tashkent</h3>
-                            <a href="#" class="location__show">
+                            <h3 class="location__title">{{ $siteTitle }}</h3>
+                            <a href="{{ route('contacts') }}" class="location__show">
                                 <i class="bx bxs-map"></i>
-                                <span>Show on map</span>
+                                <span>{{ __('Show on map') }}</span>
                             </a>
                             <p class="location__text">
-                                14442 Northampton Dr Granger, Indiana(IN), 46530
+                                {{ $address }}
                             </p>
-                            <a href="tel:9133846697" class="location__number"
-                                >(913) 384–6697</a
-                            >
-                            <a href="#" class="btn btn--outlined btn--block"
-                                >View cars at this store</a
-                            >
-                            <div class="location__search">
-                                <div class="input__box input__box--100">
-                                    <input
-                                        type="text"
-                                        class="input"
-                                        placeholder="Enter ZIP or State"
-                                    />
-                                    <button type="submit" class="input__btn">
-                                        <i class="bx bx-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            <a href="tel:{{ Helper::phone($phone) }}" class="location__number">{{ $phone }}</a>
                         </div>
                     </div>
                 </div>
@@ -70,21 +54,18 @@ $siteTitle = setting('site.title')
                     <div class="header-acc__btn">
                         <i class="bx bx-user"></i>
                     </div>
+
                     <!-- if not authenticated -->
                     <div class="select-box">
                         <div class="select-box__in">
-                            <a href="login.html" class="select-box__link">
-                                <span>Sign in</span>
+                            @guest
+                            <a href="{{ route('login') }}" class="select-box__link">
+                                <span>{{ __('Sign in') }}</span>
                             </a>
-                            <a href="register.html" class="select-box__link">
-                                <span>Register</span>
+                            <a href="{{ route('register') }}" class="select-box__link">
+                                <span>{{ __('Register') }}</span>
                             </a>
-                        </div>
-                    </div>
-
-                    <!-- if authenticated -->
-                    <!-- <div class="select-box">
-                        <div class="select-box__in">
+                            @else
                             <a href="profile.html" class="select-box__link">
                                 <svg>
                                     <use xlink:href="#icon-home"></use>
@@ -113,25 +94,26 @@ $siteTitle = setting('site.title')
                             <a href="#" class="select-box__link" style="color: #e95050">
                                 <span>Sign Out</span>
                             </a>
+                            @endguest
+
                         </div>
-                    </div> -->
+                    </div>
+
                 </div>
                 <div class="lang">
                     <div class="lang__btn">
-                        <img src="assets/img/icons/flag-gb.svg" alt="" />
-                        <span>En</span>
+                        <img src="{{ asset('img/icons/flag-' . $switcher->getActive()->key . '.svg') }}" alt="{{ $switcher->getActive()->key }}" />
+                        <span>{{ $switcher->getActive()->key }}</span>
                         <i class="bx bx-chevron-down"></i>
                     </div>
                     <div class="select-box">
                         <div class="select-box__in">
-                            <a href="#" class="select-box__link">
-                                <img src="assets/img/icons/flag-gb.svg" alt="" />
-                                <span>EN</span>
+                            @foreach ($switcher->getValues() as $value)
+                            <a href="{{ $value->url }}" class="select-box__link">
+                                <img src="{{ asset('img/icons/flag-' . $value->key . '.svg') }}" alt="{{ $value->key }}" />
+                                <span class="text-uppercase ">{{ $value->key }}</span>
                             </a>
-                            <a href="#" class="select-box__link">
-                                <img src="assets/img/icons/flag-es.svg" alt="" />
-                                <span>ES</span>
-                            </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -143,7 +125,7 @@ $siteTitle = setting('site.title')
                     <input
                         type="text"
                         class="input"
-                        placeholder="Search by Model or Keyword"
+                        placeholder="{{ __('Search by Model or Keyword') }}"
                         required
                     />
                     <button type="submit" class="input__btn">
@@ -154,9 +136,9 @@ $siteTitle = setting('site.title')
         </div>
         <div class="header__bottom">
             <ul class="header__nav">
-                <li><a href="catalog.html">Shop</a></li>
-                <li><a href="sell-trade.html">Sell/Trade</a></li>
-                <li><a href="financing-overview.html">Finance</a></li>
+                @foreach ($headerMenuItems as $item)
+                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
+                @endforeach
             </ul>
         </div>
     </div>

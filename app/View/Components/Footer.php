@@ -33,24 +33,28 @@ class Footer extends Component
     {
         $locale = app()->getLocale();
 
-        $pages = Page::active()->inFooterMenu()->withTranslation($locale)->get()->keyBy('id');
+        // $footerMenuItems = Helper::menuItems('footer');
 
-        $footerMenuItems = Helper::menuItems('footer');
-
-        $menuBuyers = menu('Покупателям', '_json');
-        if ($menuBuyers && !$menuBuyers->isEmpty()) {
-            $menuBuyers->load('translations');
+        $footerMenuNames = ['Shop', 'Sell/Trade', 'Finance', 'About', 'Careers'];
+        $footerMenus = [];
+        foreach ($footerMenuNames as $value) {
+            $footerMenu = menu($value, '_json');
+            if ($footerMenu && !$footerMenu->isEmpty()) {
+                $footerMenu->load('translations');
+                $footerMenus[] = [
+                    'name' => $value,
+                    'items' => $footerMenu,
+                ];
+            }
         }
 
-        $menuUseful = menu('Полезное', '_json');
-        if ($menuUseful && !$menuUseful->isEmpty()) {
-            $menuUseful->load('translations');
-        }
-
-        $siteLogo = setting('site.logo');
-        $siteLightLogo = setting('site.logo_light');
+        $siteLogo = Helper::setting('site.logo');
+        $siteLightLogo = Helper::setting('site.logo_light');
         $logo = $siteLogo ? Voyager::image($siteLogo) : '/img/logo.png';
         $logoLight = $siteLightLogo ? Voyager::image($siteLightLogo) : '/img/logo.png';
+
+        // $logo = Helper::setting('site.logo');
+        // $logoLight = Helper::setting('site.logo_light');
 
         $address = Helper::staticText('contact_address', 300)->getTranslatedAttribute('description');
         $workHours = Helper::staticText('work_hours', 300)->getTranslatedAttribute('description');
@@ -63,10 +67,10 @@ class Footer extends Component
         //     return $regions;
         // });
 
-        $cartQuantity = app('cart')->getTotalQuantity();
-        $wishlistQuantity = app('wishlist')->getTotalQuantity();
-        $compareQuantity = app('compare')->getTotalQuantity();
+        // $cartQuantity = app('cart')->getTotalQuantity();
+        // $wishlistQuantity = app('wishlist')->getTotalQuantity();
+        // $compareQuantity = app('compare')->getTotalQuantity();
 
-        return view('components.footer', compact('footerMenuItems', 'menuUseful', 'menuBuyers', 'pages', 'logo', 'logoLight', 'address', 'workHours', 'cartQuantity', 'wishlistQuantity', 'compareQuantity'));
+        return view('components.footer', compact('footerMenus', 'logo', 'logoLight', 'address', 'workHours', ));
     }
 }

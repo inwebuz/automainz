@@ -281,18 +281,58 @@ class MenuItemsTableSeeder extends Seeder
                 'slug' => 'shipping_methods',
                 'icon' => 'voyager-truck',
             ],
+            [
+                'slug' => 'features',
+                'icon' => 'voyager-categories',
+            ],
+            [
+                'slug' => 'specification_types',
+                'icon' => 'voyager-categories',
+            ],
+            [
+                'slug' => 'specifications',
+                'icon' => 'voyager-categories',
+            ],
+            [
+                'slug' => 'makes',
+                'icon' => 'voyager-categories',
+            ],
+            [
+                'slug' => 'car_models',
+                'icon' => 'voyager-categories',
+            ],
+            [
+                'slug' => 'cars',
+                'icon' => 'voyager-categories',
+            ],
         ];
         $this->seedMenuItems($menu, $menuItems);
 
-        $footerMenu1 = Menu::where('name', 'footer-1')->first();
-        if ($footerMenu1) {
-            MenuItem::create([
-                'menu_id' => $footerMenu1->id,
-                'title' => 'О компании',
-                'url' => '/page/3-o-nas',
-                'target' => '_self',
-            ]);
+        $customMenus = [
+            'Shop' => ['Browse By Category', 'View All Inventory', 'Find a Store', ],
+            'Sell/Trade' => ['Get an Online Offer', ],
+            'Finance' => ['How it Works', 'Automainz Auto Finance', ],
+            'About' => ['About Automainz', 'Contact Us', ],
+            'Careers' => ['Search Jobs', ],
+        ];
+
+        foreach ($customMenus as $key => $value) {
+            $menu = Menu::where('name', $key)->first();
+            if ($menu) {
+                foreach ($value as $key1 => $value1) {
+                    MenuItem::create([
+                        'menu_id' => $menu->id,
+                        'title' => $value1,
+                        'url' => '/' . Str::slug($value1),
+                        'target' => '_self',
+                    ]);
+                }
+
+            }
         }
+
+
+
     }
 
     private function seedMenuItems(Menu $menu, array $menuItems)

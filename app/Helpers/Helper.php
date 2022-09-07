@@ -140,9 +140,9 @@ class Helper
     {
         $locale = app()->getLocale();
         // $banner = Banner::where('type', $type)->active()->nowActive()->latest()->first();
-        $banner = Banner::where('type', $type)->whereNull('category_id')->active()->nowActive()->withTranslation($locale)->latest()->first();
+        $banner = Banner::where('type', $type)->active()->nowActive()->withTranslation($locale)->latest()->first();
         if (!$banner) {
-            $banner = Banner::where([['type', $type], ['shop_id', null], ['category_id', null]])->withTranslation($locale)->active()->latest()->first();
+            $banner = Banner::where('type', $type)->withTranslation($locale)->active()->latest()->first();
         }
         if (!$banner) {
             $banner = new Banner(['id' => 0, 'name' => '1', 'url' => '', 'image' => 'no-image.jpg']);
@@ -154,9 +154,9 @@ class Helper
     {
         $locale = app()->getLocale();
         // $banners = Banner::where('type', $type)->active()->nowActive()->latest()->get();
-        $banners = Banner::where('type', $type)->whereNull('category_id')->active()->withTranslation($locale)->latest()->get();
+        $banners = Banner::where('type', $type)->active()->withTranslation($locale)->latest()->get();
         if (!$banners) {
-            $banners = Banner::where([['type', $type], ['shop_id', null], ['category_id', null]])->active()->withTranslation($locale)->latest()->get();
+            $banners = Banner::where('type', $type)->active()->withTranslation($locale)->latest()->get();
         }
         return $banners;
     }
@@ -252,7 +252,7 @@ class Helper
 
         $model = null;
         $foundModel = false;
-        $hasSlugRoutes = ['page', 'cars.show'];
+        $hasSlugRoutes = ['cars.show'];
         foreach ($hasSlugRoutes as $hasSlugRoute) {
             if ($routeName == $hasSlugRoute) {
                 $routeParams = array_values($route->parameters);
@@ -265,7 +265,7 @@ class Helper
             }
         }
 
-        $onlySlugRoutes = ['category' => Category::class];
+        $onlySlugRoutes = ['page' => Category::class];
         foreach ($onlySlugRoutes as $key => $modelClass) {
             if ($routeName == $key) {
                 $routeParams = array_values($route->parameters);

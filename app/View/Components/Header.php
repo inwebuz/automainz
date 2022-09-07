@@ -38,10 +38,13 @@ class Header extends Component
         $headerMenuItems = Helper::menuItems('header');
         $pageContact = Page::findOrFail(2);
         $pageContact->load('translations');
-        $siteLogo = setting('site.logo');
+        $siteLogo = Helper::setting('site.logo');
         $logo = $siteLogo ? Voyager::image($siteLogo) : '/img/logo.png';
-        $siteLogoLight = setting('site.logo_light');
+        $siteLogoLight = Helper::setting('site.logo_light');
         $logoLight = $siteLogoLight ? Voyager::image($siteLogoLight) : '/img/logo-light.png';
+
+        // $logo = Helper::setting('site.logo');
+        // $logoLight = Helper::setting('site.logo_light');
 
         $switcher = Helper::languageSwitcher();
         $activeLanguageRegional = Helper::getActiveLanguageRegional();
@@ -49,9 +52,9 @@ class Header extends Component
         $address = Helper::staticText('contact_address', 300)->getTranslatedAttribute('description');
         $workHours = Helper::staticText('work_hours', 300)->getTranslatedAttribute('description');
 
-        $cartQuantity = app('cart')->getTotalQuantity();
-        $wishlistQuantity = app('wishlist')->getTotalQuantity();
-        $compareQuantity = app('compare')->getTotalQuantity();
+        // $cartQuantity = app('cart')->getTotalQuantity();
+        // $wishlistQuantity = app('wishlist')->getTotalQuantity();
+        // $compareQuantity = app('compare')->getTotalQuantity();
 
         // $menuCategoryBanners = collect();
         // $categories = Helper::categories('parents');
@@ -61,13 +64,6 @@ class Header extends Component
         //         $menuCategoryBanners->put($category->id, $categoryBanner);
         //     }
         // }
-
-        $menuCategories = menu('Категории', '_json');
-        if ($menuCategories && !$menuCategories->isEmpty()) {
-            $menuCategories->load('translations');
-        }
-
-        $menuCatalog = Helper::categories('menu');
 
         // $issetRegionID = Cookie::get('region_id');
         // $currentRegion = Helper::getCurrentRegion();
@@ -83,6 +79,6 @@ class Header extends Component
             ];
         }
 
-        return view('components.header', compact('headerMenuItems', 'menuCategories', 'menuCatalog', 'cartQuantity', 'wishlistQuantity', 'compareQuantity', 'pageContact', 'logo', 'logoLight', 'switcher', 'activeLanguageRegional', 'q', 'address', 'workHours', 'badEye'));
+        return view('components.header', compact('headerMenuItems', 'pageContact', 'logo', 'logoLight', 'switcher', 'activeLanguageRegional', 'q', 'address', 'workHours', 'badEye'));
     }
 }

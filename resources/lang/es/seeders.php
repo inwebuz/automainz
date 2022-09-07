@@ -212,16 +212,6 @@ return [
             'singular' => 'Резюме',
             'plural' => 'Резюме',
         ],
-
-        'car_model' => [
-            'singular' => 'Model',
-            'plural' => 'Models',
-        ],
-        'car' => [
-            'singular' => 'Car',
-            'plural' => 'Cars',
-        ],
-
         'category' => [
             'singular' => 'Category',
             'plural' => 'Categories',
@@ -234,10 +224,6 @@ return [
             'singular' => 'Сотрудник',
             'plural' => 'Сотрудники',
         ],
-        'feature' => [
-            'singular' => 'Feature',
-            'plural' => 'Features',
-        ],
         'fixed_company' => [
             'singular' => 'Закрепленная компания',
             'plural' => 'Закрепленные компании',
@@ -249,10 +235,6 @@ return [
         'gender' => [
             'singular' => 'Пол',
             'plural' => 'Пол',
-        ],
-        'make' => [
-            'singular' => 'Make',
-            'plural' => 'Makes',
         ],
         'menu' => [
             'singular' => 'Menu',
@@ -398,14 +380,6 @@ return [
             'singular' => 'Направление',
             'plural' => 'Направления',
         ],
-        'specification_type' => [
-            'singular' => 'Specifictaion type',
-            'plural' => 'Specifictaion types',
-        ],
-        'specification' => [
-            'singular' => 'Specifictaion',
-            'plural' => 'Specifictaions',
-        ],
         'static_text' => [
             'singular' => 'Static text',
             'plural' => 'Static texts',
@@ -464,8 +438,6 @@ return [
         'brand_category_texts' => 'Тексты категории/бренды',
         'brands' => 'Brands',
         'bread' => 'BREAD',
-        'car_models' => 'Models',
-        'cars' => 'Cars',
         'categories' => 'Categories',
         'companies' => 'Компании',
         'compass' => 'Compass',
@@ -473,15 +445,13 @@ return [
         'dashboard' => 'Dashboard',
         'database' => 'Database',
         'employees' => 'Employees',
-        'export' => 'Export',
-        'features' => 'Features',
         'fixed_companies' => 'Закрепленные компании',
+        'export' => 'Export',
         'galleries' => 'Galleries',
         'genders' => 'Пол',
         'import' => 'Import',
-        'make' => 'Makes',
         'media' => 'Media',
-        'menu_builder' => 'Menu constructor',
+        'menu_builder' => 'Конструктор Меню',
         'news' => 'News',
         'notifications' => 'Уведомления',
         'orders' => 'Orders',
@@ -519,8 +489,6 @@ return [
         'special_events' => 'Мероприятия',
         'specialists' => 'Specialists',
         'specializations' => 'Specializations',
-        'specification_types' => 'Specifictaion types',
-        'specifications' => 'Specifictaions',
         'static_texts' => 'Static texts',
         'stickers' => 'Stickers',
         'stores' => 'Stores',
@@ -587,8 +555,6 @@ return [
             'telegram_value' => '#',
             'tiktok' => 'Tiktok link',
             'tiktok_value' => '#',
-            'twitter' => 'Tiktok link',
-            'twitter_value' => '#',
             'work_hours' => 'Work hours',
             'work_hours_value' => 'Mon - Fri, 9:00 - 18:00',
             'youtube' => 'Youtube link',

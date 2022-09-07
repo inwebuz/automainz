@@ -24,7 +24,7 @@ class Specification extends Model
     protected $guarded = [];
 
     public static $imgSizes = [
-        'small' => [160, 160],
+        'micro' => [30, 30],
     ];
 
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
@@ -129,20 +129,5 @@ class Specification extends Model
             }
         }
         return $group;
-    }
-
-    public function getURLAttribute()
-    {
-        return $this->getURL();
-    }
-
-    public function getURL($lang = '')
-    {
-        if (!$lang) {
-            $lang = app()->getLocale();
-        }
-        $slug = $this->getTranslatedAttribute('slug', $lang) ?: $this->slug;
-        $url = 'brand/' . $this->id . '-' . $slug;
-        return LaravelLocalization::localizeURL($url, $lang);
     }
 }
