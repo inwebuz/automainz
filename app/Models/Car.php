@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\ModelDeleted;
 use App\Events\ModelSaved;
+use App\Helpers\Helper;
 use App\Traits\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,6 +62,11 @@ class Car extends Model
     public function specifications()
     {
         return $this->belongsToMany(Specification::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 
     public function getBgAttribute()
@@ -130,6 +136,12 @@ class Car extends Model
         return $group;
     }
 
+    public function getCurrentPriceAttribute()
+    {
+        $currentPrice = $this->isDiscounted() ? $this->sale_price : $this->price;
+        return round(Helper::exchangeRate() * $currentPrice, 2);
+    }
+
     public function getURLAttribute()
     {
         return $this->getURL();
@@ -143,5 +155,9 @@ class Car extends Model
         $slug = $this->getTranslatedAttribute('slug', $lang) ?: $this->slug;
         $url = 'brand/' . $this->id . '-' . $slug;
         return LaravelLocalization::localizeURL($url, $lang);
+    }
+    public function isDiscounted()
+    {
+        return ($this->sale_price > 0 && $this->sale_price < $this->price);
     }
 }

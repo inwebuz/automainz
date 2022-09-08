@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Page;
+use App\Models\Photo;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 class HomeController extends Controller
@@ -29,13 +30,11 @@ class HomeController extends Controller
 
         $page = Page::where('id', 1)->withTranslation($locale)->firstOrFail();
 
-        // slides
-        $slides = Helper::banners('slide');
+        // $slides = Helper::banners('slide');
+        $slide = Helper::banner('slide');
+        $articles = Publication::articles()->active()->withTranslation($locale)->latest()->take(3)->get();
+        $photos = Photo::active()->withTranslation($locale)->latest()->take(10)->get();
 
-
-        // articles
-        $articles = Publication::articles()->active()->withTranslation($locale)->latest()->take(4)->get();
-
-        return view('home', compact('page', 'slides', 'articles'));
+        return view('home', compact('page', 'slide', 'articles', 'photos'));
     }
 }

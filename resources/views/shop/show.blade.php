@@ -35,7 +35,7 @@
                     @if($shop->phone_number)
                         <div class="contact-info-block mb-2">
                             <i class="fa fa-phone mr-2"></i>
-                            <a href="tel:{{ Helper::phone($shop->phone_number) }}">{{ $shop->phone_number }}</a>
+                            <a href="tel:{{ Helper::phoneFormat($shop->phone_number) }}">{{ $shop->phone_number }}</a>
                         </div>
                     @endif
                     @if($shop->email)

@@ -5,225 +5,83 @@
 @section('meta_keywords', $page->getTranslatedAttribute('meta_keywords'))
 @section('body_class', 'home-page')
 
+@php
+$instagram = Helper::setting('contact.instagram');
+@endphp
+
 @section('content')
 
-@if (session()->has('alert') || session()->has('success') || session()->has('status') || session()->has('error') || session()->has('message'))
-<div class="content-block">
-    @include('partials.alerts')
-</div>
-@endif
+@include('partials.alerts')
 
+@if ($slide)
 <!-- hero -->
-<section class="hero" style="background-image: url(./assets/img/hero.jpg)">
+<section class="hero" style="background-image: url({{ $slide->img }})">
     <div class="container">
         <div class="hero__in">
             <div class="hero__content">
-                <h1 class="hero__title">Everything you want. Nothing you don’t.</h1>
-                <a href="catalog.html" class="btn btn--main">find your car</a>
+                <h1 class="hero__title">{{ $slide->getTranslatedAttribute('name') }}</h1>
+                @if ($slide->getTranslatedAttribute('url') && $slide->getTranslatedAttribute('button_text'))
+                <a href="{{ $slide->getTranslatedAttribute('url') }}" class="btn btn--main">{{ $slide->getTranslatedAttribute('button_text') }}</a>
+                @endif
             </div>
         </div>
     </div>
 </section>
+@endif
 
-<!-- features and advantages cards -->
+@if (!$articles->isEmpty())
 <section class="section">
     <div class="container">
         <div class="card__wrapper">
+            @foreach ($articles as $publication)
             <div class="card__box">
-                <a href="#" class="card">
+                <a href="{{ $publication->url }}" class="card">
                     <div class="card__photo">
-                        <img src="./assets/img/hero.jpg" alt="" />
+                        <img src="{{ $publication->small_img }}" alt="{{ $publication->getTranslatedAttribute('name') }}" />
                     </div>
                     <div class="card__content">
-                        <h3>Get Pre-Qualified</h3>
-                        <p>See your actual monthly payment</p>
-                        <button class="btn btn--outlined">Get Pre-Qualified</button>
+                        <h3>{{ $publication->getTranslatedAttribute('name') }}</h3>
+                        <p>{{ $publication->getTranslatedAttribute('description') }}</p>
+                        <button class="btn btn--outlined">{{ __('More') }}</button>
                     </div>
                 </a>
             </div>
-            <div class="card__box">
-                <a href="#" class="card">
-                    <div class="card__photo">
-                        <img src="./assets/img/photo-1.jpg" alt="" />
-                    </div>
-                    <div class="card__content">
-                        <h3>Get Pre-Qualified</h3>
-                        <p>See your actual monthly payment</p>
-                        <button class="btn btn--outlined">Get Pre-Qualified</button>
-                    </div>
-                </a>
-            </div>
-            <div class="card__box">
-                <a href="#" class="card">
-                    <div class="card__photo">
-                        <img src="./assets/img/photo-1.jpg" alt="" />
-                    </div>
-                    <div class="card__content">
-                        <h3>Get Pre-Qualified</h3>
-                        <p>See your actual monthly payment</p>
-                        <button class="btn btn--outlined">Get Pre-Qualified</button>
-                    </div>
-                </a>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
-<!-- photos -->
+@if (!$photos->isEmpty())
 <section class="photo__wrapper section pt-0">
     <div class="container">
         <div class="photo__head">
-            <h2>A hassle-free kind of happy</h2>
-            <a href="#">#SHOWYOURBOW</a>
+            <h2>{{ __('A hassle-free kind of happy') }}</h2>
+            <a href="{{ $instagram }}" target="_blank" rel="nofollow">#SHOWYOURBOW</a>
         </div>
     </div>
     <div class="photo__slide">
         <div class="swiper photo-swiper">
             <div class="swiper-wrapper">
+                @foreach ($photos as $photo)
                 <div class="swiper-slide">
                     <div class="photo__box">
                         <div
                             class="photo"
                             data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
+                            data-src="{{ $photo->img }}"
+                            data-caption="{{ $photo->instagram_username }}"
                         >
-                            <img src="./assets/img/photo.jpg" alt="" />
+                            <img src="{{ $photo->medium_img }}" alt="{{ $photo->getTranslatedAttribute('name') }}" />
                             <div class="photo__content">
                                 <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
+                                <span>{{ $photo->instagram_username }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="photo__box">
-                        <div
-                            class="photo"
-                            data-fancybox="photos"
-                            data-src="./assets/img/photo.jpg"
-                            data-caption="@happylovepeacekeeper"
-                        >
-                            <img src="./assets/img/photo.jpg" alt="" />
-                            <div class="photo__content">
-                                <i class="bx bxl-instagram"></i>
-                                <span>@happylovepeacekeeper</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
             <div class="arrows prev">
                 <div class="arrow swiper-button-prev">
@@ -242,6 +100,7 @@
         </div>
     </div>
 </section>
+@endif
 
 
 @endsection

@@ -46,6 +46,11 @@ class CarModification extends Model
         return $this->belongsToMany(Specification::class, 'car_modification_specification');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
     public function getBgAttribute()
     {
         return Voyager::image($this->background);

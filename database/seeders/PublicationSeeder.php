@@ -21,9 +21,18 @@ class PublicationSeeder extends Seeder
         DB::table('publications')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        Publication::factory()->count(10)->create([
-            'user_id' => 3,
-        ]);
+        for ($i = 1; $i <= 3; $i++) {
+            Publication::factory()->create([
+                'name' => 'Get Pre-Qualified',
+                'slug' => Str::slug('Get Pre-Qualified'),
+                'description' => 'See your actual monthly payment',
+                'image' => 'publications/0' . $i . '.jpg',
+            ]);
+        }
+
+        // Publication::factory()->count(10)->create([
+        //     'user_id' => 3,
+        // ]);
         // Publication::factory()->count(50)->create();
 
         // Publication::factory()->count(10)->create([

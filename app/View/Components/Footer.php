@@ -48,17 +48,6 @@ class Footer extends Component
             }
         }
 
-        $siteLogo = Helper::setting('site.logo');
-        $siteLightLogo = Helper::setting('site.logo_light');
-        $logo = $siteLogo ? Voyager::image($siteLogo) : '/img/logo.png';
-        $logoLight = $siteLightLogo ? Voyager::image($siteLightLogo) : '/img/logo.png';
-
-        // $logo = Helper::setting('site.logo');
-        // $logoLight = Helper::setting('site.logo_light');
-
-        $address = Helper::staticText('contact_address', 300)->getTranslatedAttribute('description');
-        $workHours = Helper::staticText('work_hours', 300)->getTranslatedAttribute('description');
-
         // $categories = Helper::categories();
 
         // $currentRegionID = Helper::getCurrentRegionID();
@@ -71,6 +60,6 @@ class Footer extends Component
         // $wishlistQuantity = app('wishlist')->getTotalQuantity();
         // $compareQuantity = app('compare')->getTotalQuantity();
 
-        return view('components.footer', compact('footerMenus', 'logo', 'logoLight', 'address', 'workHours', ));
+        return view('components.footer', compact('footerMenus'));
     }
 }

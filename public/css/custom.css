@@ -672,3 +672,38 @@
 }
 /* end product groups */
 
+.alert-container {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    z-index: 1000;
+}
+.alert {
+    margin-bottom: 15px;
+    padding: 15px 40px 15px 20px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    color: #000;
+    position: relative;
+}
+.alert-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.alert.alert-success {
+    border-color: #00be5c;
+    background-color: #00be5c;
+    color: #fff;
+}
+.alert.alert-danger {
+    border-color: #D40000;
+    background-color: #D40000;
+    color: #fff;
+}
+
+.bg-standard {
+    background-image: url(../img/hero.jpg);
+}

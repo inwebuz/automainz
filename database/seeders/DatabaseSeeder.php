@@ -48,6 +48,8 @@ class DatabaseSeeder extends Seeder
             CarModificationSeeder::class,
             CarSeeder::class,
 
+            PhotoSeeder::class,
+
         ]);
     }
 }

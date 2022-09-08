@@ -42,7 +42,7 @@ return [
         'partner_installments' => false,
         'partners'          => false,
         'payment_methods'   => false,
-        'photos'            => false,
+        'photos'            => true,
         'poll_answers'      => false,
         'polls'             => false,
         'pricelists'        => false,

@@ -1,71 +1,401 @@
 @extends('layouts.app')
 @section('seo_title', __('main.profile'))
+@section('page_class', 'page--profile')
 
 @section('content')
 
-<main class="main">
+<section class="profile">
 
-    <section class="content-header">
-        <div class="container">
-            @include('partials.breadcrumbs')
+    @include('partials.sidebar_profile')
+
+    <main class="field">
+        <h2 class="field__welcome">
+            {{ __('Welcome back') }}, <br />
+            <b>{{ $user->name }}</b>
+        </h2>
+
+        <h1 class="field__title">{{ __('Profile') }}</h1>
+
+        <div class="recommend recommend--profile">
+            <h2 class="recommend__head">{{ __('Recomended for you') }}</h2>
+            <div class="recommend__slider">
+                <div class="swiper recommend-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li class="active">
+                                        <i class="bx bxs-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arrows prev">
+                        <div class="arrow swiper-button-prev">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="arrows next">
+                        <div class="arrow swiper-button-next">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+        <div class="recommend recommend--profile">
+            <h2 class="recommend__head">Cars with less than 60,000 miles</h2>
+            <div class="recommend__slider">
+                <div class="swiper recommend-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li class="active">
+                                        <i class="bx bxs-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
 
-    <div class="container py-4 py-lg-5">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
 
-        @include('partials.alerts')
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
 
-        <h1>{{ __('main.profile') }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
 
-        <div class="row">
-            <div class="col-6 mb-4">
-                <a href="{{ route('profile.edit') }}" class="text-dark d-flex border p-3 radius-8 flex-row flex-nowrap align-items-center">
-                    <svg width="30" height="30" fill="#FCB300">
-                        <use xlink:href="#user"></use>
-                    </svg>
-                    <span class="ml-2">{{ __('main.edit') }}</span>
-                </a>
-            </div>
-            <div class="col-6 mb-4">
-                <a href="{{ route('profile.orders') }}" class="text-dark d-flex border p-3 radius-8 flex-row flex-nowrap align-items-center">
-                    <svg width="30" height="30" fill="#FCB300">
-                        <use xlink:href="#cube"></use>
-                    </svg>
-                    <span class="ml-2">{{ __('main.orders2') }}:</span>
-                    <span class="ml-2 wishlist_count">{{ $ordersQuantity }}</span>
-                </a>
-            </div>
-            <div class="col-6 mb-4">
-                <a href="{{ route('cart.index') }}" class="text-dark d-flex border p-3 radius-8 flex-row flex-nowrap align-items-center">
-                    <svg width="30" height="30" fill="#FCB300">
-                        <use xlink:href="#cart"></use>
-                    </svg>
-                    <span class="ml-2">{{ __('main.cart') }}:</span>
-                    <span class="ml-2 cart_count">{{ $cartQuantity }}</span>
-                </a>
-            </div>
-            <div class="col-6 mb-4">
-                <a href="{{ route('wishlist.index') }}" class="text-dark d-flex border p-3 radius-8 flex-row flex-nowrap align-items-center">
-                    <svg width="30" height="30" fill="#FCB300">
-                        <use xlink:href="#heart"></use>
-                    </svg>
-                    <span class="ml-2">{{ __('main.wishlist') }}:</span>
-                    <span class="ml-2 wishlist_count">{{ $wishlistQuantity }}</span>
-                </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arrows prev">
+                        <div class="arrow swiper-button-prev">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="arrows next">
+                        <div class="arrow swiper-button-next">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="recommend recommend--profile">
+            <h2 class="recommend__head">Cars around $20,000</h2>
+            <div class="recommend__slider">
+                <div class="swiper recommend-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li class="active">
+                                        <i class="bx bxs-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
 
-        <div class="my-4">
-            <form class="logout-form" action="{{ route('logout') }}" method="post">
-                @csrf
-                <button class="btn btn-danger radius-6" type="submit">{{ __('main.nav.logout') }}</button>
-            </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="item">
+                                <ul class="item__action">
+                                    <li>
+                                        <i class="bx bx-share-alt"></i>
+                                    </li>
+                                    <li>
+                                        <i class="bx bx-heart"></i>
+                                    </li>
+                                </ul>
+                                <a href="product.html" class="item__photo">
+                                    <img src="{{ asset('img/item.jpg') }}" alt="" />
+                                </a>
+                                <div class="item__content">
+                                    <a href="product.html" class="item__name"
+                                        >Volkswagen Golf GTI (2022)</a
+                                    >
+                                    <p class="item__price">
+                                        <b>$25,245</b>
+                                        <i class="bx bxs-circle"></i>
+                                        <span>61 786 miles</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arrows prev">
+                        <div class="arrow swiper-button-prev">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="arrows next">
+                        <div class="arrow swiper-button-next">
+                            <svg>
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-    </div>
-
-    {{-- @include('partials.sidebar_profile') --}}
-
-</main>
+    </main>
+</section>
 
 @endsection

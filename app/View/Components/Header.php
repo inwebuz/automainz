@@ -9,6 +9,7 @@ use App\Models\Region;
 use App\Models\StaticText;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 use TCG\Voyager\Facades\Voyager;
 
@@ -38,19 +39,14 @@ class Header extends Component
         $headerMenuItems = Helper::menuItems('header');
         $pageContact = Page::findOrFail(2);
         $pageContact->load('translations');
-        $siteLogo = Helper::setting('site.logo');
-        $logo = $siteLogo ? Voyager::image($siteLogo) : '/img/logo.png';
-        $siteLogoLight = Helper::setting('site.logo_light');
-        $logoLight = $siteLogoLight ? Voyager::image($siteLogoLight) : '/img/logo-light.png';
 
-        // $logo = Helper::setting('site.logo');
-        // $logoLight = Helper::setting('site.logo_light');
+        $headerClass = '';
+        if (in_array(Route::currentRouteName(), ['profile.show', 'profile.edit', 'wishlist.index'])) {
+            $headerClass = 'header--white';
+        }
 
         $switcher = Helper::languageSwitcher();
         $activeLanguageRegional = Helper::getActiveLanguageRegional();
-
-        $address = Helper::staticText('contact_address', 300)->getTranslatedAttribute('description');
-        $workHours = Helper::staticText('work_hours', 300)->getTranslatedAttribute('description');
 
         // $cartQuantity = app('cart')->getTotalQuantity();
         // $wishlistQuantity = app('wishlist')->getTotalQuantity();
@@ -79,6 +75,6 @@ class Header extends Component
             ];
         }
 
-        return view('components.header', compact('headerMenuItems', 'pageContact', 'logo', 'logoLight', 'switcher', 'activeLanguageRegional', 'q', 'address', 'workHours', 'badEye'));
+        return view('components.header', compact('headerMenuItems', 'headerClass', 'pageContact', 'switcher', 'activeLanguageRegional', 'q', 'badEye'));
     }
 }

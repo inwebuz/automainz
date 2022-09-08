@@ -29,22 +29,23 @@
         $assetsVersion = env('ASSETS_VERSION', 1);
     @endphp
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/4.0.31/fancybox.min.css"
-        integrity="sha512-u+sKK399eoGQLcJN/LNW9xSi01hDa/yNXcrjPGinWRp2CNxQqFjDgbcqEg3VL4aqAKBMb9x0+slTnLdrZ8geJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.1.0/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/boxicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css?v=' . $assetsVersion) }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css?v=' . $assetsVersion) }}">
 
     @yield('styles')
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
+
 
     {!! Helper::setting('site.google_analytics_code') !!}
     {!! Helper::setting('site.yandex_metrika_code') !!}
@@ -55,7 +56,7 @@
 
 <body class="@yield('body_class')">
 
-    <div class="page">
+    <div class="page @yield('page_class')">
         @include('partials.svg')
 
         <x-header />
@@ -70,10 +71,10 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/4.0.31/fancybox.umd.js" integrity="sha512-KbN1/HGDfgCQ9jeSs8O4t3Jeq2Gxv24KTWveN9QKrk/84cm5fpU8ankouT5Nsa1Pmx4SNXHZhIavwYMmnb9yHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/inputmask.min.js" integrity="sha512-czERuOifK1fy7MssE4JJ7d0Av55NPiU2Ymv4R6F0mOGpyPUb9HkP9DcEeE+Qj9In7hWQHGg0CqH1ELgNBJXqGA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('js/fancybox.umd.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+    <script src="{{ asset('js/inputmask.min.js') }}"></script>
     <script src="{{ asset('js/app.js?v=' . $assetsVersion) }}"></script>
     <script src="{{ asset('js/custom.js?v=' . $assetsVersion) }}"></script>
 

@@ -92,7 +92,7 @@ class ImportProducts extends Command
                 $image_urls = isset($cells[13]) ? trim($cells[13]->getValue()) : '';
                 $image_urls = explode(',', $image_urls);
                 // $data['image'] = 'brands/00' . mt_rand(1, 6) . '.png';
-                // $data['image'] = str_replace('https://radius.uz/wp-content/', '', $image_urls[0]);
+                // $data['image'] = str_replace('https://.uz/wp-content/', '', $image_urls[0]);
                 // $data['short_description'] = isset($cells[4]) ? trim($cells[4]->getValue()) : '';
                 $data['description'] = isset($cells[14]) ? strip_tags(trim($cells[14]->getValue())) : '';
                 $data['body'] = isset($cells[15]) ? trim($cells[15]->getValue()) : '';
@@ -174,7 +174,7 @@ class ImportProducts extends Command
 
                 // create redirect
                 // $from = rtrim(str_replace(config('app.url'), '', $oldURL), '/');
-                $from = rtrim(str_replace('https://radius.uz', '', $oldURL), '/');
+                $from = rtrim(str_replace('https://.uz', '', $oldURL), '/');
                 $to = str_replace(config('app.url'), '', $product->url);
                 if ($isNew && $from != $to) {
                     Redirect::create([

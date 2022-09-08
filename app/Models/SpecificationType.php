@@ -35,6 +35,11 @@ class SpecificationType extends Model
         return $this->hasMany(Specification::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
     public function getBgAttribute()
     {
         return Voyager::image($this->background);

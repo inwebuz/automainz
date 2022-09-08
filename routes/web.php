@@ -188,24 +188,26 @@ Route::group(
     // });
 
     // cart routes
-    // Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-    // Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-    // Route::post('cart', [CartController::class, 'add'])->name('cart.add');
-    // Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
-    // Route::delete('cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
-    // Route::post('cart/conditions', [CartController::class, 'addCondition'])->name('cart.addCondition');
-    // Route::delete('cart/conditions', [CartController::class, 'clearCartConditions'])->name('cart.clearCartConditions');
-    // Route::get('cart/debug', [CartController::class, 'debug'])->name('cart.debug');
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('cart', [CartController::class, 'add'])->name('cart.add');
+    Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::post('cart/conditions', [CartController::class, 'addCondition'])->name('cart.addCondition');
+    Route::delete('cart/conditions', [CartController::class, 'clearCartConditions'])->name('cart.clearCartConditions');
+    Route::get('cart/debug', [CartController::class, 'debug'])->name('cart.debug');
 
     // wishlist routes
-    Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::group(['middleware' => 'auth'], function(){
+        Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    });
     Route::post('wishlist', [WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('wishlist/{id}', [WishlistController::class, 'delete'])->name('wishlist.delete');
 
     // compare routes
-    // Route::get('compare', [CompareController::class, 'index'])->name('compare.index');
-    // Route::post('compare', [CompareController::class, 'add'])->name('compare.add');
-    // Route::delete('compare/{id}', [CompareController::class, 'delete'])->name('compare.delete');
+    Route::get('compare', [CompareController::class, 'index'])->name('compare.index');
+    Route::post('compare', [CompareController::class, 'add'])->name('compare.add');
+    Route::delete('compare/{id}', [CompareController::class, 'delete'])->name('compare.delete');
 
     // order routes
     // Route::get('order/{order}-{check}', [OrderController::class, 'show'])->name('order.show');

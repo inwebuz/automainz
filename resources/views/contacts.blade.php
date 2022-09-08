@@ -38,10 +38,10 @@
                 <div class="media contact-info mb-3">
                     {{-- <i class="fa fa-phone mr-3 mt-1"></i> --}}
                     <div class="media-body">
-                        <span><a href="tel:{{ Helper::phone($phone) }}" class="black-link">{{ $phone }}</a></span>
+                        <span><a href="tel:{{ Helper::phoneFormat($phone) }}" class="black-link">{{ $phone }}</a></span>
                         @if ($phone2)
                             <br>
-                            <span><a href="tel:{{ Helper::phone($phone2) }}" class="black-link">{{ $phone2 }}</a></span>
+                            <span><a href="tel:{{ Helper::phoneFormat($phone2) }}" class="black-link">{{ $phone2 }}</a></span>
                         @endif
                     </div>
                 </div>

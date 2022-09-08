@@ -173,7 +173,7 @@ class Zoodpay
         $data = [
             'customer' => [
                 'customer_email' => Str::limit($order->email, 128, ''),
-                'customer_phone' => Str::limit(Helper::phone($order->phone_number), 32, ''),
+                'customer_phone' => Str::limit(Helper::phoneFormat($order->phone_number), 32, ''),
                 'first_name' => Str::limit($order->name, 50, ''),
             ],
             'items' => [],

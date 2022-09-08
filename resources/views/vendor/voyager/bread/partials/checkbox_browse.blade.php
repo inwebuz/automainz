@@ -12,9 +12,9 @@
             @endif
         </div>
         <div class="btn-group">
-            <button class="btn btn-sm btn-success change-status-btn @if($data->{$row->field} == 1) disabled @endif" data-target="{{ route('voyager.status.activate', ['table' => $dataType->name, 'id' => ($data->id ?? 0) ]) }}" data-text="{{ $row->details->on ?? 'Да' }}"><i class="voyager-check"></i></button>
+            <button class="btn btn-sm btn-success change-status-btn @if($data->{$row->field} == 1) disabled @endif" data-target="{{ route('voyager.status.activate', ['table' => $dataType->name, 'id' => ($data->id ?? 0) ]) }}" data-text="{{ $row->details->on ?? 'Yes' }}"><i class="voyager-check"></i></button>
 
-            <button class="btn btn-sm btn-danger change-status-btn @if($data->{$row->field} == 0) disabled @endif" data-target="{{ route('voyager.status.deactivate', ['table' => $dataType->name, 'id' => ($data->id ?? 0) ]) }}" data-text="{{ $row->details->off ?? 'Нет' }}"><i class="voyager-x"></i></button>
+            <button class="btn btn-sm btn-danger change-status-btn @if($data->{$row->field} == 0) disabled @endif" data-target="{{ route('voyager.status.deactivate', ['table' => $dataType->name, 'id' => ($data->id ?? 0) ]) }}" data-text="{{ $row->details->off ?? 'No' }}"><i class="voyager-x"></i></button>
         </div>
     </div>
 @else

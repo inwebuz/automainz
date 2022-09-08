@@ -27,9 +27,11 @@ class Specification extends Model
         'micro' => [30, 30],
     ];
 
+    protected $with = ['specificationType'];
+
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
 
-    public function specifationType()
+    public function specificationType()
     {
         return $this->belongsTo(SpecificationType::class);
     }
@@ -129,5 +131,12 @@ class Specification extends Model
             }
         }
         return $group;
+    }
+
+    public function getFullNameAttribute()
+    {
+        $specificationType = $this->specificationType;
+        $specificationType->load('translations');
+        return $specificationType->getTranslatedAttribute('name') . ' - ' . $this->getTranslatedAttribute('name');
     }
 }

@@ -24,6 +24,8 @@ class CarModel extends Model
         'small' => [160, 160],
     ];
 
+    protected $with = ['make'];
+
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
 
     public function cars()
@@ -49,6 +51,11 @@ class CarModel extends Model
     public function specifications()
     {
         return $this->belongsToMany(Specification::class, 'car_model_specification');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 
     public function getBgAttribute()
@@ -116,5 +123,12 @@ class CarModel extends Model
             }
         }
         return $group;
+    }
+
+    public function getFullNameAttribute()
+    {
+        $make = $this->make;
+        $make->load('translations');
+        return $make->getTranslatedAttribute('name') . ' - ' . $this->getTranslatedAttribute('name');
     }
 }

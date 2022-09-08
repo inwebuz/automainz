@@ -60,6 +60,19 @@ class PageSeeder extends Seeder
             'show_in' => 2,
         ]);
 
+        $page = Page::factory()->create([
+            'name' => 'Privacy policy',
+            'slug' => Str::slug('Privacy policy'),
+            'order' => 40,
+            'show_in' => 0,
+        ]);
+        $page = Page::factory()->create([
+            'name' => 'Terms of use',
+            'slug' => Str::slug('Terms of use'),
+            'order' => 50,
+            'show_in' => 0,
+        ]);
+
 
     }
 }

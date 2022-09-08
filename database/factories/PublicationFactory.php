@@ -26,7 +26,7 @@ class PublicationFactory extends Factory
             'status' => 1,
             'type' => Arr::random(array_keys(Publication::types())), //mt_rand(0, 4),
             //'rubric_id' => $rubric->id,
-            'image' => 'publications/00' . mt_rand(1, 4) . '.jpg',
+            'image' => 'publications/0' . mt_rand(1, 3) . '.jpg',
         ];
 
         return $data;

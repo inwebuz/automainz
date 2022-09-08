@@ -54,6 +54,18 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         'saved' => UserSaved::class,
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function (User $user) {
+            if (in_array('email', $user->getChanges())) {
+                $user->email_verified_at = null;
+                $user->sendEmailVerificationNotification();
+            }
+        });
+    }
+
     /**
      * Get url
      */

@@ -50,10 +50,10 @@
                                             $phone2 = setting('contact.phone2');
                                         @endphp
                                         @if($phone)
-                                            <a href="tel:{{ Helper::phone($phone) }}" class="text-primary">{{ $phone }}</a>
+                                            <a href="tel:{{ Helper::phoneFormat($phone) }}" class="text-primary">{{ $phone }}</a>
                                         @endif
                                         @if($phone2)
-                                            <a href="tel:{{ Helper::phone($phone2) }}" class="text-primary">{{ $phone2 }}</a>
+                                            <a href="tel:{{ Helper::phoneFormat($phone2) }}" class="text-primary">{{ $phone2 }}</a>
                                         @endif
                                     </li>
                                     <li class="with-icon">

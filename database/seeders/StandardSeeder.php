@@ -127,7 +127,7 @@ class StandardSeeder extends Seeder
         return array_merge($details, $otherDetails);
     }
 
-    protected function checkbox($on = 'Да', $off = 'Нет', $checked = false, $description = '')
+    protected function checkbox($on = 'Yes', $off = 'No', $checked = false, $description = '')
     {
         $data =  [
             'on' => $on,

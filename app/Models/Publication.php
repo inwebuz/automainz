@@ -53,8 +53,8 @@ class Publication extends Model
 
     public static $imgSizes = [
         // 'micro' => [120, 76],
-        // 'small' => [160, 102],
-        'medium' => [320, 320],
+        'small' => [200, 170],
+        // 'medium' => [320, 320],
         // 'large' => [685, 480],
     ];
 
@@ -268,7 +268,7 @@ class Publication extends Model
     {
         return [
             // self::TYPE_PUBLICATION => __('main.publication_type_publication'),
-            self::TYPE_NEWS => __('main.publication_type_news'),
+            // self::TYPE_NEWS => __('main.publication_type_news'),
             // self::TYPE_AD => __('main.publication_type_ad'),
             // self::TYPE_USEFUL_LINK => __('main.publication_type_useful_link'),
             // self::TYPE_DOCUMENT => __('main.publication_type_document'),
@@ -280,7 +280,7 @@ class Publication extends Model
             // self::TYPE_COMPETITION => __('main.publication_type_competition'),
             // self::TYPE_PROMOTION => __('main.publication_type_promotion'),
             // self::TYPE_VIDEO => __('main.publication_type_video'),
-            // self::TYPE_ARTICLE => __('main.publication_type_article'),
+            self::TYPE_ARTICLE => __('main.publication_type_article'),
         ];
     }
 

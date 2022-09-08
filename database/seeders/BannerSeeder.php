@@ -15,17 +15,17 @@ class BannerSeeder extends Seeder
     public function run()
     {
         // slide
-        // Banner::create([
-        //     'name' => 'Лучшие цены',
-        //     'description_top' => '',
-        //     'description' => 'Оплата при получении',
-        //     'description_bottom' => '',
-        //     'button_text' => 'Подробнее',
-        //     'type' => 'slide',
-        //     'image' => 'banners/slide-01.png',
-        //     'url' => '#',
-        //     'status' => '1',
-        // ]);
+        Banner::create([
+            'name' => 'Everything you want. Nothing you don’t.',
+            'description_top' => '',
+            'description' => '',
+            'description_bottom' => '',
+            'button_text' => 'Find your car',
+            'type' => 'slide',
+            'image' => 'banners/slide-01.jpg',
+            'url' => '#',
+            'status' => '1',
+        ]);
         // Banner::create([
         //     'name' => 'Лучшие цены',
         //     'description_top' => '',

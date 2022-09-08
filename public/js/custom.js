@@ -101,15 +101,11 @@ $(function () {
     refreshCaptcha();
 
     /* search-form */
-    let headerD = $('.header-d');
-    let headerM = $('.header-m');
     let searchInputTimeout;
     let searchProcessing = false;
     let searchXHR;
     function hideAjaxSearch() {
         $('.ajax-search-results').removeClass('active');
-        headerD.removeClass('fixed');
-        headerM.removeClass('fixed');
     }
     body.on('click', function(e) {
         if (!$(e.target).closest('.ajax-search-results-content').length && !$(e.target).closest('.ajax-search-input').length) {
@@ -175,9 +171,6 @@ $(function () {
                         // results.append('<a href="' + sendUrl + '?q=' + input.val() + '" class="list-group-item">...</a>');
                         results.addClass('active');
 
-                        headerD.addClass('fixed');
-                        headerM.addClass('fixed');
-
                         // results container position
                         // if ($(window).width() >= 992) {
                         //     if ($('.header-d').hasClass('js-header-scroll')) {
@@ -189,9 +182,6 @@ $(function () {
                     } else {
                         results.find('.list-group').empty();
                         results.removeClass('active');
-
-                        headerD.removeClass('fixed');
-                        headerM.removeClass('fixed');
                     }
                     $(window).scrollTop(0);
                 })
@@ -199,9 +189,6 @@ $(function () {
                     // console.log(data);
                     results.find('.list-group').empty();
                     results.removeClass('active');
-
-                    headerD.removeClass('fixed');
-                    headerM.removeClass('fixed');
                 })
                 .always(function() {
                     searchProcessing = false;
@@ -210,6 +197,11 @@ $(function () {
                     }, 100);
                 });
         }, 300);
+    })
+
+    $('.alert-close').on('click', function(e){
+        e.preventDefault();
+        $(this).closest('.alert').remove();
     })
 
     /* bad eye form */
@@ -1151,6 +1143,9 @@ $(window).on("resize", function () {
 // load
 $(window).on("load", function () {
     //
+    setTimeout(function(){
+        $('.alert').remove();
+    }, 3000);
 });
 
 function isScrolledIntoView(elem) {

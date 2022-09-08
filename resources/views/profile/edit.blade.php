@@ -3,189 +3,171 @@
 
 @section('content')
 
-<main class="main">
+<section class="profile">
 
-    <section class="content-header">
-        <div class="container">
-            @include('partials.breadcrumbs')
-        </div>
-    </section>
+    @include('partials.sidebar_profile')
 
-    <div class="container py-4 py-lg-5">
-
-        @include('partials.alerts')
-
-        <div class="mb-5 d-none d-lg-block">
-            <a href="{{ route('profile.show') }}">
-                <strong> &larr; {{ __('main.profile') }}</strong>
-            </a>
-        </div>
-
-        <div class="box mb-5">
-
-            <h3 class="box-header">{{ __('main.profile_details') }}</h3>
-
-            <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-
-                <div class="row">
-
-                    <div class="col-lg-6">
-
-                        <div class="form-group">
-                            <label for="form_name">{{ __('main.form.name') }} <span
-                                    class="text-danger">*</span></label>
-                            <input id="form_name" type="text"
-                                class="form-control @error('name') is-invalid @enderror"
-                                name="name"
-                                value="{{ old('name') ?? $user->name }}" required
-                                autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+    <main class="field">
+        <h1 class="field__title">{{ __('Profile settings') }}</h1>
+        <div class="bar__wrapper">
+            <div class="bar">
+                <div class="bar__head">
+                    <h2 class="bar__title">{{ __('Personal information') }}</h2>
+                    <ul class="bar__actions">
+                        <li class="bar__actions--open" data-open>{{ __('Update') }}</li>
+                        <li class="bar__actions--close" data-close>{{ __('Close') }}</li>
+                    </ul>
+                </div>
+                <h3 class="bar__name">{{ $user->name }}</h3>
+                <div class="bar__form">
+                    <form class="form" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="input__box input__box--50">
+                            <input type="text" class="input" value="Rick" required />
+                            <p class="input__placeholder">First name</p>
                         </div>
-
-                        {{-- <div class="form-group">
-                            <label for="form_phone_number">{{ __('main.phone_number') }}</label>
-                            <input id="form_phone_number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') ?? $user->phone_number }}">
-                            @error('phone_number')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="input__box input__box--50">
+                            <input type="text" class="input" value="Astley" required />
+                            <p class="input__placeholder">Last name</p>
+                        </div>
+                        <div class="input__box input__box--100">
+                            <input type="text" class="input" />
+                            <p class="input__placeholder">Address (optional)</p>
+                        </div>
+                        {{-- <div class="input__box input__box--100">
+                            <input type="text" class="input" />
+                            <p class="input__placeholder">Address Line (optional)</p>
+                        </div>
+                        <div class="input__box input__box--50">
+                            <input type="text" class="input" />
+                            <p class="input__placeholder">Zip (optional)</p>
+                        </div>
+                        <div class="input__box input__box--50">
+                            <select type="text" class="input">
+                                <option hidden></option>
+                                <option value="Washingtion">Washingtion</option>
+                                <option value="Texas">Texas</option>
+                            </select>
+                            <p class="input__placeholder">State (optional)</p>
+                            <button class="input__btn">
+                                <i class="bx bx-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="input__box input__box--100">
+                            <input type="text" class="input" />
+                            <p class="input__placeholder">City (optional)</p>
                         </div> --}}
-
-                        {{-- <div class="form-group">
-                            <label for="form_address">{{ __('main.address') }}</label>
-                            <textarea id="form_address"
-                                    class="form-control @error('address') is-invalid @enderror"
-                                    name="address"
-                            >{{ old('address') ?? $user->address }}</textarea>
-                            @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div> --}}
-
-
-                        <div class="form-group">
-                            <label for="form_avatar">{{ __('main.image') }}</label>
-                            @if ($user->avatar)
-                                <div style="max-width: 100px;" class="mb-4">
-                                    <img src="{{ $user->avatar_img }}" alt="{{ $user->name }}" class="img-fluid">
-                                </div>
-                            @endif
-                            <input type="file" name="avatar" class="form-control">
-                            @error('avatar')
-                                <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="bar__btns">
+                            <a class="btn btn--outlined" data-close> Cancel </a>
+                            <button type="submit" class="btn btn--main">Save</button>
                         </div>
-
-                    </div>
-                    <div class="col-lg-6">
-
-
-                    </div>
+                    </form>
                 </div>
-
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary radius-6">
-                        {{ __('main.form.to_save') }}
-                    </button>
+            </div>
+            <div class="bar">
+                <div class="bar__head">
+                    <h2 class="bar__title">Contact settings</h2>
+                    <ul class="bar__actions">
+                        <li class="bar__actions--open" data-open>Update</li>
+                        <li class="bar__actions--close" data-close>Close</li>
+                    </ul>
                 </div>
+                <p class="bar__text">Let us know the best way to contact you.</p>
+                <div class="bar__email">
+                    <b>{{ __('E-mail') }}</b>
+                    <span>{{ $user->email }}</span>
+                </div>
+                <div class="bar__form">
+                    <form class="form" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="input__box input__box--50">
+                            <input
+                                type="email"
+                                class="input"
+                                value="rickroll@gmail.com"
+                                required
+                            />
+                            <p class="input__placeholder">Email</p>
+                        </div>
+                        <div class="input__box input__box--50">
+                            <input
+                                type="text"
+                                class="input"
+                                value="9133846697"
+                                required
+                                data-format-phone-number
+                            />
+                            <p class="input__placeholder">Phone number</p>
+                        </div>
+                        <div class="bar__btns">
+                            <a class="btn btn--outlined" data-close> Cancel </a>
+                            <button type="submit" class="btn btn--main">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="bar__head">
+                    <h2 class="bar__title">Password and security</h2>
+                    <ul class="bar__actions">
+                        <li class="bar__actions--open" data-open>Update</li>
+                        <li class="bar__actions--close" data-close>Close</li>
+                    </ul>
+                </div>
+                <p class="bar__text">Manage your signin and security settings</p>
+                <div class="bar__form">
+                    <form class="form" action="{{ route('profile.password') }}" method="post">
+                        @csrf
+                        <div class="input__box input__box--100">
+                            <input type="password" class="input" name="current_password" required />
+                            <p class="input__placeholder">Current password</p>
+                        </div>
+                        <div class="input__box input__box--100">
+                            <input type="password" class="input" name="password" required />
+                            <p class="input__placeholder">Password</p>
+                        </div>
+                        <div class="input__box input__box--100">
+                            <input type="password" class="input" name="password_confirmation" required />
+                            <p class="input__placeholder">Confirm Password</p>
+                        </div>
+                        <div class="bar__btns">
+                            <a class="btn btn--outlined" data-close> Cancel </a>
+                            <button type="submit" class="btn btn--main">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-            </form>
-
+            {{-- <div class="bar">
+                <div class="bar__head">
+                    <h2 class="bar__title">Delete my profile</h2>
+                    <ul class="bar__actions">
+                        <li class="bar__actions--open bar__actions--red" data-open>
+                            Delete
+                        </li>
+                        <li class="bar__actions--close" data-close>Close</li>
+                    </ul>
+                </div>
+                <p class="bar__text">Proceeding will delete your profile data.</p>
+                <div class="bar__form">
+                    <form action="#" class="form">
+                        <div class="input__box input__box--100">
+                            <input type="password" class="input" required />
+                            <p class="input__placeholder">Confirm Password</p>
+                        </div>
+                        <div class="bar__btns">
+                            <a class="btn btn--outlined" data-close> Cancel </a>
+                            <button class="btn btn--red">Delete Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div> --}}
 
         </div>
-
-        <div class="box mb-5">
-            <h3 class="box-header">{{ __('main.change_password') }}</h3>
-
-            @if(Session::has('pmessage'))
-                <div class="alert alert-success">
-                    {{ Session::get('pmessage') }}
-                </div>
-            @endif
-
-            <form action="{{ route('profile.password') }}" method="post">
-                @csrf
-
-                <div class="row">
-
-                    <div class="col-lg-6">
-
-                        <div class="form-group">
-                            <label for="current_password">{{ __('main.form.current_password') }}
-                                <span
-                                    class="text-danger">*</span></label>
-                            <input id="current_password" type="password"
-                                class="form-control @error('current_password') is-invalid @enderror"
-                                name="current_password"
-                                value="" required
-                            >
-                            @error('current_password')
-                            <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">{{ __('main.form.new_password') }} <span
-                                    class="text-danger">*</span></label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror"
-                                name="password"
-                                value="" required
-                            >
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label
-                                for="password_confirmation">{{ __('main.form.confirm_password') }}
-                                <span
-                                    class="text-danger">*</span></label>
-                            <input id="password_confirmation" type="password"
-                                class="form-control"
-                                name="password_confirmation"
-                                value="" required
-                            >
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary radius-6">
-                        {{ __('main.form.to_save') }}
-                    </button>
-                </div>
-
-            </form>
-
-
-        </div>
-
-    </div>
-
-</main>
-
-<div class="section">
-</div>
+    </main>
+</section>
 
 
 @endsection

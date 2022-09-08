@@ -1,8 +1,3 @@
-@php
-$phone = Helper::setting('contact.phone');
-$email = Helper::setting('contact.email');
-$siteTitle = Helper::setting('site.title')
-@endphp
 {{-- @if (auth()->check() && auth()->user()->isAdmin())
 <div class="py-3 px-3 text-light position-fixed"
     style="top: 0; left: 0; z-index: 10000;width: 220px;background-color: #000;">
@@ -12,11 +7,11 @@ $siteTitle = Helper::setting('site.title')
 </div>
 @endif --}}
 
-<div class="header">
+<div class="header {{ $headerClass }}">
     <div class="container">
         <div class="header__in">
             <a href="{{ route('home') }}" class="header__logo">
-                <img src="{{ $logo }}" alt="{{ $siteTitle }}" />
+                <img src="{{ Helper::logo() }}" alt="{{ Helper::siteTitle() }}" />
                 {{-- {!! $logo !!} --}}
             </a>
             <ul class="header__nav">
@@ -33,20 +28,22 @@ $siteTitle = Helper::setting('site.title')
                     </div>
                     <div class="location__box">
                         <div class="location__in">
-                            <h3 class="location__title">{{ $siteTitle }}</h3>
-                            <a href="{{ route('contacts') }}" class="location__show">
+                            <h3 class="location__title">{{ Helper::siteTitle() }}</h3>
+                            <a href="{{ Helper::setting('contact.map_link') }}" class="location__show" target="_blank">
                                 <i class="bx bxs-map"></i>
                                 <span>{{ __('Show on map') }}</span>
                             </a>
                             <p class="location__text">
-                                {{ $address }}
+                                {{ Helper::address() }}
                             </p>
-                            <a href="tel:{{ Helper::phone($phone) }}" class="location__number">{{ $phone }}</a>
+                            <a href="tel:{{ Helper::phoneFormat(Helper::phone()) }}" class="location__number">{{ Helper::phone() }}</a>
                         </div>
                     </div>
                 </div>
                 <div class="header__fav">
-                    <i class="bx bx-heart"></i>
+                    <a href="{{ route('wishlist.index') }}">
+                        <i class="bx bx-heart"></i>
+                    </a>
                     <!-- filled heard -->
                     <!-- <i class="bx bxs-heart"></i> -->
                 </div>
@@ -66,34 +63,37 @@ $siteTitle = Helper::setting('site.title')
                                 <span>{{ __('Register') }}</span>
                             </a>
                             @else
-                            <a href="profile.html" class="select-box__link">
+                            <a href="{{ route('profile.show') }}" class="select-box__link">
                                 <svg>
                                     <use xlink:href="#icon-home"></use>
                                 </svg>
-                                <span>My Automainz</span>
+                                <span>{{ __('My Automainz') }}</span>
                             </a>
-                            <a href="profile-favorites.html" class="select-box__link">
+                            <a href="{{ route('wishlist.index') }}" class="select-box__link">
                                 <svg>
                                     <use xlink:href="#icon-heart"></use>
                                 </svg>
-                                <span>My Favorites</span>
+                                <span>{{ __('My Favorites') }}</span>
                             </a>
-                            <a href="profile-searchs.html" class="select-box__link">
+                            {{-- <a href="profile-searchs.html" class="select-box__link">
                                 <svg>
                                     <use xlink:href="#icon-loop"></use>
                                 </svg>
                                 <span>My Saved Cars</span>
-                            </a>
+                            </a> --}}
                             <hr />
-                            <a href="#" class="select-box__link">
+                            {{-- <a href="#" class="select-box__link">
                                 <span>My Orders</span>
+                            </a> --}}
+                            <a href="{{ route('profile.edit') }}" class="select-box__link">
+                                <span>{{ __('Profile Settings') }}</span>
                             </a>
-                            <a href="settings.html" class="select-box__link">
-                                <span>Profile Settings</span>
+                            <a href="javascript:;" class="select-box__link" style="color: #e95050" onclick="document.getElementById('logout-form').submit()">
+                                <span>{{ __('Sign Out') }}</span>
                             </a>
-                            <a href="#" class="select-box__link" style="color: #e95050">
-                                <span>Sign Out</span>
-                            </a>
+                            <form action="{{ route('logout') }}" method="POST" style="display: none" id="logout-form">
+                                @csrf
+                            </form>
                             @endguest
 
                         </div>

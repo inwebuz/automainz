@@ -3,36 +3,32 @@
 namespace Database\Seeders;
 
 use App\Models\Attribute;
-use App\Models\AttributeValue;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Company;
-use App\Gallery;
+use App\Models\Company;
+use App\Models\Gallery;
 use App\Models\Gender;
 use App\ImportPartner;
 use App\Models\Car;
 use App\Models\CarModel;
 use App\Models\Feature;
 use App\Models\Make;
-use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Page;
 use App\Models\Partner;
-use App\Models\PartnerInstallment;
 use App\Models\PaymentMethod;
-use App\Photo;
+use App\Models\Photo;
 use App\Models\Poll;
 use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\Publication;
-use App\Pubrubric;
 use App\Models\Region;
 use App\Models\Rubric;
-use App\Serrubric;
-use App\Service;
+use App\Models\Service;
 use App\Models\ShippingMethod;
 use App\Models\Shop;
+use App\Models\Specification;
 use App\Models\SpecificationType;
 use App\Models\Sticker;
 use App\Models\Store;
@@ -1592,7 +1588,7 @@ class DataRowsTableSeeder extends StandardSeeder
                 'method' => 'statusRow',
                 'data' => [
                     'display_name' => __('seeders.data_rows.used_for_filter'),
-                    'details'      => $this->checkbox('Да', 'Нет', false, 'Отметьте, если это значение нужно отображать на странице категории товаров.'),
+                    'details'      => $this->checkbox('Yes', 'No', false, ''),
                 ],
             ],
         ];
@@ -1808,42 +1804,6 @@ class DataRowsTableSeeder extends StandardSeeder
         $this->saveMainRows($dataType);
         $this->saveStandardRows($dataType, [], ['status', 'image']);
         $this->saveSeoRows($dataType);
-        $rows = [
-            'parent_id' => [
-                'method' => 'parentIdRow',
-            ],
-            'status' => [
-                'method' => 'statusRow'
-            ],
-        ];
-        $this->saveRows($dataType, $rows);
-    }
-
-    protected function pubrubricsRows()
-    {
-        $dataType = DataType::where('slug', 'pubrubrics')->firstOrFail();
-
-        $this->saveMainRows($dataType);
-        $this->saveStandardRows($dataType, [], ['status', 'image']);
-        $this->saveSeoRows($dataType);
-        $rows = [
-            'parent_id' => [
-                'method' => 'parentIdRow',
-            ],
-            'status' => [
-                'method' => 'statusRow'
-            ],
-        ];
-        $this->saveRows($dataType, $rows);
-    }
-
-    protected function serrubricsRows()
-    {
-        $dataType = DataType::where('slug', 'serrubrics')->firstOrFail();
-
-        $this->saveMainRows($dataType);
-        $this->saveStandardRows($dataType, [], ['status', 'image']);
-        $this->saveSeoRows($dataType); // specific rows
         $rows = [
             'parent_id' => [
                 'method' => 'parentIdRow',
@@ -2658,22 +2618,30 @@ class DataRowsTableSeeder extends StandardSeeder
         }
 
         $rows = [
-            'gallery_id' => [
-                'method' => 'hiddenRow',
+            // 'gallery_id' => [
+            //     'method' => 'hiddenRow',
+            //     'data' => [
+            //         'display_name' => __('seeders.data_rows.gallery'),
+            //         'edit' => 1,
+            //         'add' => 1,
+            //         'delete' => 1,
+            //         'details' => $this->required(),
+            //     ],
+            // ],
+            // 'photo_belongsto_gallery_relationship' => [
+            //     'method' => 'relationshipRow',
+            //     'data' => [
+            //         'display_name' => __('seeders.data_rows.gallery'),
+            //         'details' => $this->relationship(Gallery::class, 'galleries', 'belongsTo', 'gallery_id', 'id', 'name', 'galleries'),
+            //         'order' => 10,
+            //     ],
+            // ],
+            'name' => [
+                'method' => 'textRow',
                 'data' => [
-                    'display_name' => __('seeders.data_rows.gallery'),
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                    'details' => $this->required(),
-                ],
-            ],
-            'photo_belongsto_gallery_relationship' => [
-                'method' => 'relationshipRow',
-                'data' => [
-                    'display_name' => __('seeders.data_rows.gallery'),
-                    'details' => $this->relationship(Gallery::class, 'galleries', 'belongsTo', 'gallery_id', 'id', 'name', 'galleries'),
-                    'order' => 10,
+                    'display_name' => __('seeders.data_rows.name'),
+                    'required' => 1,
+                    'browse' => 1,
                 ],
             ],
             'image' => [
@@ -2681,6 +2649,19 @@ class DataRowsTableSeeder extends StandardSeeder
                 'data' => [
                     'details' => $this->image(1000, $imageThumbs),
                     'browse' => 1,
+                ],
+            ],
+            'instagram_username' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => 'Instagram username',
+                ],
+            ],
+            'instagram_link' => [
+                // 'method' => 'textRow',
+                'method' => 'hiddenRow',
+                'data' => [
+                    'display_name' => 'Instagram link',
                 ],
             ],
             'order' => [
@@ -3197,6 +3178,14 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
+            'car_model_belongsto_make_relationship' => [
+                'method' => 'relationshipRow',
+                'data' => [
+                    'display_name' => __('seeders.data_types.make.singular'),
+                    'details' => $this->relationship(Make::class, 'makes', 'belongsTo', 'make_id', 'id', 'name'),
+                    'order' => 10,
+                ],
+            ],
             'image' => [
                 'method' => 'imageRow',
                 'data' => [
@@ -3238,12 +3227,30 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
-            'car_answer_belongsto_car_model_relationship' => [
+            'car_belongsto_car_model_relationship' => [
                 'method' => 'relationshipRow',
                 'data' => [
                     'display_name' => __('seeders.data_types.car_model.singular'),
-                    'details' => $this->relationship(CarModel::class, 'car_models', 'belongsTo', 'car_model_id', 'id', 'name'),
+                    'details' => $this->relationship(CarModel::class, 'car_models', 'belongsTo', 'car_model_id', 'id', 'full_name'),
                     'order' => 10,
+                ],
+            ],
+            'car_belongstomany_feature_relationship' => [
+                'method' => 'relationshipRow',
+                'data' => [
+                    'display_name' => __('seeders.data_types.feature.plural'),
+                    'browse' => 1,
+                    'details' => $this->relationship(Feature::class, 'features', 'belongsToMany', 'id', 'id', 'name', 'car_feature', 1),
+                    'order' => 11,
+                ],
+            ],
+            'car_belongstomany_specification_relationship' => [
+                'method' => 'relationshipRow',
+                'data' => [
+                    'display_name' => __('seeders.data_types.specification.plural'),
+                    'browse' => 1,
+                    'details' => $this->relationship(Specification::class, 'specifications', 'belongsToMany', 'id', 'id', 'full_name', 'car_specification', 1),
+                    'order' => 12,
                 ],
             ],
             'image' => [
@@ -3374,12 +3381,13 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
-            'specification_answer_belongsto_specification_type_relationship' => [
+            'specification_belongsto_specification_type_relationship' => [
                 'method' => 'relationshipRow',
                 'data' => [
-                    'display_name' => __('seeders.data_types.car_model.singular'),
+                    'display_name' => __('seeders.data_types.specification_type.singular'),
                     'details' => $this->relationship(SpecificationType::class, 'specification_types', 'belongsTo', 'specification_type_id', 'id', 'name'),
                     'order' => 10,
+                    'browse' => 1,
                 ],
             ],
             'image' => [

@@ -140,10 +140,10 @@ class Helper
     {
         $locale = app()->getLocale();
         // $banner = Banner::where('type', $type)->active()->nowActive()->latest()->first();
-        $banner = Banner::where('type', $type)->active()->nowActive()->withTranslation($locale)->latest()->first();
-        if (!$banner) {
-            $banner = Banner::where('type', $type)->withTranslation($locale)->active()->latest()->first();
-        }
+        $banner = Banner::where('type', $type)->active()->withTranslation($locale)->latest()->first();
+        // if (!$banner) {
+        //     $banner = Banner::where('type', $type)->withTranslation($locale)->active()->latest()->first();
+        // }
         if (!$banner) {
             $banner = new Banner(['id' => 0, 'name' => '1', 'url' => '', 'image' => 'no-image.jpg']);
         }
@@ -190,12 +190,12 @@ class Helper
         }
     }
 
-    public static function phone($phone)
+    public static function phoneFormat($phone)
     {
         $phone = preg_replace('#[^\d]#', '', $phone);
-        if (Str::startsWith($phone, '998')) {
-            $phone = '+' . $phone;
-        }
+        // if (Str::startsWith($phone, '998')) {
+        //     $phone = '+' . $phone;
+        // }
         return $phone;
     }
 
@@ -1155,6 +1155,45 @@ class Helper
         $order->setPaid();
 
         return true;
+    }
+
+    public static function logo()
+    {
+        $siteLogo = Helper::setting('site.logo');
+        $logo = $siteLogo ? Voyager::image($siteLogo) : '/img/logo.png';
+        return $logo;
+    }
+
+    public static function logoLight()
+    {
+        $siteLogoLight = Helper::setting('site.logo_light');
+        $logoLight = $siteLogoLight ? Voyager::image($siteLogoLight) : '/img/logo-light.png';
+        return $logoLight;
+    }
+
+    public static function address()
+    {
+        return Helper::staticText('contact_address', 300)->getTranslatedAttribute('description');
+    }
+
+    public static function workHours()
+    {
+        return Helper::staticText('work_hours', 300)->getTranslatedAttribute('description');
+    }
+
+    public static function phone()
+    {
+        return Helper::setting('contact.phone');
+    }
+
+    public static function email()
+    {
+        return Helper::setting('contact.email');
+    }
+
+    public static function siteTitle()
+    {
+        return Helper::setting('site.title');
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Product;
+use App\Models\Car;
 use App\Storages\WishlistStorage;
 use Darryldecode\Cart\Cart;
 use Illuminate\Support\Facades\Cookie;
@@ -75,7 +75,7 @@ class WishlistServiceProvider extends ServiceProvider
                 // add cookie wishlist items to user wishlist
                 foreach($oldWishlist->getContent() as $oldWishlistItem) {
                     $oldWishlistItem = $oldWishlistItem->toArray();
-                    $oldWishlistItem['associatedModel'] = Product::find($oldWishlistItem['id']);
+                    $oldWishlistItem['associatedModel'] = Car::find($oldWishlistItem['id']);
                     if ($oldWishlistItem['associatedModel']) {
                         $wishlist->add($oldWishlistItem);
                     }
@@ -86,7 +86,7 @@ class WishlistServiceProvider extends ServiceProvider
 
             // update wishlist items
             foreach($wishlist->getContent() as $wishlistItem) {
-                $product = Product::find($wishlistItem->id);
+                $product = Car::find($wishlistItem->id);
                 if(!$product) {
                     $wishlist->remove($wishlistItem->id);
                     continue;

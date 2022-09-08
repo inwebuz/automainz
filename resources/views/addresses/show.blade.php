@@ -100,19 +100,6 @@
                         </div>
                     </div>
                 </div> --}}
-                <div class="col-6 profile-item__parent">
-                    <div class="profile-item radius-10">
-                        <div class="profile-item__img">
-                            <svg width="40" height="40" fill="#005bff">
-                                <use xlink:href="#open-box"></use>
-                            </svg>
-                        </div>
-                        <div class="profile-item__content">
-                            <a href="{{ route('profile.orders') }}" class="profile-item__title">{{ __('main.my_orders') }}</a>
-                            <span class="d-none d-lg-inline-block">{{ __('main.orders2') }}: {{ $ordersQuantity }}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="my-4">

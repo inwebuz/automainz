@@ -6,6 +6,7 @@ use App\Helpers\Breadcrumbs;
 use App\Helpers\Helper;
 use App\Helpers\LinkItem;
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Providers\RouteServiceProvider;
 use App\Models\SmsVerification;
 use App\Models\User;
@@ -60,9 +61,12 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $locale = app()->getLocale();
         $breadcrumbs = new Breadcrumbs();
         $breadcrumbs->addItem(new LinkItem(__('main.nav.register'), route('register'), LinkItem::STATUS_INACTIVE));
-        return view('auth.register', compact('breadcrumbs'));
+        $page7 = Page::where('id', 7)->withTranslation($locale)->first();
+        $page8 = Page::where('id', 8)->withTranslation($locale)->first();
+        return view('auth.register', compact('breadcrumbs', 'page7', 'page8'));
     }
 
     public function showRegistrationVerifyForm(Request $request)
@@ -180,10 +184,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:191'],
-            'last_name' => ['string', 'max:191'],
+            'last_name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             // 'email' => ['string', 'email', 'max:191', 'unique:users'],
-            'phone_number' => ['string', 'max:191', 'unique:users'],
+            // 'phone_number' => ['string', 'max:191', 'unique:users'],
             // 'phone_number' => ['required', 'string', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);

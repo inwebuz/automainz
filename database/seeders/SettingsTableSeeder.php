@@ -261,7 +261,7 @@ class SettingsTableSeeder extends Seeder
         if (!$setting->exists) {
             $setting->fill([
                 'display_name' => __('seeders.settings.contact.email'),
-                'value'        => 'info@radius.uz',
+                'value'        => 'info@automainz.com',
                 'details'      => '',
                 'type'         => 'text',
                 'order'        => 1,
@@ -317,29 +317,29 @@ class SettingsTableSeeder extends Seeder
         //     ])->save();
         // }
 
-        $setting = $this->findSetting('contact.map');
-        if (!$setting->exists) {
-            $setting->fill([
-                'display_name' => __('seeders.settings.contact.map'),
-                'value'        => '<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab8b3646169d556c091b2246fdf2900904bb3f2f032e992abf228d2bf6035293a&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>',
-                'details'      => '',
-                'type'         => 'text_area',
-                'order'        => 6,
-                'group'        => 'Contact',
-            ])->save();
-        }
+        // $setting = $this->findSetting('contact.map');
+        // if (!$setting->exists) {
+        //     $setting->fill([
+        //         'display_name' => __('seeders.settings.contact.map'),
+        //         'value'        => '<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab8b3646169d556c091b2246fdf2900904bb3f2f032e992abf228d2bf6035293a&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>',
+        //         'details'      => '',
+        //         'type'         => 'text_area',
+        //         'order'        => 6,
+        //         'group'        => 'Contact',
+        //     ])->save();
+        // }
 
-        $setting = $this->findSetting('contact.all_stores_map');
-        if (!$setting->exists) {
-            $setting->fill([
-                'display_name' => 'Код карты - Все магазины',
-                'value'        => '<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A14f7af4a8cb4a7e1f03d71f822ec528a05c8512cb0392b616d6f85bd84676f7d&amp;source=constructor" width="420" height="180"></iframe>',
-                'details'      => '',
-                'type'         => 'text_area',
-                'order'        => 7,
-                'group'        => 'Contact',
-            ])->save();
-        }
+        // $setting = $this->findSetting('contact.all_stores_map');
+        // if (!$setting->exists) {
+        //     $setting->fill([
+        //         'display_name' => 'Код карты - Все магазины',
+        //         'value'        => '<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A14f7af4a8cb4a7e1f03d71f822ec528a05c8512cb0392b616d6f85bd84676f7d&amp;source=constructor" width="420" height="180"></iframe>',
+        //         'details'      => '',
+        //         'type'         => 'text_area',
+        //         'order'        => 7,
+        //         'group'        => 'Contact',
+        //     ])->save();
+        // }
 
         // $setting = $this->findSetting('contact.work_hours');
         // if (!$setting->exists) {
@@ -352,6 +352,18 @@ class SettingsTableSeeder extends Seeder
         //         'group'        => 'Contact',
         //     ])->save();
         // }
+
+        $setting = $this->findSetting('contact.map_link');
+        if (!$setting->exists) {
+            $setting->fill([
+                'display_name' => 'Map link',
+                'value'        => 'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=2070%20Stafford%20Way%20%20Newark%20DE%2019711',
+                'details'      => '',
+                'type'         => 'text',
+                'order'        => 6,
+                'group'        => 'Contact',
+            ])->save();
+        }
 
         $setting = $this->findSetting('contact.telegram');
         if (!$setting->exists) {

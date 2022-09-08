@@ -91,16 +91,6 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function orders()
-    {
-        $user = Auth::user();
-        $breadcrumbs = new Breadcrumbs();
-        $breadcrumbs->addItem(new LinkItem(__('main.profile'), route('profile.show')));
-        $breadcrumbs->addItem(new LinkItem(__('main.orders'), route('profile.orders'), LinkItem::STATUS_INACTIVE));
-        $orders = $user->orders()->with('orderItems.product')->latest()->paginate(20);
-        return view('profile.orders', compact('breadcrumbs', 'user', 'orders'));
-    }
-
     public function requestSellerStatus()
     {
         $breadcrumbs = new Breadcrumbs();

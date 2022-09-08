@@ -35,7 +35,7 @@
         <ul class="nav navbar-nav @if (__('voyager::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
             <li>
                 <a href="{{ route('home') }}" target="_blank">
-                    <span>Перейти на сайт</span>
+                    <span>Go to site</span>
                     <i class="voyager-angle-right" style="vertical-align: middle"></i>
                 </a>
             </li>

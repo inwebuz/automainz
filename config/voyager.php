@@ -151,8 +151,8 @@ return [
 
         'widgets' => [
             PageDimmer::class,
-            CategoryDimmer::class,
-            ProductDimmer::class,
+            // CategoryDimmer::class,
+            // ProductDimmer::class,
         ],
 
     ],

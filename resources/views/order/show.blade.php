@@ -18,28 +18,7 @@
 
     <div class="container py-4 py-lg-5">
 
-        {{-- @auth
-            <div class="mb-5 d-none d-lg-block">
-                <a href="{{ route('profile.orders') }}">
-                    <strong> &larr; {{ __('main.back_to_orders') }}</strong>
-                </a>
-            </div>
-        @endauth --}}
-
         <h1>{{ __('main.view_order') }}</h1>
-
-        {{-- <div class="mb-4">
-            @auth
-                <a href="{{ route('profile.orders') }}" class="btn btn-primary">
-                    <i class="fa fa-angle-left mr-2"></i>
-                    {{ __('main.back_to_orders') }}
-                </a>
-            @endauth
-            <a href="{{ route('order.print', ['order' => $order->id, 'check' => md5($order->created_at)]) }}" class="btn btn-link" target="_blank">
-                <i class="text-dark fa fa-print mr-2"></i>
-                <span class="text-dark">{{ __('main.print_version') }}</span>
-            </a>
-        </div> --}}
 
         <div class="box">
             <h3 class="box-header">
