@@ -73,9 +73,22 @@
                     <p class="info-head__brand">{{ $car->carModel->make->name ?? '' }}</p>
                 </div>
                 <div class="info-head__fav active">
-                    <i class="bx bx-heart"></i>
-                    {{-- <i class="bx bxs-heart"></i> --}}
-                    {{-- <span>24 people saved</span> --}}
+                    <div
+                        class="@if(!app('wishlist')->get($car->id)) add-to-wishlist-btn @else remove-from-wishlist-btn active @endif only-icon"
+                        data-id="{{ $car->id }}"
+                        data-add-url="{{ route('wishlist.add') }}"
+                        data-remove-url="{{ route('wishlist.delete', $car->id) }}"
+                        data-name="{{ $car->getTranslatedAttribute('name') }}"
+                        data-price="{{ $car->price }}"
+                        data-add-text="<i class='bx bx-heart'></i>"
+                        data-delete-text="<i class='bx bxs-heart'></i>"
+                    >
+                        @if(!app('wishlist')->get($car->id))
+                        <i class="bx bx-heart"></i>
+                        @else
+                        <i class="bx bxs-heart"></i>
+                        @endif
+                    </div>
                 </div>
             </div>
             <ul class="info-head__bottom">

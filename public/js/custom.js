@@ -847,7 +847,6 @@ $(function () {
             return false;
         }
         let btnHTML = btn.html();
-        let parentRow = btn.closest(".wishlist-tr-row");
         let url = btn.data("add-url");
         let id = btn.attr("data-id");
         let name = btn.attr("data-name");
@@ -884,14 +883,10 @@ $(function () {
         })
             .done(function (data) {
                 updateWishlistInfo(data.wishlist);
-                if (parentRow.length) {
-                    parentRow.remove();
-                } else {
-                    btn.removeClass("add-to-wishlist-btn")
-                        .addClass("remove-from-wishlist-btn")
-                        .addClass("active")
-                        .html(btn.attr("data-delete-text"));
-                }
+                btn.removeClass("add-to-wishlist-btn")
+                    .addClass("remove-from-wishlist-btn")
+                    .addClass("active");
+                btnHTML = btn.attr("data-delete-text");
             })
             .fail(function (data) {
                 // console.log(data);
@@ -942,12 +937,11 @@ $(function () {
         })
             .done(function (data) {
                 // console.log(data);
-                btn.closest('.wishlist_item_line').remove();
                 updateWishlistInfo(data.wishlist);
                 btn.removeClass("remove-from-wishlist-btn")
                     .addClass("add-to-wishlist-btn")
-                    .removeClass("active")
-                    .html(btn.attr("data-add-text"));
+                    .removeClass("active");
+                btnHTML = btn.attr("data-add-text");
             })
             .fail(function (data) {
                 // console.log(data);

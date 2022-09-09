@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Breadcrumbs;
 use App\Helpers\Helper;
 use App\Helpers\LinkItem;
-use App\Models\Product;
+use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -24,14 +24,14 @@ class WishlistController extends Controller
     public function add(Request $request)
     {
         $data = $request->validate([
-            'id' => 'required|exists:products,id',
+            'id' => 'required|exists:cars,id',
             'name' => 'required',
             'price' => 'required|numeric|min:0'
         ]);
 
         $data['price'] = (float)$data['price'];
         $data['quantity'] = 1;
-        $data['associatedModel'] = Product::findOrFail($request->input('id'));
+        $data['associatedModel'] = Car::findOrFail($request->input('id'));
 
         if (
             $data['associatedModel']->current_price != $data['price']
@@ -44,7 +44,7 @@ class WishlistController extends Controller
 
         return response([
             'wishlist' => $this->getWishlistInfo(app('wishlist')),
-            'message' => __('main.product_added_to_wishlist'),
+            'message' => __('main.added_to_wishlist'),
         ], 201);
     }
 
@@ -54,7 +54,7 @@ class WishlistController extends Controller
 
         return response(array(
             'wishlist' => $this->getWishlistInfo(app('wishlist')),
-            'message' => __('main.product_removed_from_wishlist')
+            'message' => __('main.removed_from_wishlist')
         ), 200);
     }
 
