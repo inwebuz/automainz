@@ -20,6 +20,10 @@ class CreateCarsTable extends Migration
             $table->text('image')->nullable();
             $table->text('background')->nullable();
             $table->text('images')->nullable();
+            $table->text('exterior_images_360')->nullable();
+            $table->text('exterior_images_360_quantity')->nullable();
+            $table->text('exterior_images_360_format')->nullable();
+            $table->text('interior_images_360')->nullable();
             $table->text('description')->nullable();
             $table->mediumText('body')->nullable();
             $table->decimal('price', 15, 2)->default(0);

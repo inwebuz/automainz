@@ -3299,6 +3299,38 @@ class DataRowsTableSeeder extends StandardSeeder
                     'details' => $this->image(1000, $imageThumbs),
                 ],
             ],
+            'exterior_images_360' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => '360 rotation folder link',
+                ],
+            ],
+            'exterior_images_360_quantity' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => '360 rotation images quantity',
+                ],
+            ],
+            'exterior_images_360_format' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => '360 rotation images file format (jpg, png, webp)',
+                ],
+            ],
+            // 'exterior_images_360' => [
+            //     'method' => 'imageRow',
+            //     'data' => [
+            //         'display_name' => '360 exterior images',
+            //         'type' => 'multiple_images',
+            //         'details' => $this->image(1400),
+            //     ],
+            // ],
+            'interior_images_360' => [
+                'method' => 'hiddenRow',
+                'data' => [
+                    'display_name' => '360 interior images',
+                ],
+            ],
             'order' => [
                 // 'method' => 'orderRow',
                 'method' => 'hiddenNumberRow',

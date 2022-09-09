@@ -41,6 +41,9 @@ class CarSeeder extends Seeder
                 'car_model_id' => $carModel->id,
                 'make_id' => $carModel->make->id,
                 'price' => mt_rand(10, 100) * 1000,
+                'exterior_images_360' => '/storage/360/1/',
+                'exterior_images_360_quantity' => 24,
+                'exterior_images_360_format' => 'webp',
             ]);
             $carFeatures = $features->random(4);
             $car->features()->sync($carFeatures);

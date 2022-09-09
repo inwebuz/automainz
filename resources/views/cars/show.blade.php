@@ -9,9 +9,13 @@
 
 <section class="show">
     <div class="gallery">
-        <div class="gallery-main" data-fancybox="gallery" data-src="{{ $car->img }}">
-            <img src="{{ $car->img }}" alt="" />
-        </div>
+        @if ($car->exterior_images_360 && $car->exterior_images_360_quantity)
+            <div class="cloudimage-360" id="gurkha-suv" data-folder="{{ $car->exterior_images_360 }}" data-filename-x="{index}.{{ $car->exterior_images_360_format }}" data-amount-x="{{ $car->exterior_images_360_quantity }}"></div>
+        @else
+            <div class="gallery-main" data-fancybox="gallery" data-src="{{ $car->img }}">
+                <img src="{{ $car->img }}" alt="" />
+            </div>
+        @endif
         <div class="gallery-features">
             <div class="gallery-features__summary">
                 <h3>
@@ -212,4 +216,8 @@
     </div>
 </section>
 
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/js-cloudimage-360-view.min.js') }}"></script>
 @endsection
