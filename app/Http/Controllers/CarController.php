@@ -32,12 +32,11 @@ class CarController extends Controller
 
         $selectedSpecifications = $request->input('specifications', []);
         if (is_array($selectedSpecifications) && count($selectedSpecifications)) {
-            foreach ($params['specifications'] as $key => $value) {
+            foreach ($selectedSpecifications as $key => $value) {
                 $params['specifications'][$key] = array_keys($value);
             }
-            $params['specifications_all'] = collect($params['specifications'])->flatten();
+            $params['specifications_all'] = collect($params['specifications'])->flatten()->toArray();
         }
-        dd($params);
         $features = Feature::active()->where('used_for_filter', 1)->withTranslation($locale)->get();
         $specificationTypes = SpecificationType::active()->where('used_for_filter', 1)->with(['specifications' => function($q) use ($locale) {
             $q->active()->withTranslation($locale);
@@ -91,10 +90,16 @@ class CarController extends Controller
             $q->withTranslation($locale)->with(['make' => function($q1) use ($locale) {
                 $q1->withTranslation($locale)->with([]);
             }]);
-        }])->paginate(9)->appends($request->all());
+        }])->simplePaginate(9)->withQueryString();
 
         if ($request->input('json', '')) {
             return CarResource::collection($cars);
+        }
+        if ($request->input('html', '')) {
+            return response()->json([
+                'html' => view('partials.cars_list', compact('cars'))->render(),
+                'nextPageUrl' => $cars->nextPageUrl(),
+            ]);
         }
 
         return view('cars.index', compact('page', 'breadcrumbs', 'cars', 'params', 'features', 'specificationTypes', 'prices', 'years'));

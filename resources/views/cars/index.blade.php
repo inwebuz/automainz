@@ -38,7 +38,7 @@
                                                 @foreach ($specificationType->specifications as $specification)
                                                     <li class="filter__check">
                                                         <input type="checkbox" id="specification->{{ $specification->id }}" class="checkbox"
-                                                            name="specifications[{{ $specificationType->id }}][{{ $specification->id }}]" />
+                                                            name="specifications[{{ $specificationType->id }}][{{ $specification->id }}]" @if(in_array($specification->id, $params['specifications_all'])) checked @endif />
                                                         <label for="specification->{{ $specification->id }}">{{ $specification->getTranslatedAttribute('name') }}</label>
                                                     </li>
                                                 @endforeach
@@ -178,14 +178,12 @@
                 </aside>
 
                 <main class="main">
-                    <div class="items">
-                        @foreach ($cars as $car)
-                        <div class="item__box">
-                            @include('partials.car_one')
-                        </div>
-                        @endforeach
+                    <div class="items" id="cars-list">
+                        @include('partials.cars_list')
                     </div>
-                    <a class="btn btn--outlined btn--block" style="margin: 10px 0 0">Show more</a>
+                    @if($cars->hasMorePages())
+                    <a href="{{ $cars->nextPageUrl() }}" class="load-more-items btn btn--outlined btn--block" style="margin: 10px 0 0" data-target="#cars-list">{{ __('Show more') }}</a>
+                    @endif
                 </main>
             </div>
         </div>

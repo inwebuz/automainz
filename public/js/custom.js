@@ -171,6 +171,44 @@ $(function () {
         $(this).closest('.alert').remove();
     })
 
+    $('.load-more-items').on('click', function(e){
+        e.preventDefault();
+        let btn = $(this);
+        let targetID = btn.data('target');
+        let target = $(targetID);
+        if (!target.length) {
+            return;
+        }
+        let sendUrl = btn.attr('href');
+        $.ajax({
+            url: sendUrl,
+            dataType: "json",
+            data: {
+                "html": 1
+            },
+            beforeSend: function(){
+                btn.addClass("disabled").prop("disabled", true).append(spinnerHTML());
+            },
+        })
+            .done(function(data){
+                console.log(data);
+                target.append(data.html);
+                if (data.nextPageUrl) {
+                    btn.attr('href', data.nextPageUrl);
+                } else {
+                    btn.hide();
+                }
+            })
+            .fail(function(data){
+                // console.log(data);
+            })
+            .always(function(data){
+                setTimeout(() => {
+                    btn.removeClass("disabled").prop("disabled", false).find('.spinner').remove();
+                }, 400);
+            });
+    })
+
     /* bad eye form */
     let badEyeForm = $(".bad-eye-form");
     $(".btn-bad-eye").on("click", function (e) {
