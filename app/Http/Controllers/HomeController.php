@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Photo;
 use App\Models\Publication;
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**

@@ -22,6 +22,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RssController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SellTradeController;
 use App\Http\Controllers\ShopController;
@@ -142,6 +143,9 @@ Route::group(
 
     // home page
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    // rss
+    Route::get('rss', [RssController::class, 'index'])->name('rss.index');
 
     // shop
     Route::get('cars', [CarController::class, 'index'])->name('cars.index');
