@@ -17,7 +17,8 @@ class CarController extends Controller
     {
         $locale = app()->getLocale();
         $params = [
-            'specifications' => $request->input('specifications', []),
+            'specifications' => [],
+            'specifications_all' => [],
             'features' => [],
             'price_from' => (float)$request->input('price_from', -1),
             'price_to' => (float)$request->input('price_to', -1),
@@ -28,7 +29,15 @@ class CarController extends Controller
         if (is_array($selectedFeatures) && count($selectedFeatures)) {
             $params['features'] = array_keys($selectedFeatures);
         }
-        // dd($params);
+
+        $selectedSpecifications = $request->input('specifications', []);
+        if (is_array($selectedSpecifications) && count($selectedSpecifications)) {
+            foreach ($params['specifications'] as $key => $value) {
+                $params['specifications'][$key] = array_keys($value);
+            }
+            $params['specifications_all'] = collect($params['specifications'])->flatten();
+        }
+        dd($params);
         $features = Feature::active()->where('used_for_filter', 1)->withTranslation($locale)->get();
         $specificationTypes = SpecificationType::active()->where('used_for_filter', 1)->with(['specifications' => function($q) use ($locale) {
             $q->active()->withTranslation($locale);
