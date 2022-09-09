@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CacheController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompareController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SellTradeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SubscriberController;
@@ -142,7 +144,8 @@ Route::group(
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // shop
-    Route::get('shop', [HomeController::class, 'index'])->name('shop');
+    Route::get('cars', [CarController::class, 'index'])->name('cars.index');
+    Route::get('cars/{car}', [CarController::class, 'show'])->name('cars.show');
 
     // zoodpay create transaction
     Route::post('zoodpay/transaction/store', [ZoodpayController::class, 'transactionStore'])->name('zoodpay.transaction.store');
@@ -153,11 +156,14 @@ Route::group(
 
     // search
     Route::get('search', [SearchController::class, 'index'])->name('search');
-    Route::get('search/ajax', [SearchController::class, 'ajax'])->name('search.ajax');
 
     // contacts
     Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
     Route::post('contacts/send', [ContactController::class, 'send'])->name('contacts.send');
+
+    // sell-trade
+    Route::get('sell-trade', [SellTradeController::class, 'index'])->name('sell-trade');
+    Route::post('sell-trade', [SellTradeController::class, 'store'])->name('sell-trade.store');
 
     // subscriber
     Route::post('subscriber/subscribe', [SubscriberController::class, 'subscribe'])->name('subscriber.subscribe');

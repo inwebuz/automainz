@@ -309,10 +309,10 @@ class MenuItemsTableSeeder extends Seeder
         $this->seedMenuItems($menu, $menuItems);
 
         $customMenus = [
-            'Shop' => ['Browse By Category', 'View All Inventory', 'Find a Store', ],
+            'Shop' => ['Cars', 'Find a Store', ],
             'Sell/Trade' => ['Get an Online Offer', ],
             'Finance' => ['How it Works', 'Automainz Auto Finance', ],
-            'About' => ['About Automainz', 'Contact Us', ],
+            'About' => ['About Automainz', 'Contacts', ],
             'Careers' => ['Search Jobs', ],
         ];
 

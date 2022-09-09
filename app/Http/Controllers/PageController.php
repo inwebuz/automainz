@@ -14,27 +14,22 @@ class PageController extends Controller
     /**
      * show single page
      */
-    public function index(Page $page, $slug)
+    public function show(Request $request, $slug)
     {
         $locale = app()->getLocale();
-        // $page = Page::where('slug', $slug)->withTranslation($locale)->firstOrFail();
+        $defaultLocale = config('voyager.multilingual.default');
+        if ($locale == $defaultLocale) {
+            $page = Page::where('slug', $slug)->firstOrFail();
+        } else {
+            $page = Page::whereTranslation('slug', '=', $slug, [$locale], false)->withTranslation($locale)->firstOrFail();
+        }
         Helper::checkModelActive($page);
         $breadcrumbs = new Breadcrumbs();
 
         $page->increment('views');
         $page->load('translations');
 
-        if ($page->parent_id) {
-            $parentPage = $page->parent;
-            $parentPage->load('translations');
-            $breadcrumbs->addItem(new LinkItem($parentPage->getTranslatedAttribute('name'), $parentPage->url));
-        }
-        $siblingPages = Helper::siblingPages($page);
-        if (!$page->parent_id) {
-            $breadcrumbs->addItem(new LinkItem($page->getTranslatedAttribute('name'), $page->url, LinkItem::STATUS_INACTIVE));
-        }
-
-        return view('page.index', compact('breadcrumbs', 'page', 'siblingPages'));
+        return view('page.show', compact('breadcrumbs', 'page'));
     }
 
     public function print(Page $page)

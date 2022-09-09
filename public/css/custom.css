@@ -348,15 +348,19 @@
     position: relative;
 }
 .ajax-search-results {
-    position: fixed;
+    position: absolute;
     width: 100%;
-    height: 100%;
+    max-height: 505px;
+    border-radius: 10px;
+    border: 2px solid #F2F2F2;
+    background-color: #fff;
     left: 0;
-    top: 75px;
+    top: 100%;
     z-index: 1000;
     display: none;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 }
-.ajax-search-results::before {
+/* .ajax-search-results::before {
     content: '';
     display: block;
     width: 100%;
@@ -365,8 +369,8 @@
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.7);
-}
-@media all and (max-width: 991px) {
+} */
+/* @media all and (max-width: 991px) {
     .ajax-search-results {
         top: 133px;
     }
@@ -375,14 +379,12 @@
     .ajax-search-results {
         top: 110px;
     }
-}
+} */
 .ajax-search-results-content {
     position: relative;
-    background-color: #fff;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
-    max-height: 80%;
-    border-top: 1px solid #eee;
+    max-height: 500px;
+    padding: 20px 0;
 }
 .ajax-search-results.active {
     display: block;
@@ -390,13 +392,15 @@
 .ajax-search-results .list-group-item {
     display: flex;
     flex-wrap: nowrap;
-    font-size: 14px;
+    font-size: 18px;
     align-items: center;
     border: none;
+    padding: 10px 0;
 }
 .ajax-search-results img {
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 10px;
     width: auto;
     height: auto;
     margin-right: 10px;
@@ -672,6 +676,8 @@
 }
 /* end product groups */
 
+
+/* temp */
 .alert-container {
     position: fixed;
     right: 15px;
@@ -679,12 +685,19 @@
     z-index: 1000;
 }
 .alert {
+    border-radius: 10px;
     margin-bottom: 15px;
     padding: 15px 40px 15px 20px;
     border: 1px solid #fff;
     background-color: #fff;
     color: #000;
     position: relative;
+}
+.form-result {
+    width: 100%;
+}
+.form-result .alert {
+    margin-bottom: 30px;
 }
 .alert-close {
     position: absolute;
@@ -707,3 +720,27 @@
 .bg-standard {
     background-image: url(../img/hero.jpg);
 }
+
+.d-flex {
+    display: flex;
+}
+.col-50 {
+    flex: 0 0 50%;
+}
+
+@media all and (max-width: 720px) {
+    .d-flex {
+        flex-wrap: wrap;
+    }
+    .col-50 {
+        flex: 0 0 100%;
+        margin-bottom: 30px;
+    }
+}
+.btn .spinner {
+    line-height: 1;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/* temp */

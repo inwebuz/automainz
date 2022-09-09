@@ -40,9 +40,9 @@ class Header extends Component
         $pageContact = Page::findOrFail(2);
         $pageContact->load('translations');
 
-        $headerClass = '';
-        if (in_array(Route::currentRouteName(), ['profile.show', 'profile.edit', 'wishlist.index'])) {
-            $headerClass = 'header--white';
+        $headerClass = 'header--white';
+        if (in_array(Route::currentRouteName(), ['home', 'sell-trade'])) {
+            $headerClass = '';
         }
 
         $switcher = Helper::languageSwitcher();

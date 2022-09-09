@@ -12,104 +12,89 @@
 
 @section('content')
 
-<main class="main">
+<div class="container">
 
-    <section class="content-header">
-        <div class="container">
-            @include('partials.breadcrumbs')
+    <!-- box -->
+    <section class="section p0-w480">
+        <div class="box__container box__container--content" style="background-image: url({{ asset('img/finance.jpg') }});">
+            <div class="box__content">
+                <h1>{{ $page->getTranslatedAttribute('name') }}</h1>
+                {{-- <a href="#" class="btn btn--main">GET pre-approved</a> --}}
+            </div>
         </div>
     </section>
 
-    <div class="container py-4 py-lg-5">
 
-        <h1>{{ $page->getTranslatedAttribute('name') }}</h1>
+    <div class="d-flex">
+        <div class="col-50">
 
-        <div class="row mb-5">
-            <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0">
+            <h3 class="contact-title mb-4">{{ __('main.our_contacts') }}</h3>
+            <br>
 
-                <h3 class="contact-title mb-4">{{ __('main.our_contacts') }}</h3>
-
-                <div class="media contact-info mb-3">
-                    {{-- <i class="fa fa-map-marker mr-3 mt-1"></i> --}}
-                    <div class="media-body">
-                        <span>{{ $address }}</span>
-                    </div>
+            <p class="media contact-info mb-3">
+                <i class="bx bxs-map"></i>
+                <span>{{ $address }}</span>
+            </p>
+            <br>
+            <p class="media contact-info mb-3">
+                <i class="bx bxs-phone"></i>
+                <a href="tel:{{ Helper::phoneFormat($phone) }}">{{ $phone }}</a>
+            </p>
+            <br>
+            {{-- <div class="media contact-info mb-3">
+                <div class="media-body">
+                    <span><a href="mailto:{{ $email }}" class="black-link">{{ $email }}</a></span>
                 </div>
-                <div class="media contact-info mb-3">
-                    {{-- <i class="fa fa-phone mr-3 mt-1"></i> --}}
-                    <div class="media-body">
-                        <span><a href="tel:{{ Helper::phoneFormat($phone) }}" class="black-link">{{ $phone }}</a></span>
-                        @if ($phone2)
-                            <br>
-                            <span><a href="tel:{{ Helper::phoneFormat($phone2) }}" class="black-link">{{ $phone2 }}</a></span>
-                        @endif
-                    </div>
-                </div>
-                <div class="media contact-info mb-3">
-                    {{-- <i class="fa fa-envelope mr-3 mt-1"></i> --}}
-                    <div class="media-body">
-                        <span><a href="mailto:{{ $email }}" class="black-link">{{ $email }}</a></span>
-                    </div>
-                </div>
+            </div> --}}
 
-                <div class="contact-map my-4">
-                    {!! Helper::setting('contact.map') !!}
-                </div>
+            {{-- <div class="contact-map my-4">
+                {!! Helper::setting('contact.map') !!}
+            </div> --}}
 
-            </div>
-            <div class="col-lg-6 order-lg-1">
-
-                <h3 class="contact-title">{{ __('main.write_us') }}</h3>
-
-                <form class="contact-form" method="post"  action="{{ route('contacts.send') }}">
-
-                    @csrf
-
-                    <div class="form-result"></div>
-
-                    <div class="form-group">
-                        <label for="form_name">{{ __('main.form.your_name') }}&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control" name="name" id="form_name" type="text" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="form_phone">{{ __('main.form.phone') }}&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control" name="phone" id="form_phone" type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="form_message">{{ __('main.form.message') }}</label>
-                        <textarea class="form-control" name="message" id="form_message" rows="4"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="form_security_code">{{ __('main.form.security_code') }}</label>
-                        <div class="row gutters-5">
-                            <div class="col-lg-6 mb-3 mb-lg-0">
-                                <input type="text" name="captcha" class="form-control" id="form_security_code" placeholder="{{ __('main.form.security_code') }}" required>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="captcha-container">
-                                    <img src="{{ asset('images/captcha.png') }}" alt="Captcha" class="img-fluid rounded">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-primary radius-6">{{ __('main.form.send') }}</button>
-                    </div>
-                </form>
-            </div>
         </div>
+        <div class="col-50">
 
-        @if ($page->getTranslatedAttribute('body'))
-            <div class="text-block my-5">
-                {!! $page->getTranslatedAttribute('body') !!}
-            </div>
-        @endif
+            <h3 class="contact-title">{{ __('main.write_us') }}</h3>
+            <br>
 
+            <form class="form contact-form" method="post"  action="{{ route('contacts.send') }}">
+
+                @csrf
+
+                <div class="form-result"></div>
+
+                <div class="input__box input__box--100">
+                    <input type="text" name="name" class="input" required />
+                    <p class="input__placeholder">{{ __('main.form.your_name') }}</p>
+                </div>
+                <div class="input__box input__box--100">
+                    <input type="text" name="phone" class="input" required />
+                    <p class="input__placeholder">{{ __('main.form.phone') }}</p>
+                </div>
+                <div class="input__box input__box--100">
+                    <input type="text" name="message" class="input">
+                    <p class="input__placeholder">{{ __('main.form.message') }}</p>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn--main">{{ __('main.form.send') }}</button>
+                </div>
+            </form>
+
+            <br>
+            <br>
+            <br>
+        </div>
     </div>
 
-</main>
+    @if ($page->getTranslatedAttribute('body'))
+        <br>
+        <br>
+        <div class="text-block my-5">
+            {!! $page->getTranslatedAttribute('body') !!}
+        </div>
+    @endif
+
+</div>
 
 @endsection

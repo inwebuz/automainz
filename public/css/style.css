@@ -2790,6 +2790,7 @@ input[type=range]::-moz-range-thumb {
     color: #fff;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-bottom: 5px;
 }
@@ -4301,7 +4302,7 @@ input[type=range]::-moz-range-thumb {
     width: calc((100vw - 1600px) / 2 + 350px - 7.5px);
     background-color: #fff;
     position: relative;
-    z-index: 99;
+    /* z-index: 99; */
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;

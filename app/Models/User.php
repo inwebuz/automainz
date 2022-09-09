@@ -59,9 +59,15 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         parent::boot();
 
         static::updating(function (User $user) {
-            if (in_array('email', $user->getChanges())) {
+            if ($user->isDirty('email')) {
                 $user->email_verified_at = null;
                 $user->sendEmailVerificationNotification();
+            }
+        });
+
+        static::saving(function (User $user) {
+            if ($user->isDirty('first_name') || $user->isDirty('last_name')) {
+                $user->name = trim($user->first_name . ' ' . $user->last_name);
             }
         });
     }

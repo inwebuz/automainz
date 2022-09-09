@@ -21,6 +21,9 @@ class SpecificationTypeSeeder extends Seeder
                 'name' => $value,
                 'slug' => Str::slug($value),
                 'status' => 1,
+                'used_for_filter' => in_array($value, ['Body', 'Fuel Type']) ? 1 : 0,
+                'is_main' => in_array($value, ['Engine', 'Fuel Type', 'Transmission']) ? 1 : 0,
+                'image' => 'specification_types/' . Str::slug($value) . '.png',
             ]);
         }
     }

@@ -80,7 +80,12 @@ $twitter = Helper::setting('contact.twitter');
     <div class="footer__bottom">
         <div class="container">
             <div class="footer__bottom--in">
-                <p class="footer__copy">{{ date('Y') }} &copy; {{ Helper::siteTitle() }}</p>
+                <p class="footer__copy">
+                    {{ date('Y') }}
+                    &copy;
+                    {{ __('main.all_rights_reserved') }}.
+                    {{ Helper::siteTitle() }}
+                </p>
                 <a href="https://inweb.uz" class="footer__author" target="_blank">
                     <p>{{ __('main.developer') }}</p>
                     <span>-</span>

@@ -39,7 +39,7 @@ return [
         'country' => 'Страна',
         'created_at' => 'Дата создания',
         'default_selected' => 'Выбрано по умолчанию',
-        'description' => 'Описание',
+        'description' => 'Description',
         'details' => [
             'any_files' => 'Любые файлы',
             'slug_description' => 'Название для ссылки страницы',
@@ -399,12 +399,12 @@ return [
             'plural' => 'Направления',
         ],
         'specification_type' => [
-            'singular' => 'Specifictaion type',
-            'plural' => 'Specifictaion types',
+            'singular' => 'Specification type',
+            'plural' => 'Specification types',
         ],
         'specification' => [
-            'singular' => 'Specifictaion',
-            'plural' => 'Specifictaions',
+            'singular' => 'Specification',
+            'plural' => 'Specifications',
         ],
         'static_text' => [
             'singular' => 'Static text',
@@ -519,8 +519,8 @@ return [
         'special_events' => 'Мероприятия',
         'specialists' => 'Specialists',
         'specializations' => 'Specializations',
-        'specification_types' => 'Specifictaion types',
-        'specifications' => 'Specifictaions',
+        'specification_types' => 'Specification types',
+        'specifications' => 'Specifications',
         'static_texts' => 'Static texts',
         'stickers' => 'Stickers',
         'stores' => 'Stores',

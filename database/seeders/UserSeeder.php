@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin2@admin.com',
             'role_id' => Role::where('name', 'admin')->firstOrFail(),
-            'phone_number' => '998908081239'
+            'phone_number' => '998974072030'
         ]);
 
         User::factory()->create([

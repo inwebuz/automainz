@@ -23,8 +23,11 @@ class Car extends Model
 
     protected $guarded = [];
 
+    protected $with = ['carModel'];
+
     public static $imgSizes = [
-        'small' => [160, 160],
+        'small' => [308, 173],
+        'medium' => [365, 205],
     ];
 
     protected $translatable = ['name', 'slug', 'description', 'body', 'seo_title', 'meta_description', 'meta_keywords'];
@@ -33,6 +36,22 @@ class Car extends Model
         'saved' => ModelSaved::class,
         'deleted' => ModelDeleted::class,
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Car $car) {
+            $car->mileage = (int)$car->mileage;
+            $car->year = (int)$car->year;
+            if ($car->year < 1900) {
+                $car->year = 1900;
+            }
+            if ($car->year > 2100) {
+                $car->year = 2100;
+            }
+        });
+    }
 
     public function searches()
     {
@@ -77,6 +96,11 @@ class Car extends Model
     public function getImgAttribute()
     {
         return $this->image ? Voyager::image($this->image) : asset('images/no-product-image.jpg');
+    }
+
+    public function getfeatureSummaryImgAttribute()
+    {
+        return $this->feature_summary_image ? Voyager::image($this->feature_summary_image) : asset('images/no-product-image.jpg');
     }
 
     public function getMicroImgAttribute()
@@ -153,11 +177,24 @@ class Car extends Model
             $lang = app()->getLocale();
         }
         $slug = $this->getTranslatedAttribute('slug', $lang) ?: $this->slug;
-        $url = 'brand/' . $this->id . '-' . $slug;
+        // $url = 'cars/' . $this->id . '-' . $slug;
+        $url = 'cars/' . $this->id;
         return LaravelLocalization::localizeURL($url, $lang);
     }
     public function isDiscounted()
     {
         return ($this->sale_price > 0 && $this->sale_price < $this->price);
+    }
+
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function getFullNameAttribute()
+    {
+        $carModel = $this->carModel;
+        $carModel->load('translations');
+        return $carModel->full_name . ' (' . $this->year . ')';
     }
 }

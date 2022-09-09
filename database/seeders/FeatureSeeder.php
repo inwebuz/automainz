@@ -22,6 +22,7 @@ class FeatureSeeder extends Seeder
                 'slug' => Str::slug($value),
                 'status' => 1,
                 'source' => 1,
+                'used_for_filter' => in_array($value, ['ABS Brakes', 'Air Conditioning']) ? 1 : 0,
             ]);
         }
     }

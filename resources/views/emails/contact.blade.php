@@ -5,28 +5,22 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta content="width=device-width" name="viewport" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-    <title>Контактная форма</title>
+    <title>Contact form</title>
 </head>
 
 <body style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #FFFFFF;">
     <h1>
-        {{ setting('site.title') }} - Контактная форма
+        {{ setting('site.title') }} - Contact form
     </h1>
 
     <p>
-        <strong>Имя:</strong> {{ $contact->name }} <br />
-        <strong>Телефон:</strong> {{ $contact->phone }} <br />
-        <strong>Email:</strong> {{ $contact->email }} <br />
-        <strong>Сообщение:</strong> {{ $contact->message }} <br />
-        <strong>Форма:</strong> {{ $contact->type_title }} <br />
-        @if($product)
-        <strong>Товар:</strong> <a href="{{ $product->url }}" target="_blank">{{ $product->name }}</a> <br />
-        @endif
-        @if($product)
-        <strong>Товар:</strong> <a href="{{ $product->url }}" target="_blank">{{ $product->name }}</a> <br />
-        @endif
-        @if($category)
-        <strong>Категория:</strong> <a href="{{ $category->url }}" target="_blank">{{ $category->name }}</a> <br />
+        <strong>Name:</strong> {{ $contact->name }} <br />
+        <strong>Phone number:</strong> {{ $contact->phone }} <br />
+        <strong>E-mail:</strong> {{ $contact->email }} <br />
+        <strong>Message:</strong> {{ $contact->message }} <br />
+        <strong>Form:</strong> {{ $contact->type_title }} <br />
+        @if($car)
+        <strong>Car:</strong> <a href="{{ $car->url }}" target="_blank">{{ $car->full_name }}</a> <br />
         @endif
     </p>
 </body>

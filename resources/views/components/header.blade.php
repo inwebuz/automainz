@@ -1,4 +1,5 @@
-{{-- @if (auth()->check() && auth()->user()->isAdmin())
+{{-- @if (auth()->check() &&
+    auth()->user()->isAdmin())
 <div class="py-3 px-3 text-light position-fixed"
     style="top: 0; left: 0; z-index: 10000;width: 220px;background-color: #000;">
     <div class="container-fluid">
@@ -16,7 +17,7 @@
             </a>
             <ul class="header__nav">
                 @foreach ($headerMenuItems as $item)
-                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
+                    <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
                 @endforeach
             </ul>
             <div class="header__controls">
@@ -56,44 +57,44 @@
                     <div class="select-box">
                         <div class="select-box__in">
                             @guest
-                            <a href="{{ route('login') }}" class="select-box__link">
-                                <span>{{ __('Sign in') }}</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="select-box__link">
-                                <span>{{ __('Register') }}</span>
-                            </a>
+                                <a href="{{ route('login') }}" class="select-box__link">
+                                    <span>{{ __('Sign in') }}</span>
+                                </a>
+                                <a href="{{ route('register') }}" class="select-box__link">
+                                    <span>{{ __('Register') }}</span>
+                                </a>
                             @else
-                            <a href="{{ route('profile.show') }}" class="select-box__link">
-                                <svg>
-                                    <use xlink:href="#icon-home"></use>
-                                </svg>
-                                <span>{{ __('My Automainz') }}</span>
-                            </a>
-                            <a href="{{ route('wishlist.index') }}" class="select-box__link">
-                                <svg>
-                                    <use xlink:href="#icon-heart"></use>
-                                </svg>
-                                <span>{{ __('My Favorites') }}</span>
-                            </a>
-                            {{-- <a href="profile-searchs.html" class="select-box__link">
+                                <a href="{{ route('profile.show') }}" class="select-box__link">
+                                    <svg>
+                                        <use xlink:href="#icon-home"></use>
+                                    </svg>
+                                    <span>{{ __('My Automainz') }}</span>
+                                </a>
+                                <a href="{{ route('wishlist.index') }}" class="select-box__link">
+                                    <svg>
+                                        <use xlink:href="#icon-heart"></use>
+                                    </svg>
+                                    <span>{{ __('My Favorites') }}</span>
+                                </a>
+                                {{-- <a href="profile-searchs.html" class="select-box__link">
                                 <svg>
                                     <use xlink:href="#icon-loop"></use>
                                 </svg>
                                 <span>My Saved Cars</span>
                             </a> --}}
-                            <hr />
-                            {{-- <a href="#" class="select-box__link">
+                                <hr />
+                                {{-- <a href="#" class="select-box__link">
                                 <span>My Orders</span>
                             </a> --}}
-                            <a href="{{ route('profile.edit') }}" class="select-box__link">
-                                <span>{{ __('Profile Settings') }}</span>
-                            </a>
-                            <a href="javascript:;" class="select-box__link" style="color: #e95050" onclick="document.getElementById('logout-form').submit()">
-                                <span>{{ __('Sign Out') }}</span>
-                            </a>
-                            <form action="{{ route('logout') }}" method="POST" style="display: none" id="logout-form">
-                                @csrf
-                            </form>
+                                <a href="{{ route('profile.edit') }}" class="select-box__link">
+                                    <span>{{ __('Profile Settings') }}</span>
+                                </a>
+                                <a href="javascript:;" class="select-box__link" style="color: #e95050" onclick="document.getElementById('logout-form').submit()">
+                                    <span>{{ __('Sign Out') }}</span>
+                                </a>
+                                <form action="{{ route('logout') }}" method="POST" style="display: none" id="logout-form">
+                                    @csrf
+                                </form>
                             @endguest
 
                         </div>
@@ -109,10 +110,10 @@
                     <div class="select-box">
                         <div class="select-box__in">
                             @foreach ($switcher->getValues() as $value)
-                            <a href="{{ $value->url }}" class="select-box__link">
-                                <img src="{{ asset('img/icons/flag-' . $value->key . '.svg') }}" alt="{{ $value->key }}" />
-                                <span class="text-uppercase ">{{ $value->key }}</span>
-                            </a>
+                                <a href="{{ $value->url }}" class="select-box__link">
+                                    <img src="{{ asset('img/icons/flag-' . $value->key . '.svg') }}" alt="{{ $value->key }}" />
+                                    <span class="text-uppercase ">{{ $value->key }}</span>
+                                </a>
                             @endforeach
                         </div>
                     </div>
@@ -120,24 +121,31 @@
             </div>
         </div>
         <div class="header__search">
-            <form>
+            <form action="{{ route('search') }}" class="ajax-search-form ajax-search-container">
                 <div class="input__box input__box--100">
                     <input
                         type="text"
-                        class="input"
+                        class="input ajax-search-input"
+                        name="q"
                         placeholder="{{ __('Search by Model or Keyword') }}"
-                        required
-                    />
-                    <button type="submit" class="input__btn">
+                        required />
+                    <button type="button" class="input__btn">
                         <i class="bx bx-search"></i>
                     </button>
+                </div>
+                <div class="ajax-search-results">
+                    <div class="ajax-search-results-content py-4">
+                        <div class="container">
+                            <div class="list-group cars-list-group"></div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
         <div class="header__bottom">
             <ul class="header__nav">
                 @foreach ($headerMenuItems as $item)
-                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
+                    <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
                 @endforeach
             </ul>
         </div>

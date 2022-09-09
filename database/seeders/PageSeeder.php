@@ -41,7 +41,7 @@ class PageSeeder extends Seeder
 
         $page = Page::factory()->create([
             'name' => 'Shop',
-            'slug' => 'shop',
+            'slug' => 'cars',
             'order' => 10,
             'show_in' => 2,
         ]);
@@ -73,6 +73,35 @@ class PageSeeder extends Seeder
             'show_in' => 0,
         ]);
 
-
+        $page = Page::factory()->create([
+            'name' => 'Find a Store',
+            'slug' => Str::slug('Find a Store'),
+            'order' => 60,
+            'show_in' => 0,
+        ]);
+        $page = Page::factory()->create([
+            'name' => 'Get an Online Offer',
+            'slug' => Str::slug('Get an Online Offer'),
+            'order' => 60,
+            'show_in' => 0,
+        ]);
+        $page = Page::factory()->create([
+            'name' => 'How it Works',
+            'slug' => Str::slug('How it Works'),
+            'order' => 60,
+            'show_in' => 0,
+        ]);
+        $page = Page::factory()->create([
+            'name' => 'Automainz Auto Finance',
+            'slug' => Str::slug('Automainz Auto Finance'),
+            'order' => 60,
+            'show_in' => 0,
+        ]);
+        $page = Page::factory()->create([
+            'name' => 'Search Jobs',
+            'slug' => Str::slug('Search Jobs'),
+            'order' => 60,
+            'show_in' => 0,
+        ]);
     }
 }

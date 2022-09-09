@@ -3,6 +3,8 @@
 
 @section('content')
 
+@include('partials.alerts')
+
 <section class="profile">
 
     @include('partials.sidebar_profile')
@@ -10,13 +12,13 @@
     <main class="field">
         <h1 class="field__title">{{ __('Profile settings') }}</h1>
         <div class="bar__wrapper">
-            <div class="bar">
+            <div class="bar active">
                 <div class="bar__head">
                     <h2 class="bar__title">{{ __('Personal information') }}</h2>
-                    <ul class="bar__actions">
+                    {{-- <ul class="bar__actions">
                         <li class="bar__actions--open" data-open>{{ __('Update') }}</li>
                         <li class="bar__actions--close" data-close>{{ __('Close') }}</li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 <h3 class="bar__name">{{ $user->name }}</h3>
                 <div class="bar__form">
@@ -24,16 +26,16 @@
                         @method('PUT')
                         @csrf
                         <div class="input__box input__box--50">
-                            <input type="text" class="input" value="Rick" required />
-                            <p class="input__placeholder">First name</p>
+                            <input type="text" class="input" name="first_name" value="{{ $user->first_name }}" required />
+                            <p class="input__placeholder">{{ __('First name') }} *</p>
                         </div>
                         <div class="input__box input__box--50">
-                            <input type="text" class="input" value="Astley" required />
-                            <p class="input__placeholder">Last name</p>
+                            <input type="text" class="input" name="last_name" value="{{ $user->last_name }}" required />
+                            <p class="input__placeholder">{{ __('Last name') }} *</p>
                         </div>
                         <div class="input__box input__box--100">
-                            <input type="text" class="input" />
-                            <p class="input__placeholder">Address (optional)</p>
+                            <input type="text" class="input" name="address" value="{{ $user->address }}" />
+                            <p class="input__placeholder">{{ __('Address') }}</p>
                         </div>
                         {{-- <div class="input__box input__box--100">
                             <input type="text" class="input" />
@@ -59,21 +61,21 @@
                             <p class="input__placeholder">City (optional)</p>
                         </div> --}}
                         <div class="bar__btns">
-                            <a class="btn btn--outlined" data-close> Cancel </a>
-                            <button type="submit" class="btn btn--main">Save</button>
+                            {{-- <a href="javascript:;" class="btn btn--outlined" data-close>{{ __('Cancel') }}</a> --}}
+                            <button type="submit" class="btn btn--main">{{ __('Save') }}</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="bar">
+            <div class="bar active">
                 <div class="bar__head">
-                    <h2 class="bar__title">Contact settings</h2>
-                    <ul class="bar__actions">
-                        <li class="bar__actions--open" data-open>Update</li>
-                        <li class="bar__actions--close" data-close>Close</li>
-                    </ul>
+                    <h2 class="bar__title">{{ __('Contact settings') }}</h2>
+                    {{-- <ul class="bar__actions">
+                        <li class="bar__actions--open" data-open>{{ __('Update') }}</li>
+                        <li class="bar__actions--close" data-close>{{ __('Close') }}</li>
+                    </ul> --}}
                 </div>
-                <p class="bar__text">Let us know the best way to contact you.</p>
+                <p class="bar__text">{{ __('Let us know the best way to contact you') }}</p>
                 <div class="bar__email">
                     <b>{{ __('E-mail') }}</b>
                     <span>{{ $user->email }}</span>
@@ -83,58 +85,53 @@
                         @method('PUT')
                         @csrf
                         <div class="input__box input__box--50">
-                            <input
-                                type="email"
-                                class="input"
-                                value="rickroll@gmail.com"
-                                required
-                            />
-                            <p class="input__placeholder">Email</p>
+                            <input type="email" name="email" class="input" value="{{ $user->email }}" required />
+                            <p class="input__placeholder">{{ __('E-mail') }}</p>
                         </div>
                         <div class="input__box input__box--50">
-                            <input
-                                type="text"
-                                class="input"
-                                value="9133846697"
-                                required
-                                data-format-phone-number
-                            />
-                            <p class="input__placeholder">Phone number</p>
+                            <input type="text" class="input" name="phone_number" value="{{ $user->phone_number }}" required data-format-phone-number />
+                            <p class="input__placeholder">{{ __('Phone number') }}</p>
                         </div>
                         <div class="bar__btns">
-                            <a class="btn btn--outlined" data-close> Cancel </a>
-                            <button type="submit" class="btn btn--main">Save</button>
+                            {{-- <a href="javascript:;" class="btn btn--outlined" data-close>{{ __('Cancel') }}</a> --}}
+                            <button type="submit" class="btn btn--main">{{ __('Save') }}</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="bar">
+            <div class="bar active">
                 <div class="bar__head">
-                    <h2 class="bar__title">Password and security</h2>
-                    <ul class="bar__actions">
-                        <li class="bar__actions--open" data-open>Update</li>
-                        <li class="bar__actions--close" data-close>Close</li>
-                    </ul>
+                    <h2 class="bar__title">{{ __('Password and security') }}</h2>
+                    {{-- <ul class="bar__actions">
+                        <li class="bar__actions--open" data-open>{{ __('Update') }}</li>
+                        <li class="bar__actions--close" data-close>{{ __('Close') }}</li>
+                    </ul> --}}
                 </div>
-                <p class="bar__text">Manage your signin and security settings</p>
+                <p class="bar__text">{{ __('Manage your signin and security settings') }}</p>
                 <div class="bar__form">
                     <form class="form" action="{{ route('profile.password') }}" method="post">
                         @csrf
                         <div class="input__box input__box--100">
-                            <input type="password" class="input" name="current_password" required />
-                            <p class="input__placeholder">Current password</p>
+                            <input type="password" class="input @error('current_password') error @enderror" name="current_password" required />
+                            <p class="input__placeholder">{{ __('Current password') }}</p>
+                            @error('current_password')
+                            <span class="input__error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="input__box input__box--100">
-                            <input type="password" class="input" name="password" required />
-                            <p class="input__placeholder">Password</p>
+                            <input type="password" class="input @error('password') error @enderror" name="password" required />
+                            <p class="input__placeholder">{{ __('Password') }}</p>
+                            @error('password')
+                            <span class="input__error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="input__box input__box--100">
                             <input type="password" class="input" name="password_confirmation" required />
-                            <p class="input__placeholder">Confirm Password</p>
+                            <p class="input__placeholder">{{ __('Confirm Password') }}</p>
                         </div>
                         <div class="bar__btns">
-                            <a class="btn btn--outlined" data-close> Cancel </a>
-                            <button type="submit" class="btn btn--main">Save</button>
+                            {{-- <a href="javascript:;" class="btn btn--outlined" data-close>{{ __('Cancel') }}</a> --}}
+                            <button type="submit" class="btn btn--main">{{ __('Save') }}</button>
                         </div>
                     </form>
                 </div>
@@ -158,7 +155,7 @@
                             <p class="input__placeholder">Confirm Password</p>
                         </div>
                         <div class="bar__btns">
-                            <a class="btn btn--outlined" data-close> Cancel </a>
+                            <a href="javascript:;" class="btn btn--outlined" data-close> Cancel </a>
                             <button class="btn btn--red">Delete Profile</button>
                         </div>
                     </form>

@@ -29,7 +29,7 @@ return [
         'delivery_settings' => false,
         'export'            => false,
         'feauture_groups'   => false,
-        'feautures'         => true,
+        'features'          => true,
         'galleries'         => false,
         'genders'           => false,
         'import'            => false,

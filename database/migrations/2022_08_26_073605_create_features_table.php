@@ -30,6 +30,7 @@ class CreateFeaturesTable extends Migration
             $table->text('meta_keywords')->nullable();
             $table->bigInteger('order')->default(0);
             $table->text('additional_info')->nullable();
+            $table->tinyInteger('used_for_filter')->default(0);
             $table->timestamps();
         });
     }

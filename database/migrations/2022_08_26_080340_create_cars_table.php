@@ -32,6 +32,7 @@ class CreateCarsTable extends Migration
             $table->unsignedBigInteger('views')->default(0);
             $table->bigInteger('order')->default(0);
             $table->decimal('rating', 8, 2)->default(5);
+            $table->text('feature_summary_image')->nullable();
 
             $table->foreignId('make_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('car_model_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();

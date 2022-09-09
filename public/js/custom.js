@@ -102,7 +102,6 @@ $(function () {
 
     /* search-form */
     let searchInputTimeout;
-    let searchProcessing = false;
     let searchXHR;
     function hideAjaxSearch() {
         $('.ajax-search-results').removeClass('active');
@@ -113,91 +112,59 @@ $(function () {
         }
     });
 
-    $('.ajax-search-input').on('input focus', function(e){
-        let input = $(this);
+    function ajaxSearch(){
+        let input = $('.ajax-search-input');
         if (input.val().length < 3) {
             hideAjaxSearch();
             return;
         }
-        clearTimeout(searchInputTimeout);
-        searchInputTimeout = setTimeout(() => {
-            if (searchProcessing) {
-                searchXHR.abort();
+        let form = input.closest('form');
+        let container = input.closest('.ajax-search-container');
+        let results = container.find('.ajax-search-results')
+        let btn = form.find('[type="button"]');
+        let btnHTML = btn.html();
+        let sendUrl = form.attr('action');
+        let sendData = form.serialize() + '&json=1';
+        $.ajax({
+            url: sendUrl,
+            dataType: "json",
+            data: sendData,
+            beforeSend: function() {
+                btn.addClass("disabled").prop("disabled", true).html(spinnerHTML());
             }
-            searchProcessing = true;
-            let form = input.closest('form');
-            let container = $(this).closest('.ajax-search-container');
-            let results = container.find('.ajax-search-results')
-            let btn = form.find('[type="submit"]');
-            let btnHTML = btn.html();
-            let sendUrl = form.attr('action');
-            let sendData = form.serialize() + '&json=1';
-            searchXHR = $.ajax({
-                url: sendUrl,
-                dataType: "json",
-                data: sendData,
-                beforeSend: function() {
-                    btn.addClass("disabled").prop("disabled", true).html(spinnerHTML());
-                }
-            })
-                .done(function(data) {
-                    // console.log(data)
-                    results.find('.list-group').empty();
-                    if (data.brands.length || data.categories.length || data.products.length) {
-                        if (data.brands.length) {
-                            for (let i in data.brands) {
-                                results.find('.brands-list-group').append('<a href="' + data.brands[i].url + '" class="list-group-item text-gray" title="' + data.brands[i].name + '"><img src="' + data.brands[i].small_img + '" alt="' + data.brands[i].name + '"> ' + data.brands[i].name + '</a>');
-                                if (i >= 5) {
-                                    break;
-                                }
+        })
+            .done(function(data) {
+                results.find('.list-group').empty();
+                if (data.cars.length) {
+                    if (data.cars.length) {
+                        for (let i in data.cars) {
+                            results.find('.cars-list-group').append('<a href="' + data.cars[i].url + '" class="list-group-item text-gray lh-125 d-flex" title="' + data.cars[i].full_name + '"><img src="' + data.cars[i].small_img + '" alt="' + data.cars[i].full_name + '"><div><span class="d-inline-block mb-1">' + data.cars[i].full_name + '</span> <strong>' + data.cars[i].price_formatted + '</strong></div></a>');
+                            if (i >= 5) {
+                                break;
                             }
                         }
-                        if (data.categories.length) {
-                            for (let i in data.categories) {
-                                results.find('.categories-list-group').append('<a href="' + data.categories[i].url + '" class="list-group-item text-gray" title="' + data.categories[i].full_name + '"><img src="' + data.categories[i].small_img + '" alt="' + data.categories[i].full_name + '"> ' + data.categories[i].full_name + '</a>');
-                                if (i >= 5) {
-                                    break;
-                                }
-                            }
-                        }
-                        if (data.products.length) {
-                            for (let i in data.products) {
-                                results.find('.products-list-group').append('<a href="' + data.products[i].url + '" class="list-group-item text-gray lh-125 d-flex" title="' + data.products[i].name + '"><img src="' + data.products[i].small_img + '" alt="' + data.products[i].name + '"><div><span class="d-inline-block mb-1">' + data.products[i].name + '</span><br><strong>' + data.products[i].current_price_formatted + '</strong></div></a>');
-                                if (i >= 5) {
-                                    break;
-                                }
-                            }
-                        }
-                        // results.append('<a href="' + sendUrl + '?q=' + input.val() + '" class="list-group-item">...</a>');
-                        results.addClass('active');
-
-                        // results container position
-                        // if ($(window).width() >= 992) {
-                        //     if ($('.header-d').hasClass('js-header-scroll')) {
-                        //         results.css('top', '78px');
-                        //     } else {
-                        //         results.css('top', '124px');
-                        //     }
-                        // }
-                    } else {
-                        results.find('.list-group').empty();
-                        results.removeClass('active');
                     }
-                    $(window).scrollTop(0);
-                })
-                .fail(function(data) {
-                    // console.log(data);
+                    results.addClass('active');
+                } else {
                     results.find('.list-group').empty();
                     results.removeClass('active');
-                })
-                .always(function() {
-                    searchProcessing = false;
-                    setTimeout(() => {
-                        btn.removeClass("disabled").prop("disabled", false).html(btnHTML);
-                    }, 100);
-                });
-        }, 300);
-    })
+                }
+                $(window).scrollTop(0);
+            })
+            .fail(function(data) {
+                // console.log(data);
+                results.find('.list-group').empty();
+                results.removeClass('active');
+            })
+            .always(function() {
+                setTimeout(() => {
+                    btn.removeClass("disabled").prop("disabled", false).html(btnHTML);
+                }, 400);
+            });
+    }
+    const processAjaxSearch = debounce(() => ajaxSearch());
+
+    $('.ajax-search-input').on('input focus', processAjaxSearch);
 
     $('.alert-close').on('click', function(e){
         e.preventDefault();
@@ -447,6 +414,77 @@ $(function () {
         }
     });
 
+    /* sell-trade form */
+
+    /* contact form */
+    $(".sell-trade-form").on("submit", function (e) {
+        e.preventDefault();
+        let form = $(this);
+        let formHideBlock = form.find(".form-hide-blocks");
+        let sendUrl = form.attr("action");
+        let sendData = form.serialize();
+        let button = form.find("[type=submit]");
+        let message = "";
+        $.ajax({
+            url: sendUrl,
+            method: "post",
+            dataType: "json",
+            data: sendData,
+            beforeSend: function () {
+                // clear message
+                form.find(".form-result").empty();
+                // disabel send button
+                button
+                    .addClass("disabled")
+                    .prop("disabled", true)
+                    .append(spinnerHTML());
+            },
+        })
+            .done(function (data) {
+                // console.log(data);
+                form.find("input[type=text], input[type=email], textarea").val(
+                    ""
+                );
+                message = `<div class="alert alert-success">
+                            ${data.message}
+                            </div>`;
+                form.find(".form-result").html(message);
+                formHideBlock.addClass("d-none");
+                if (data.redirect_url) {
+                    setTimeout(function () {
+                        location.href = data.redirect_url;
+                    }, 500);
+                }
+                // setTimeout(function(){
+                //     location.reload();
+                // }, 1000);
+            })
+            .fail(function (data) {
+                // console.log(data);
+                if (data.status == 422) {
+                    let result = data.responseJSON;
+                    let messageContent = result.message + "<br>";
+                    for (let i in result.errors) {
+                        messageContent +=
+                            "<span>" + result.errors[i] + "</span><br>";
+                    }
+
+                    message = `<div class="alert alert-danger">
+                            ${messageContent}
+                            </div>`;
+                    form.find(".form-result").html(message);
+                }
+            })
+            .always(function () {
+                // enable button
+                button
+                    .removeClass("disabled")
+                    .prop("disabled", false)
+                    .find(".spinner").remove();
+                refreshCaptcha();
+            });
+    });
+
     /* subscriber form */
     $(".subscriber-form").on("submit", function (e) {
         e.preventDefault();
@@ -480,7 +518,7 @@ $(function () {
                 form.find(".form-result").html(message);
             })
             .fail(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 422) {
                     let result = data.responseJSON;
                     let messageContent = result.message + "<br>";
@@ -818,7 +856,7 @@ $(function () {
                 }
             })
             .fail(function (data) {
-                console.log(data);
+                // console.log(data);
             })
             .always(function (data) {
                 setTimeout(() => {
@@ -943,7 +981,7 @@ $(function () {
                     .attr("title", btn.data("delete-text"));
             })
             .fail(function (data) {
-                console.log(data);
+                // console.log(data);
             })
             .always(function (data) {
                 setTimeout(() => {
@@ -1178,5 +1216,13 @@ function refreshCaptcha(obj) {
 }
 
 function spinnerHTML() {
-    return `<span class="spinner"><svg class="svg-spinner" width="20" height="20" viewBox="0 0 50 50"><circle class="svg-spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor"></circle></svg></span>`;
+    return `<span class="spinner"><svg class="svg-spinner" width="16" height="16" viewBox="0 0 50 50"><circle class="svg-spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor"></circle></svg></span>`;
+}
+
+function debounce(func, timeout = 300){
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
 }

@@ -23,7 +23,7 @@ class BannerSeeder extends Seeder
             'button_text' => 'Find your car',
             'type' => 'slide',
             'image' => 'banners/slide-01.jpg',
-            'url' => '#',
+            'url' => '/cars',
             'status' => '1',
         ]);
         // Banner::create([

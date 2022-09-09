@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Category;
+use App\Models\Car;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -15,22 +15,18 @@ class ContactMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $contact;
-    protected $product;
-    protected $category;
+    protected $car;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Contact $contact, Product $product = null, Category $category = null)
+    public function __construct(Contact $contact, Car $car = null)
     {
         $this->contact = $contact;
-        if ($product) {
-            $this->product = $product;
-        }
-        if ($category) {
-            $this->category = $category;
+        if ($car) {
+            $this->car = $car;
         }
     }
 
@@ -41,7 +37,7 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.contact', ['contact' => $this->contact, 'product' => $this->product, 'category' => $this->category]);
+        return $this->view('emails.contact', ['contact' => $this->contact, 'car' => $this->car]);
     }
 }
 

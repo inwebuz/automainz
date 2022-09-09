@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Breadcrumbs;
 use App\Helpers\Helper;
 use App\Helpers\LinkItem;
+use App\Models\Car;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Page;
@@ -29,18 +30,23 @@ class ProfileController extends Controller
 
     public function show()
     {
-        $user = Auth::user();
+        $locale = app()->getLocale();
+        $user = auth()->user();
         $breadcrumbs = new Breadcrumbs();
         $breadcrumbs->addItem(new LinkItem(__('main.profile'), route('profile.show'), LinkItem::STATUS_INACTIVE));
 
-        $cartQuantity = app('cart')->getTotalQuantity();
+        // $cartQuantity = app('cart')->getTotalQuantity();
         $wishlistQuantity = app('wishlist')->getTotalQuantity();
-        $compareQuantity = app('compare')->getTotalQuantity();
-        $ordersQuantity = Order::where('user_id', $user->id)->count();
+        // $compareQuantity = app('compare')->getTotalQuantity();
+        // $ordersQuantity = Order::where('user_id', $user->id)->count();
 
-        $notifications = $user->notifications()->new()->count();
+        // $notifications = $user->notifications()->new()->count();
 
-        return view('profile.show', compact('breadcrumbs', 'user', 'cartQuantity', 'wishlistQuantity', 'compareQuantity', 'ordersQuantity', 'notifications'));
+        $latestCars = Car::active()->latest()->withTranslation($locale)->take(10)->get();
+        $littleMileageCars = Car::active()->where('mileage', '<', '60000')->latest()->withTranslation($locale)->take(10)->get();
+        $notExpensiveCars = Car::active()->latest()->where('price', '<', '26000')->where('price', '>=', '15000')->withTranslation($locale)->take(10)->get();
+
+        return view('profile.show', compact('breadcrumbs', 'user', 'wishlistQuantity', 'latestCars', 'littleMileageCars', 'notExpensiveCars'));
     }
 
     public function edit()
@@ -55,27 +61,45 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:190'],
-            // 'phone_number' => ['max:190'],
-            'address' => ['max:5000'],
-            'avatar' => ['image', 'max:1024'],
+            'first_name' => ['nullable', 'max:191'],
+            'last_name' => ['nullable', 'max:191'],
+            'phone_number' => ['nullable', 'max:191'],
+            'email' => ['nullable', 'max:191'],
+            'address' => ['nullable', 'max:5000'],
+            // 'avatar' => ['image', 'max:1024'],
         ]);
 
         $authUser = auth()->user();
-        if (!empty($data['avatar'])) {
-            if ($authUser->avatar) {
-                Storage::disk('public')->delete($authUser->avatar);
-            }
-            Helper::storeImage($authUser, 'avatar', 'users');
-            unset($data['avatar']);
+        // if (!empty($data['avatar'])) {
+        //     if ($authUser->avatar) {
+        //         Storage::disk('public')->delete($authUser->avatar);
+        //     }
+        //     Helper::storeImage($authUser, 'avatar', 'users');
+        //     unset($data['avatar']);
+        // }
+
+        if (isset($data['first_name'])) {
+            $authUser->first_name = $data['first_name'];
+        }
+        if (isset($data['last_name'])) {
+            $authUser->last_name = $data['last_name'];
+        }
+        if (isset($data['phone_number'])) {
+            $authUser->phone_number = $data['phone_number'];
+        }
+        if (isset($data['email'])) {
+            $authUser->email = $data['email'];
+        }
+        if (isset($data['address'])) {
+            $authUser->address = $data['address'];
         }
 
-        $authUser->update($data);
+        $authUser->save();
 
         // Session::flash('message', __('main.profile_saved'));
         // return redirect()->back();
 
-        return redirect()->route('profile.show')->withSuccess(__('main.profile_saved'));
+        return redirect()->route('profile.edit')->withSuccess(__('main.profile_saved'));
     }
 
     public function password(Request $request)
@@ -84,11 +108,10 @@ class ProfileController extends Controller
             'current_password' => ['required', new CurrentPassword],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
-        Auth::user()->update([
+        auth()->user()->update([
             'password' => Hash::make($data['password']),
         ]);
-        Session::flash('pmessage', __('main.password_saved'));
-        return redirect()->back();
+        return redirect()->back()->with(['pmessage' => __('main.password_saved')]);
     }
 
     public function requestSellerStatus()

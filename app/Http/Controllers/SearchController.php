@@ -7,11 +7,9 @@ use App\Models\Category;
 use App\Helpers\Breadcrumbs;
 use App\Helpers\Helper;
 use App\Helpers\LinkItem;
-use App\Http\Resources\BrandResource;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\CarResource;
+use App\Models\Car;
 use App\Models\Page;
-use App\Models\Product;
 use App\Models\Search;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -37,7 +35,7 @@ class SearchController extends Controller
                 ->whereRaw("MATCH(body) AGAINST('" . $q . "' IN BOOLEAN MODE)")
                 ->whereHasMorph(
                     'searchable',
-                    [Product::class, Category::class, Brand::class],
+                    [Car::class],
                     function ($q1) {
                         $q1->active();
                     }
@@ -50,7 +48,7 @@ class SearchController extends Controller
                 $query = Search::where('body', 'like', '%' . $q . '%')
                     ->whereHasMorph(
                         'searchable',
-                        [Product::class, Category::class, Brand::class],
+                        [Car::class],
                         function ($q1) {
                             $q1->active();
                         }
@@ -62,35 +60,17 @@ class SearchController extends Controller
 
 
             if ($isJson) {
-                // products
-                $products = collect();
+                // cars
+                $cars = collect();
                 $queryClone = clone $query;
-                $queryClone->where('searchable_type', Product::class);
-                $productIDs  = $queryClone->take(10)->get()->pluck('searchable_id')->toArray();
-                if ($productIDs) {
-                    $products = Product::active()->withTranslation($locale)->whereIn('id', $productIDs)->orderByRaw("FIELD(id," . implode(',', $productIDs) . ")")->get();
-                }
-
-                // categories
-                $categories = collect();
-                $queryClone = clone $query;
-                $queryClone->where('searchable_type', Category::class);
-                $categoryIDs  = $queryClone->take(10)->get()->pluck('searchable_id')->toArray();
-                if ($categoryIDs) {
-                    $categories = Category::active()->withTranslation($locale)->whereIn('id', $categoryIDs)->orderByRaw("FIELD(id," . implode(',', $categoryIDs) . ")")->get();
-                }
-
-                // brands
-                $brands = collect();
-                $queryClone = clone $query;
-                $queryClone->where('searchable_type', Brand::class);
-                $brandIDs  = $queryClone->take(10)->get()->pluck('searchable_id')->toArray();
-                if ($brandIDs) {
-                    $brands = Brand::active()->withTranslation($locale)->whereIn('id', $brandIDs)->orderByRaw("FIELD(id," . implode(',', $brandIDs) . ")")->get();
+                $queryClone->where('searchable_type', Car::class);
+                $carIDs  = $queryClone->take(10)->get()->pluck('searchable_id')->toArray();
+                if ($carIDs) {
+                    $cars = Car::active()->withTranslation($locale)->whereIn('id', $carIDs)->orderByRaw("FIELD(id," . implode(',', $carIDs) . ")")->get();
                 }
             } else {
-                // only products
-                $query->where('searchable_type', Product::class);
+                // only cars
+                $query->where('searchable_type', Car::class);
 
                 // get searches
                 $searches = $query->paginate(30);
@@ -100,66 +80,12 @@ class SearchController extends Controller
         if ($isJson) {
             return [
                 'q' => $q,
-                'products' => ProductResource::collection($products ?? collect()),
-                'categories' => CategoryResource::collection($categories ?? collect()),
-                'brands' => BrandResource::collection($brands ?? collect()),
+                'cars' => CarResource::collection($cars ?? collect()),
             ];
         }
 
         $links = !$searches->isEmpty() ? $searches->appends(['q' => $q])->links('partials.pagination') : '';
 
         return view('search', compact('breadcrumbs', 'searches', 'links', 'q'));
-    }
-
-    public function ajax(Request $request)
-    {
-        $results = [];
-        $q = $request->input('q', '');
-        $searches = $this->getSearches($q, 50);
-        foreach ($searches as $item) {
-            $results[] = [
-                'name' => $item->searchable->getTranslatedAttribute('name') ?? $item->searchable->getTranslatedAttribute('full_name'),
-                'url' => $item->searchable->url,
-            ];
-        }
-
-        return $results;
-    }
-
-    private function getSearches($q, $quantity = 0)
-    {
-        $locale = app()->getLocale();
-        $searches = collect([]);
-        if ($quantity == 0) {
-            $quantity = $this->perPage;
-        }
-
-        if ($q && Str::length($q) >= 3) {
-
-            $searches = Search::where('body', 'like', '%' . $q . '%')
-                ->with(['searchable' => function($q1) use ($locale) {
-                    $q1->withTranslation($locale);
-                }])
-                ->paginate($quantity);
-
-            if ($searches->isEmpty()) {
-                $qArray = explode(' ', $q);
-                if (count($qArray) > 0) {
-                    $searches = Search::where(function ($query) use ($qArray) {
-                        foreach ($qArray as $qWord) {
-                            if (mb_strlen($qWord) > 2) {
-                                $query->orWhere('body', 'like', '%' . $qWord . '%');
-                            }
-                        }
-                    })
-                        ->with(['searchable' => function($q1) use ($locale) {
-                            $q1->withTranslation($locale);
-                        }])
-                        ->paginate($quantity);
-                }
-            }
-        }
-
-        return $searches;
     }
 }

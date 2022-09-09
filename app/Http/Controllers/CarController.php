@@ -2,85 +2,115 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Breadcrumbs;
+use App\Helpers\LinkItem;
+use App\Http\Resources\CarResource;
 use App\Models\Car;
-use App\Http\Requests\StoreCarRequest;
-use App\Http\Requests\UpdateCarRequest;
+use App\Models\Feature;
+use App\Models\Page;
+use App\Models\SpecificationType;
+use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $locale = app()->getLocale();
+        $params = [
+            'specifications' => $request->input('specifications', []),
+            'features' => [],
+            'price_from' => (float)$request->input('price_from', -1),
+            'price_to' => (float)$request->input('price_to', -1),
+            'year_from' => (int)$request->input('year_from', -1),
+            'year_to' => (int)$request->input('year_to', -1),
+        ];
+        $selectedFeatures = $request->input('features', []);
+        if (is_array($selectedFeatures) && count($selectedFeatures)) {
+            $params['features'] = array_keys($selectedFeatures);
+        }
+        // dd($params);
+        $features = Feature::active()->where('used_for_filter', 1)->withTranslation($locale)->get();
+        $specificationTypes = SpecificationType::active()->where('used_for_filter', 1)->with(['specifications' => function($q) use ($locale) {
+            $q->active()->withTranslation($locale);
+        }])->withTranslation($locale)->get();
+        $breadcrumbs = new Breadcrumbs();
+        $page = Page::where('slug', 'cars')->active()->withTranslation($locale)->firstOrFail();
+        $breadcrumbs->addItem(new LinkItem($page->getTranslatedAttribute('name'), $page->url, LinkItem::STATUS_INACTIVE));
+        $prices = [
+            'min' => floor(Car::active()->min('price')),
+            'max' => ceil(Car::active()->max('price')),
+        ];
+        $years = [
+            'min' => floor(Car::active()->min('year')),
+            'max' => ceil(Car::active()->max('year')),
+        ];
+
+        $query = Car::active();
+
+        // filters
+        if ($params['price_from'] != -1) {
+            $query->where('cars.price', '>=', $params['price_from']);
+        }
+        if ($params['price_to'] != -1) {
+            $query->where('cars.price', '<=', $params['price_to']);
+        }
+        if ($params['year_from'] != -1) {
+            $query->where('cars.year', '>=', $params['year_from']);
+        }
+        if ($params['year_to'] != -1) {
+            $query->where('cars.year', '<=', $params['year_to']);
+        }
+
+        if (count($params['features'])) {
+            $query->whereHas('features', function($q) use ($params) {
+                $q->whereIn('features.id', $params['features']);
+            });
+        }
+
+        if (count($params['specifications'])) {
+            $query->where(function ($q) use ($params) {
+                foreach ($params['specifications'] as $key => $value) {
+                    $q->whereHas('specifications', function($q) use ($value) {
+                        $q->whereIn('specifications.id', $value);
+                    });
+                }
+                return $q;
+            });
+        }
+
+        $cars = $query->with(['carModel' => function($q) use ($locale) {
+            $q->withTranslation($locale)->with(['make' => function($q1) use ($locale) {
+                $q1->withTranslation($locale)->with([]);
+            }]);
+        }])->paginate(9)->appends($request->all());
+
+        if ($request->input('json', '')) {
+            return CarResource::collection($cars);
+        }
+
+        return view('cars.index', compact('page', 'breadcrumbs', 'cars', 'params', 'features', 'specificationTypes', 'prices', 'years'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCarRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCarRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
     public function show(Car $car)
     {
-        //
-    }
+        $locale = app()->getLocale();
+        $breadcrumbs = new Breadcrumbs();
+        $car->load(['translations']);
+        $car->load(['specifications' => function($q) use ($locale) {
+            $q->withTranslation($locale)->with(['specificationType' => function($q1) use ($locale) {
+                $q1->withTranslation($locale);
+            }]);
+        }]);
+        $car->load(['features' => function($q) use ($locale) {
+            $q->withTranslation($locale);
+        }]);
+        // dd($car->features);
+        $page = Page::where('slug', 'cars')->active()->withTranslation($locale)->firstOrFail();
+        $breadcrumbs->addItem(new LinkItem($page->getTranslatedAttribute('name'), $page->url));
+        $breadcrumbs->addItem(new LinkItem($car->getTranslatedAttribute('name'), $car->url, LinkItem::STATUS_INACTIVE));
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Car $car)
-    {
-        //
-    }
+        $recommendedCars = Car::active()->withTranslation($locale)->where('make_id', $car->make_id)->latest()->take(10)->get();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCarRequest  $request
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCarRequest $request, Car $car)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Car $car)
-    {
-        //
+        return view('cars.show', compact('page', 'breadcrumbs', 'car', 'recommendedCars'));
     }
 }

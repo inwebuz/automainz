@@ -28,6 +28,8 @@ class CreateSpecificationTypesTable extends Migration
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
             $table->bigInteger('order')->default(0);
+            $table->tinyInteger('used_for_filter')->default(0);
+            $table->tinyInteger('is_main')->default(0);
             $table->timestamps();
         });
     }

@@ -3178,6 +3178,15 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
+            'make_id' => [
+                'method' => 'hiddenRow',
+                'data'   => [
+                    'display_name' =>__('seeders.data_types.make.singular'),
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                ],
+            ],
             'car_model_belongsto_make_relationship' => [
                 'method' => 'relationshipRow',
                 'data' => [
@@ -3213,7 +3222,7 @@ class DataRowsTableSeeder extends StandardSeeder
         $dataType = DataType::where('slug', 'cars')->firstOrFail();
 
         $this->saveMainRows($dataType);
-        $this->saveStandardRows($dataType, [], ['image']);
+        $this->saveStandardRows($dataType, [], ['image', 'body']);
         // $this->saveSeoRows($dataType);
 
         $imageThumbs = [];
@@ -3227,11 +3236,21 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
+            'car_model_id' => [
+                'method' => 'hiddenRow',
+                'data'   => [
+                    'display_name' =>__('seeders.data_types.car_model.singular'),
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                ],
+            ],
             'car_belongsto_car_model_relationship' => [
                 'method' => 'relationshipRow',
                 'data' => [
                     'display_name' => __('seeders.data_types.car_model.singular'),
                     'details' => $this->relationship(CarModel::class, 'car_models', 'belongsTo', 'car_model_id', 'id', 'full_name'),
+                    'browse' => 1,
                     'order' => 10,
                 ],
             ],
@@ -3239,7 +3258,7 @@ class DataRowsTableSeeder extends StandardSeeder
                 'method' => 'relationshipRow',
                 'data' => [
                     'display_name' => __('seeders.data_types.feature.plural'),
-                    'browse' => 1,
+                    'browse' => 0,
                     'details' => $this->relationship(Feature::class, 'features', 'belongsToMany', 'id', 'id', 'name', 'car_feature', 1),
                     'order' => 11,
                 ],
@@ -3248,7 +3267,7 @@ class DataRowsTableSeeder extends StandardSeeder
                 'method' => 'relationshipRow',
                 'data' => [
                     'display_name' => __('seeders.data_types.specification.plural'),
-                    'browse' => 1,
+                    'browse' => 0,
                     'details' => $this->relationship(Specification::class, 'specifications', 'belongsToMany', 'id', 'id', 'full_name', 'car_specification', 1),
                     'order' => 12,
                 ],
@@ -3258,6 +3277,16 @@ class DataRowsTableSeeder extends StandardSeeder
                 'data' => [
                     'details' => $this->image(1000, $imageThumbs),
                 ],
+            ],
+            'feature_summary_image' => [
+                'method' => 'imageRow',
+                'data' => [
+                    'details' => $this->image(1000),
+                    'display_name' => 'Feature summary image',
+                ],
+            ],
+            'body' => [
+                'method' => 'hiddenRow',
             ],
             'background' => [
                 'method' => 'hiddenRow',
@@ -3273,6 +3302,30 @@ class DataRowsTableSeeder extends StandardSeeder
             'order' => [
                 // 'method' => 'orderRow',
                 'method' => 'hiddenNumberRow',
+            ],
+            'price' => [
+                'method' => 'priceRow',
+                'data' => [
+                    'display_name' => __('seeders.data_rows.price'),
+                ],
+            ],
+            'vin' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => 'VIN',
+                ],
+            ],
+            'year' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => 'Year',
+                ],
+            ],
+            'mileage' => [
+                'method' => 'textRow',
+                'data' => [
+                    'display_name' => 'Mileage',
+                ],
             ],
         ];
 
@@ -3315,6 +3368,12 @@ class DataRowsTableSeeder extends StandardSeeder
                 // 'method' => 'orderRow',
                 'method' => 'hiddenNumberRow',
             ],
+            'used_for_filter' => [
+                'method' => 'statusRow',
+                'data' => [
+                    'display_name' => 'Used for filtering',
+                ],
+            ],
         ];
 
         $this->saveRows($dataType, $rows);
@@ -3356,6 +3415,18 @@ class DataRowsTableSeeder extends StandardSeeder
                 // 'method' => 'orderRow',
                 'method' => 'hiddenNumberRow',
             ],
+            'used_for_filter' => [
+                'method' => 'statusRow',
+                'data' => [
+                    'display_name' => 'Used for filtering',
+                ],
+            ],
+            'is_main' => [
+                'method' => 'statusRow',
+                'data' => [
+                    'display_name' => 'Is main specification type',
+                ],
+            ],
         ];
 
         $this->saveRows($dataType, $rows);
@@ -3381,6 +3452,15 @@ class DataRowsTableSeeder extends StandardSeeder
 
         // specific rows
         $rows = [
+            'specification_type_id' => [
+                'method' => 'hiddenRow',
+                'data'   => [
+                    'display_name' =>__('seeders.data_types.specification_type.singular'),
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                ],
+            ],
             'specification_belongsto_specification_type_relationship' => [
                 'method' => 'relationshipRow',
                 'data' => [

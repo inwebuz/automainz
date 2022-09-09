@@ -634,7 +634,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.specification_type.plural'),
                 'icon'                  => 'voyager-categories',
                 'model_name'            => SpecificationType::class,
-                // 'server_side'           => 1,
+                'server_side'           => 1,
             ],
             [
                 'slug'                  => 'specifications',
@@ -643,7 +643,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.specification.plural'),
                 'icon'                  => 'voyager-categories',
                 'model_name'            => Specification::class,
-                // 'server_side'           => 1,
+                'server_side'           => 1,
             ],
             [
                 'slug'                  => 'makes',
@@ -652,7 +652,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.make.plural'),
                 'icon'                  => 'voyager-categories',
                 'model_name'            => Make::class,
-                // 'server_side'           => 1,
+                'server_side'           => 1,
             ],
             [
                 'slug'                  => 'car_models',
@@ -661,7 +661,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.car_model.plural'),
                 'icon'                  => 'voyager-categories',
                 'model_name'            => CarModel::class,
-                // 'server_side'           => 1,
+                'server_side'           => 1,
             ],
             [
                 'slug'                  => 'cars',
@@ -670,7 +670,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_plural'   => __('seeders.data_types.car.plural'),
                 'icon'                  => 'voyager-categories',
                 'model_name'            => Car::class,
-                // 'server_side'           => 1,
+                'server_side'           => 1,
             ],
         ];
 

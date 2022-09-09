@@ -121,7 +121,7 @@ if (forms.length) {
 		const requiredInputs = form.querySelectorAll('.input[required]')
 		const disabledButton = form.querySelector('button[disabled]')
 
-		if (requiredInputs.length) {
+		if (requiredInputs.length && disabledButton) {
 			for (let i = 0; i < requiredInputs.length; i++) {
 				const input = requiredInputs[i]
 				input.addEventListener('input', () => {
@@ -206,9 +206,10 @@ function controlToInput(toSlider, fromInput, toInput, controlSlider) {
 function controlFromSlider(fromSlider, toSlider, fromInput) {
 	const [from, to] = getParsed(fromSlider, toSlider)
 	fillSlider(fromSlider, toSlider, '#f2f2f2', '#30A1FF', toSlider)
-	if (from > to) {
-		fromSlider.value = to
-		fromInput.value = to
+    const fromMax = to - 5000;
+	if (from > fromMax) {
+		fromSlider.value = fromMax
+		fromInput.value = fromMax
 	} else {
 		fromInput.value = from
 	}
@@ -218,12 +219,13 @@ function controlToSlider(fromSlider, toSlider, toInput) {
 	const [from, to] = getParsed(fromSlider, toSlider)
 	fillSlider(fromSlider, toSlider, '#f2f2f2', '#30A1FF', toSlider)
 	setToggleAccessible(toSlider)
-	if (from <= to) {
+    const toMin = from + 5000;
+	if (toMin <= to) {
 		toSlider.value = to
 		toInput.value = to
 	} else {
-		toInput.value = from
-		toSlider.value = from
+		toInput.value = toMin
+		toSlider.value = toMin
 	}
 }
 
@@ -237,7 +239,6 @@ function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
 	const rangeDistance = to.max - to.min
 	const fromPosition = from.value - to.min
 	const toPosition = to.value - to.min
-	console.log(from.value, to.value)
 	controlSlider.style.background = `linear-gradient(
     to right,
     ${sliderColor} 0%,

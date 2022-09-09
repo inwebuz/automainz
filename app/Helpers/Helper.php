@@ -49,7 +49,7 @@ class Helper
 
     public static function formatPrice($number)
     {
-        return self::formatNumber($number) . ' ' . __('main.currency');
+        return '$' . number_format($number, 0, '.', ',');
     }
 
     public static function formatDate(Carbon $date, $year = false)
@@ -265,7 +265,7 @@ class Helper
             }
         }
 
-        $onlySlugRoutes = ['page' => Category::class];
+        $onlySlugRoutes = ['page' => Page::class];
         foreach ($onlySlugRoutes as $key => $modelClass) {
             if ($routeName == $key) {
                 $routeParams = array_values($route->parameters);

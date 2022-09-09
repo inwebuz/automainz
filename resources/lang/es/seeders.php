@@ -39,7 +39,7 @@ return [
         'country' => 'Страна',
         'created_at' => 'Дата создания',
         'default_selected' => 'Выбрано по умолчанию',
-        'description' => 'Описание',
+        'description' => 'Description',
         'details' => [
             'any_files' => 'Любые файлы',
             'slug_description' => 'Название для ссылки страницы',
