@@ -419,30 +419,31 @@ class DataRowsTableSeeder extends StandardSeeder
         // specific rows
         $rows = [
             'image' => [
-                'method' => 'hiddenRow',
+                'method' => 'imageRow',
                 'data' => [
                     'display_name' => __('seeders.data_rows.image'),
+                    'details' => $this->image(1400),
                 ],
             ],
             'image_en' => [
-                'method' => 'imageRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => __('seeders.data_rows.image_en'),
-                    'details' => $this->image(1400),
+                    // 'details' => $this->image(1400),
                 ],
             ],
             'image_ru' => [
-                'method' => 'imageRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => __('seeders.data_rows.image_ru'),
-                    'details' => $this->image(1400),
+                    // 'details' => $this->image(1400),
                 ],
             ],
             'image_uz' => [
-                'method' => 'imageRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => __('seeders.data_rows.image_uz'),
-                    'details' => $this->image(1400),
+                    // 'details' => $this->image(1400),
                 ],
             ],
             'type' => [
@@ -455,19 +456,20 @@ class DataRowsTableSeeder extends StandardSeeder
                 ],
             ],
             'text_color' => [
-                'method' => 'colorRow',
+                // 'method' => 'colorRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => 'Цвет текста',
                 ],
             ],
             'description_top' => [
-                'method' => 'textAreaRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => 'Верхнее короткое описание',
                 ],
             ],
             'description_bottom' => [
-                'method' => 'textAreaRow',
+                'method' => 'hiddenRow',
                 'data' => [
                     'display_name' => 'Нижнее короткое описание',
                 ],
@@ -517,46 +519,46 @@ class DataRowsTableSeeder extends StandardSeeder
             'language' => [
                 'method' => 'hiddenRow',
             ],
-            'category_id' => [
-                'method' => 'hiddenRow',
-                'data'   => [
-                    'display_name' => __('seeders.data_rows.category'),
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                ],
-            ],
-            'product_belongsto_category_relationship' => [
-                'method' => 'relationshipRow',
-                'data'   => [
-                    'display_name' => __('seeders.data_rows.category'),
-                    'details' => $this->relationship(Category::class, 'categories', 'belongsTo', 'category_id', 'id', 'full_name'),
-                    'browse' => 1,
-                ],
-            ],
+            // 'category_id' => [
+            //     'method' => 'hiddenRow',
+            //     'data'   => [
+            //         'display_name' => __('seeders.data_rows.category'),
+            //         'edit' => 1,
+            //         'add' => 1,
+            //         'delete' => 1,
+            //     ],
+            // ],
+            // 'product_belongsto_category_relationship' => [
+            //     'method' => 'relationshipRow',
+            //     'data'   => [
+            //         'display_name' => __('seeders.data_rows.category'),
+            //         'details' => $this->relationship(Category::class, 'categories', 'belongsTo', 'category_id', 'id', 'full_name'),
+            //         'browse' => 1,
+            //     ],
+            // ],
             'image_mobile' => [
                 'method' => 'hiddenRow',
             ],
             'order' => [
-                'method' => 'orderRow',
+                'method' => 'hiddenNumberRow',
             ],
 
-            'targetable_type' => [
-                'method' => 'dropdownRow',
-                'data' => [
-                    'display_name' => 'Цель',
-                    'details' => $this->dropdown('-', Banner::targetTypes()),
-                    'browse' => 1,
-                    'read' => 1,
-                ],
-            ],
-            'targetable_id' => [
-                'method' => 'numberRow',
-                'data' => [
-                    'display_name' => 'ID цели',
-                    'browse'       => 1,
-                ],
-            ],
+            // 'targetable_type' => [
+            //     'method' => 'dropdownRow',
+            //     'data' => [
+            //         'display_name' => 'Цель',
+            //         'details' => $this->dropdown('-', Banner::targetTypes()),
+            //         'browse' => 1,
+            //         'read' => 1,
+            //     ],
+            // ],
+            // 'targetable_id' => [
+            //     'method' => 'numberRow',
+            //     'data' => [
+            //         'display_name' => 'ID цели',
+            //         'browse'       => 1,
+            //     ],
+            // ],
         ];
         $this->saveRows($dataType, $rows);
     }

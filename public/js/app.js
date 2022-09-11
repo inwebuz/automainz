@@ -46,11 +46,23 @@ if (inputs.length) {
 		input.addEventListener('focus', () => {
 			input.classList.add('focus')
 		})
+		input.addEventListener('input', () => {
+			input.classList.add('focus')
+		})
+		input.addEventListener('change', () => {
+			if (!input.value.length) {
+				input.classList.remove('focus')
+			} else {
+                input.classList.add('focus')
+            }
+		})
 
 		input.addEventListener('blur', () => {
 			if (!input.value.length) {
 				input.classList.remove('focus')
-			}
+			} else {
+                input.classList.add('focus')
+            }
 		})
 	})
 

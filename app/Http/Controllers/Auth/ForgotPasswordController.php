@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SmsVerification;
 use App\Models\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,6 +35,13 @@ class ForgotPasswordController extends Controller
     public function showLinkRequestPhoneForm()
     {
         return view('auth.passwords.phone');
+    }
+
+    protected function sendResetLinkResponse(Request $request, $response)
+    {
+        return $request->wantsJson()
+                    ? new JsonResponse(['message' => trans($response)], 200)
+                    : redirect()->route('login')->with('status', trans($response));
     }
 
     /**

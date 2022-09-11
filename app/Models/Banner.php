@@ -125,24 +125,24 @@ class Banner extends Model
     public static function types()
     {
         return [
-            self::TYPE_SLIDE => 'Слайд (1037x380)',
+            self::TYPE_SLIDE => 'Слайд (1400x800)',
             // self::TYPE_HOME_1 => 'Главная 1',
             // self::TYPE_HOME_2 => 'Главная 2',
             // self::TYPE_HOME_3 => 'Главная 3',
             // self::TYPE_LINE_1 => 'Полоска 1 (1390x130)',
-            self::TYPE_MIDDLE_1 => 'Середина 1 (448x215)',
-            self::TYPE_MIDDLE_2 => 'Середина 2 (448x215)',
-            self::TYPE_MIDDLE_3 => 'Середина 3 (448x215)',
+            // self::TYPE_MIDDLE_1 => 'Середина 1 (448x215)',
+            // self::TYPE_MIDDLE_2 => 'Середина 2 (448x215)',
+            // self::TYPE_MIDDLE_3 => 'Середина 3 (448x215)',
             // self::TYPE_MOBILE_MENU => 'Мобильное меню',
             // self::TYPE_SIDEBAR_1 => 'Левая колонка 1 (382x534)',
             // self::TYPE_SIDEBAR_2 => 'Левая колонка 2 (382x534)',
             // self::TYPE_MENU_CATEGORY => 'Категории в меню (360x440)',
-            self::TYPE_MIDDLE_SLIDE => 'Слайд акции и скидки (542x390)',
-            self::TYPE_CATEGORY_TOP => 'Категория верхняя часть (1390x225)',
-            self::TYPE_CATEGORY_BOTTOM => 'Категория нижняя часть (1390x225)',
-            self::TYPE_APP_SLIDE => 'Слайд на главной странице в приложении (175x110)',
-            self::TYPE_APP_HOME => 'Главная страница приложения нижние баннеры (150x114)',
-            self::TYPE_APP_CATEGORY => 'Баннер в категории приложения (396x120)',
+            // self::TYPE_MIDDLE_SLIDE => 'Слайд акции и скидки (542x390)',
+            // self::TYPE_CATEGORY_TOP => 'Категория верхняя часть (1390x225)',
+            // self::TYPE_CATEGORY_BOTTOM => 'Категория нижняя часть (1390x225)',
+            // self::TYPE_APP_SLIDE => 'Слайд на главной странице в приложении (175x110)',
+            // self::TYPE_APP_HOME => 'Главная страница приложения нижние баннеры (150x114)',
+            // self::TYPE_APP_CATEGORY => 'Баннер в категории приложения (396x120)',
         ];
     }
 

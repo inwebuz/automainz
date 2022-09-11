@@ -123,7 +123,8 @@ $(function () {
         let results = container.find('.ajax-search-results')
         let btn = form.find('[type="button"]');
         let btnHTML = btn.html();
-        let sendUrl = form.attr('action');
+        // let sendUrl = form.attr('action');
+        let sendUrl = form.data('search-url');
         let sendData = form.serialize() + '&json=1';
         $.ajax({
             url: sendUrl,
@@ -165,6 +166,7 @@ $(function () {
     const processAjaxSearch = debounce(() => ajaxSearch());
 
     $('.ajax-search-input').on('input focus', processAjaxSearch);
+    $('.ajax-search-form').on('submit', () => false);
 
     $('.alert-close').on('click', function(e){
         e.preventDefault();
@@ -174,6 +176,9 @@ $(function () {
     $('.load-more-items').on('click', function(e){
         e.preventDefault();
         let btn = $(this);
+        if (btn.prop('disabled')) {
+            return;
+        }
         let targetID = btn.data('target');
         let target = $(targetID);
         if (!target.length) {

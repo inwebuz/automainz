@@ -121,7 +121,7 @@
             </div>
         </div>
         <div class="header__search">
-            <form action="{{ route('search') }}" class="ajax-search-form ajax-search-container">
+            <form action="{{ route('cars.index') }}" class="ajax-search-form ajax-search-container" data-search-url="{{ route('search') }}">
                 <div class="input__box input__box--100">
                     <input
                         type="text"

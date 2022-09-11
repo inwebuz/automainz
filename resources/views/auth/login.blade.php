@@ -2,6 +2,7 @@
 @section('seo_title', __('main.nav.login'))
 
 @section('content')
+    @include('partials.alerts')
     <section class="modal modal--auth bg-standard">
         <div class="modal__back"></div>
         <div class="modal__in">

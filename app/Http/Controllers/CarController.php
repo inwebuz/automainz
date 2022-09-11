@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Breadcrumbs;
+use App\Helpers\Helper;
 use App\Helpers\LinkItem;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
@@ -24,6 +25,7 @@ class CarController extends Controller
             'price_to' => (float)$request->input('price_to', -1),
             'year_from' => (int)$request->input('year_from', -1),
             'year_to' => (int)$request->input('year_to', -1),
+            // 'q' => $request->input('q', ''),
         ];
         $selectedFeatures = $request->input('features', []);
         if (is_array($selectedFeatures) && count($selectedFeatures)) {
@@ -68,6 +70,10 @@ class CarController extends Controller
         if ($params['year_to'] != -1) {
             $query->where('cars.year', '<=', $params['year_to']);
         }
+        // if (mb_strlen($params['q']) >= 3) {
+        //     $q = Helper::escapeFullTextSearch($params['q']);
+        //     $query->where('cars.name', 'LIKE', '%' . $q . '%');
+        // }
 
         if (count($params['features'])) {
             $query->whereHas('features', function($q) use ($params) {

@@ -36,7 +36,7 @@ use App\Models\Page;
 use App\Models\Partner;
 use App\Models\PartnerInstallment;
 use App\Models\PaymentMethod;
-use App\Photo;
+use App\Models\Photo;
 use App\Models\Poll;
 use App\Models\PollAnswer;
 use App\Pricelist;
