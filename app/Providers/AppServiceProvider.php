@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         Voyager::addAction(OrderViewAction::class);
         Voyager::addAction(UserApiTokensAction::class);
         Voyager::addAction(ProductAttributesAction::class);
-        Voyager::addAction(ReviewablePageAction::class);
+        // Voyager::addAction(ReviewablePageAction::class);
         Voyager::addAction(ProductGroupSettingsAction::class);
         Voyager::addAction(ProductAttributesTemplateBuilderAction::class);
         Voyager::useModel('MenuItem', MenuItem::class);
